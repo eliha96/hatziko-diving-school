@@ -12,6 +12,15 @@
     <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
 </head>
 <body>
+    <!-- Live Depth Gauge Widget -->
+    <div id="depth-gauge" class="depth-gauge">
+        <span class="depth-icon">🤿</span>
+        <div class="depth-info">
+            <span class="depth-title">מד עומק:</span>
+            <span id="depth-value" class="depth-meters">0.0 מטר</span>
+        </div>
+    </div>
+
     <!-- Edit Mode Bar -->
     <div id="edit-mode-bar" class="edit-mode-bar hidden">
         <div class="container edit-bar-content">
@@ -25,6 +34,25 @@
                 <button class="btn btn-sm btn-warning" id="btn-reset-data">🔄 אפס למקור</button>
             </div>
         </div>
+    </div>
+
+    <!-- Top Animated Waves & Rubber Duck -->
+    <div class="ocean-surface-header">
+        <div class="duck-wrapper">
+            <div class="rubber-duck" title="ברווז גומי צף בחציכו">🦆</div>
+        </div>
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax-waves">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(0, 210, 255, 0.4)" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0, 102, 255, 0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(13, 31, 54, 0.7)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="#071322" />
+            </g>
+        </svg>
     </div>
 
     <!-- Navigation Header -->
@@ -55,6 +83,14 @@
             </div>
         </div>
     </header>
+
+    <!-- Floating Fish Container -->
+    <div class="sea-creatures-layer" id="sea-creatures">
+        <div class="swimming-fish fish-1">🐠</div>
+        <div class="swimming-fish fish-2">🐟</div>
+        <div class="swimming-fish fish-3">🐡</div>
+        <div class="swimming-shark shark-1">🦈</div>
+    </div>
 
     <main>
         <!-- Hero Section -->
@@ -372,6 +408,18 @@
             </div>
         </section>
     </main>
+
+    <!-- Ocean Floor / Seabed Footer Section -->
+    <div class="seabed-decoration">
+        <div class="seabed-sand"></div>
+        <div class="seabed-elements container">
+            <div class="seabed-shipwreck" title="ספינה טבועה - עומק 2.0 מטר">🚢</div>
+            <div class="seabed-seaweed seaweed-1">🌿</div>
+            <div class="seabed-starfish" title="כוכב ים">⭐</div>
+            <div class="seabed-seaweed seaweed-2">🌿</div>
+            <div class="seabed-chest" title="תיבת אוצר עם קפה קר">🪙</div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Hatziko Diving School - Application Logic & Complete Dynamic Edit Engine
+   Hatziko Diving School - Application Logic & Dynamic Depth Engine
    ========================================================================== */
 
 // Comprehensive Default State Data
@@ -174,7 +174,33 @@ document.addEventListener('DOMContentLoaded', () => {
     initCalculator();
     initCertificate();
     initImageModal();
+    initScrollDepthTracker();
 });
+
+// Scroll Depth Gauge Logic
+function initScrollDepthTracker() {
+    const depthVal = document.getElementById('depth-value');
+    if (!depthVal) return;
+
+    window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollHeight > 0 ? (scrollTop / scrollHeight) : 0;
+
+        // Scale depth from 0.0m to 2.0m max
+        const meters = (progress * 2.0).toFixed(1);
+
+        if (progress < 0.1) {
+            depthVal.innerText = `${meters} מטר (פני המים 🦆)`;
+        } else if (progress < 0.4) {
+            depthVal.innerText = `${meters} מטר (מים רדודים 🐟)`;
+        } else if (progress < 0.75) {
+            depthVal.innerText = `${meters} מטר (אזור הכרישים 🦈)`;
+        } else {
+            depthVal.innerText = `${meters} מטר (קרקעית וספינה 🚢)`;
+        }
+    });
+}
 
 // Load from LocalStorage
 function loadSavedData() {
