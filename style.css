@@ -188,48 +188,31 @@ h1, h2, h3, h4, h5, h6 {
     color: #fff;
 }
 
-/* Live Floating Depth Gauge Widget */
-.depth-gauge {
+/* Full Page Bubbles Background */
+.bubbles-container {
     position: fixed;
-    bottom: 25px;
-    left: 25px;
-    z-index: 1200;
-    background: rgba(7, 19, 34, 0.85);
-    border: 2px solid var(--primary-cyan);
-    backdrop-filter: blur(12px);
-    border-radius: var(--radius-full);
-    padding: 0.5rem 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    box-shadow: 0 4px 20px rgba(0, 210, 255, 0.3);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
 }
 
-.depth-gauge:hover {
-    transform: scale(1.05);
-    border-color: var(--accent-gold);
+.bubble {
+    position: absolute;
+    bottom: -50px;
+    background: rgba(0, 210, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 50%;
+    animation: rise 9s infinite ease-in-out;
 }
 
-.depth-icon {
-    font-size: 1.4rem;
-}
-
-.depth-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.depth-title {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-}
-
-.depth-meters {
-    font-family: var(--font-heading);
-    font-weight: 800;
-    color: var(--accent-gold);
-    font-size: 1.1rem;
+@keyframes rise {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    15% { opacity: 0.8; }
+    100% { transform: translateY(-105vh) scale(1.6); opacity: 0; }
 }
 
 /* Animated Top Ocean Surface & Rubber Duck */
@@ -300,7 +283,7 @@ h1, h2, h3, h4, h5, h6 {
     100% { transform: translate3d(85px, 0, 0); }
 }
 
-/* Sea Creatures Floating Layer */
+/* Sea Creatures Floating Layer (UPSIDE DOWN & RIGHT TO LEFT) */
 .sea-creatures-layer {
     position: absolute;
     top: 0;
@@ -308,51 +291,51 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
     overflow: hidden;
 }
 
 .swimming-fish {
     position: absolute;
-    font-size: 2.2rem;
+    font-size: 2.6rem;
     filter: drop-shadow(0 2px 8px rgba(0,210,255,0.4));
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
+/* Fish swimming UPSIDE DOWN (rotated 180deg) from RIGHT to LEFT */
 .fish-1 {
-    top: 900px;
-    animation: swim-left-to-right 18s linear infinite;
+    top: 850px;
+    animation: swim-right-to-left-upsidedown 19s linear infinite;
 }
 
 .fish-2 {
-    top: 1500px;
-    animation: swim-right-to-left 22s linear infinite;
+    top: 1600px;
+    animation: swim-right-to-left-upsidedown 23s linear infinite;
 }
 
 .fish-3 {
-    top: 2200px;
-    animation: swim-left-to-right 16s linear infinite;
+    top: 2400px;
+    animation: swim-right-to-left-upsidedown 17s linear infinite;
+}
+
+.fish-4 {
+    top: 3100px;
+    animation: swim-right-to-left-upsidedown 21s linear infinite;
 }
 
 .swimming-shark {
     position: absolute;
-    top: 3100px;
-    font-size: 4rem;
-    opacity: 0.7;
+    top: 3600px;
+    font-size: 4.2rem;
+    opacity: 0.75;
     filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
-    animation: swim-right-to-left 28s linear infinite;
+    animation: swim-right-to-left-upsidedown 28s linear infinite;
 }
 
-@keyframes swim-left-to-right {
-    0% { left: -80px; transform: scaleX(1) translateY(0); }
-    50% { transform: scaleX(1) translateY(-25px); }
-    100% { left: 105vw; transform: scaleX(1) translateY(0); }
-}
-
-@keyframes swim-right-to-left {
-    0% { right: -100px; transform: scaleX(-1) translateY(0); }
-    50% { transform: scaleX(-1) translateY(30px); }
-    100% { right: 105vw; transform: scaleX(-1) translateY(0); }
+@keyframes swim-right-to-left-upsidedown {
+    0% { right: -100px; transform: rotate(180deg) translateY(0); }
+    50% { transform: rotate(180deg) translateY(25px); }
+    100% { right: 105vw; transform: rotate(180deg) translateY(0); }
 }
 
 /* Seabed Bottom Section Decoration */
@@ -665,32 +648,6 @@ body.in-edit-mode .editable:hover {
 
 .card-icon {
     font-size: 2rem;
-}
-
-/* Bubbles Background */
-.bubbles-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.bubble {
-    position: absolute;
-    bottom: -50px;
-    background: rgba(0, 210, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    border-radius: 50%;
-    animation: rise 10s infinite ease-in-out;
-}
-
-@keyframes rise {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    20% { opacity: 0.7; }
-    100% { transform: translateY(-800px) scale(1.5); opacity: 0; }
 }
 
 /* Sections Global */
@@ -1351,10 +1308,5 @@ input[type=range]::-webkit-slider-thumb {
     }
     .duck-wrapper {
         right: 5%;
-    }
-    .depth-gauge {
-        bottom: 15px;
-        left: 15px;
-        padding: 0.4rem 0.9rem;
     }
 }

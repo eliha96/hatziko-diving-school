@@ -12,14 +12,8 @@
     <link rel="icon" href="assets/logo.jpg" type="image/jpeg">
 </head>
 <body>
-    <!-- Live Depth Gauge Widget -->
-    <div id="depth-gauge" class="depth-gauge">
-        <span class="depth-icon">🤿</span>
-        <div class="depth-info">
-            <span class="depth-title">מד עומק:</span>
-            <span id="depth-value" class="depth-meters">0.0 מטר</span>
-        </div>
-    </div>
+    <!-- Full-Page Bubbles Background Container -->
+    <div class="bubbles-container" id="bubbles"></div>
 
     <!-- Edit Mode Bar -->
     <div id="edit-mode-bar" class="edit-mode-bar hidden">
@@ -84,18 +78,18 @@
         </div>
     </header>
 
-    <!-- Floating Fish Container -->
+    <!-- Floating Fish Container (Upside Down, Right to Left) -->
     <div class="sea-creatures-layer" id="sea-creatures">
         <div class="swimming-fish fish-1">🐠</div>
         <div class="swimming-fish fish-2">🐟</div>
         <div class="swimming-fish fish-3">🐡</div>
+        <div class="swimming-fish fish-4">🐠</div>
         <div class="swimming-shark shark-1">🦈</div>
     </div>
 
     <main>
         <!-- Hero Section -->
         <section class="hero-section" id="hero">
-            <div class="bubbles-container" id="bubbles"></div>
             <div class="container hero-container">
                 <div class="hero-content">
                     <div class="badge-half-star">
