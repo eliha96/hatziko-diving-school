@@ -1,21 +1,80 @@
 /* ==========================================================================
-   Hatziko Diving School - Application Logic & Dynamic Edit Engine
+   Hatziko Diving School - Application Logic & Complete Dynamic Edit Engine
    ========================================================================== */
 
-// Default State Data
+// Comprehensive Default State Data
 const DEFAULT_DATA = {
+    brandTitle: "חציכו",
+    brandSubtitle: "בית ספר לצלילה",
+    navCta: "הרשמה לחצי כוכב",
+    logoSrc: "assets/logo.jpg",
+    heroSrc: "assets/hero.jpg",
+
+    heroBadge: "⭐½ מסלול חצי כוכב יוקרתי",
     heroTitle: "חציכו – בית ספר לצלילה",
     heroMotto: '"חצי כוכב. חצי כוח."',
     heroDescription: "למה לצלול 30 מטר לעומק כשרק ברום המים אפשר לנשום? ברוכים הבאים לבית הספר היחיד בעולם שמבין שבעיות אוזניים וחרדה קלה הן לא מניעה – הן פשוט סיבה מצוינת לסיים בדיוק בחצי.",
-    
+
+    stat1Number: "0.5",
+    stat1Label: "כוכבים בדיוק",
+    stat2Number: "1.5m",
+    stat2Label: "עומק מקסימלי",
+    stat3Number: "100%",
+    stat3Label: "הפסקות קפה",
+
+    heroCtaPrimary: "תשריינו לי חצי כוכב",
+    heroCtaSecondary: "אני מפחד/ת – כנסו למחשבון",
+    heroCardIcon: "☕",
+    heroCardTitle: "טכניקת הקפה הצף",
+    heroCardText: "צלילה בגובה העיניים – מקסימום שלווה, אפס השוואת לחצים.",
+
+    aboutSubtitle: "היתרונות הייחודיים לנו",
     aboutTitle: "למה דווקא מסלול \"חצי כוכב\"?",
     aboutDesc: "אנחנו לא מאמינים במאמץ מיותר. הנה 3 סיבות למה הקורס שלנו הוא המשתלם ביותר:",
+    
+    feat1Icon: "👂",
     feat1Title: "0% לחץ באוזניים",
     feat1Text: "בזכות שיטת העומק הרדוד שלנו (עד מטר וחצי), האוזניים שלך יישארו פתוחות, רגועות ובלי צורך לפמפם שום דבר חוץ מאשר את האגו.",
+    
+    feat2Icon: "🛋️",
     feat2Title: "אפס חרדות – 100% בנוחות",
     feat2Text: "נכנסת ללחץ מ-2 מטר עומק? אין בעיה! המדריך מיד עוצר את הצלילה, עולים ליבשה ומזמינים ארטיק רמזור בחוף.",
+    
+    feat3Icon: "📜",
     feat3Title: "תעודה חצי-מוכרת",
     feat3Text: "התעודה שלנו מוכרת על ידינו בלבד, תקפה מים המלח ועד הבריכה בבית, ומבטיחה שכולם ידעו שהשתדלת – וזה מה שחשוב.",
+
+    syllabusSubtitle: "תוכנית הלימודים היוקרתית",
+    syllabusTitle: "מה לומדים בדרך לחצי כוכב?",
+    syllabusDesc: "מבנה קורס מוקפד המותאם במיוחד לאנשים עם כוונות טובות ויכולת ביצוע חלקית.",
+
+    calcBadge: "🧮 מחשבון חציכו בלעדי",
+    calcTitle: "מחשבון עומק, אוזניים וחרדה",
+    calcDesc: "הזינו את המדדים שלכם וגלו מה העומק המקסימלי הבטוח עבורכם היום:",
+    calcLabel1: "😱 רמת חרדה ממעמקים:",
+    calcLabel2: "👂 רמת רגישות/כאב באוזניים:",
+    calcLabel3: "😴 חשק לחזור למלון:",
+    calcResultHeader: "העומק המומלץ עבורך:",
+
+    testimonialsSubtitle: "מה אומרים החצי-בוגרים שלנו?",
+    testimonialsTitle: "ביקורות מהללות (למחצה)",
+    testimonialsDesc: "סיפורים אמיתיים של אנשים שנכנסו למים ויצאו כמעט מיד.",
+
+    certSubtitle: "מזכרת לכל החיים",
+    certTitle: "מחולל תעודת \"חצי כוכב\" רשמית",
+    certDesc: "הזינו את השם שלכם או של חברים וקבלו תעודת סיום מותאמת אישית!",
+
+    faqSubtitle: "יש לכם שאלות?",
+    faqTitle: "שאלות נפוצות (ותשובות כנות)",
+    faqDesc: "כל מה שרציתם לדעת לפני שאתם מבינים שאין לכם כוח לזה.",
+
+    registerTitle: "שריון מקום בקורס החצי כוכב הקרוב",
+    registerDesc: "מלאו את הפרטים ונחזור אליכם ברגע שנסיים את הקפה.",
+    registerBtnText: "שגרו בקשה (בלי לחץ)",
+
+    footerDesc: "בית הספר הסאטירי המוביל בישראל לצלילות רדודות, חצי כוכב ואפס מאמץ.",
+    footerDisclaimer: "האתר הינו אתר היתולי/סאטירי שנבנה בהמון אהבה והומור. אין לראות בתעודת \"חצי כוכב\" הסמכה רשמית לצלילה חופשית או צלילת מכשירים, אלא אם כן אתם צוללים באמבטיה.",
+    footerCopyright: "© 2026 חציכו – כל הזכויות שמורות לחצי כוכב וחצי כוח.",
 
     syllabus: [
         {
@@ -103,7 +162,7 @@ const DEFAULT_DATA = {
 // Global State Instance
 let appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
 let isEditMode = false;
-let editingModalItemType = null; // 'syllabus' | 'testimonial' | 'faq'
+let editingModalItemType = null;
 let editingModalItemId = null;
 
 // Initialize App
@@ -114,6 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
     initCalculator();
     initCertificate();
+    initImageModal();
 });
 
 // Load from LocalStorage
@@ -121,7 +181,7 @@ function loadSavedData() {
     const saved = localStorage.getItem('hatziko_site_data');
     if (saved) {
         try {
-            appState = JSON.parse(saved);
+            appState = Object.assign({}, DEFAULT_DATA, JSON.parse(saved));
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -136,10 +196,24 @@ function saveData() {
 
 // Render All Sections
 function renderAll() {
+    renderImages();
     renderStaticText();
     renderSyllabus();
     renderTestimonials();
     renderFAQs();
+}
+
+// Update Logo and Hero Image Sources
+function renderImages() {
+    const mainLogo = document.getElementById('main-logo-img');
+    const certLogo = document.getElementById('cert-logo-img');
+    const footerLogo = document.getElementById('footer-logo-img');
+    const mainHero = document.getElementById('main-hero-img');
+
+    if (mainLogo) mainLogo.src = appState.logoSrc || 'assets/logo.jpg';
+    if (certLogo) certLogo.src = appState.logoSrc || 'assets/logo.jpg';
+    if (footerLogo) footerLogo.src = appState.logoSrc || 'assets/logo.jpg';
+    if (mainHero) mainHero.src = appState.heroSrc || 'assets/hero.jpg';
 }
 
 // Render Simple Editable Text Elements
@@ -150,15 +224,16 @@ function renderStaticText() {
             el.innerText = appState[key];
         }
 
-        // Handle live editing in edit mode
         if (isEditMode) {
             el.contentEditable = "true";
+            el.title = "לחץ לעריכה";
             el.onblur = () => {
                 appState[key] = el.innerText.trim();
                 saveData();
             };
         } else {
             el.contentEditable = "false";
+            el.title = "";
             el.onblur = null;
         }
     });
@@ -181,7 +256,7 @@ function renderSyllabus() {
                 <div class="syllabus-difficulty">${escapeHtml(item.difficulty)}</div>
                 ${isEditMode ? `
                     <div class="item-actions-bar">
-                        <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">✏️ ערוך</button>
+                        <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">✏️ ערוך שיעור</button>
                         <button class="btn btn-sm btn-outline" onclick="deleteItem('syllabus', '${item.id}')">🗑️ מחק</button>
                     </div>
                 ` : ''}
@@ -210,7 +285,7 @@ function renderTestimonials() {
             </div>
             ${isEditMode ? `
                 <div class="item-actions-bar">
-                    <button class="btn btn-sm btn-outline" onclick="openEditModal('testimonial', '${item.id}')">✏️ ערוך</button>
+                    <button class="btn btn-sm btn-outline" onclick="openEditModal('testimonial', '${item.id}')">✏️ ערוך המלצה</button>
                     <button class="btn btn-sm btn-outline" onclick="deleteItem('testimonial', '${item.id}')">🗑️ מחק</button>
                 </div>
             ` : ''}
@@ -233,7 +308,7 @@ function renderFAQs() {
                 ${escapeHtml(item.answer)}
                 ${isEditMode ? `
                     <div class="item-actions-bar">
-                        <button class="btn btn-sm btn-outline" onclick="openEditModal('faq', '${item.id}')">✏️ ערוך</button>
+                        <button class="btn btn-sm btn-outline" onclick="openEditModal('faq', '${item.id}')">✏️ ערוך שאלה</button>
                         <button class="btn btn-sm btn-outline" onclick="deleteItem('faq', '${item.id}')">🗑️ מחק</button>
                     </div>
                 ` : ''}
@@ -241,7 +316,6 @@ function renderFAQs() {
         </div>
     `).join('');
 
-    // Attach click events for accordions
     document.querySelectorAll('.faq-item').forEach(faqEl => {
         faqEl.querySelector('.faq-question').onclick = (e) => {
             if (e.target.tagName === 'BUTTON') return;
@@ -252,7 +326,6 @@ function renderFAQs() {
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // Toggle Edit Mode
     const toggleBtn = document.getElementById('toggle-edit-mode');
     const editBar = document.getElementById('edit-mode-bar');
 
@@ -267,31 +340,27 @@ function setupEventListeners() {
         renderAll();
     });
 
-    // Save & Reset Buttons
     document.getElementById('btn-save-data').addEventListener('click', () => {
         saveData();
-        alert("השינויים נשמרו בהצלחה בדפדפן! 🎉");
+        alert("כל השינויים נשמרו בהצלחה בדפדפן! 🎉");
     });
 
     document.getElementById('btn-reset-data').addEventListener('click', () => {
-        if (confirm("האם אתה בטוח שברצונך לאפס את האתר לטקסטים המקוריים?")) {
+        if (confirm("האם אתה בטוח שברצונך לאפס את האתר לטקסטים והגדרות המקוריות?")) {
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
             saveData();
             renderAll();
         }
     });
 
-    // Add buttons
     document.getElementById('btn-add-syllabus').addEventListener('click', () => openEditModal('syllabus'));
     document.getElementById('btn-add-testimonial').addEventListener('click', () => openEditModal('testimonial'));
     document.getElementById('btn-add-faq').addEventListener('click', () => openEditModal('faq'));
 
-    // Modal controls
     document.getElementById('modal-close-btn').addEventListener('click', closeModal);
     document.getElementById('modal-cancel-btn').addEventListener('click', closeModal);
     document.getElementById('modal-save-btn').addEventListener('click', saveModalItem);
 
-    // Form submit
     document.getElementById('satirical-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('reg-name').value;
@@ -315,7 +384,7 @@ function openEditModal(type, id = null) {
     }
 
     if (type === 'syllabus') {
-        modalTitle.innerText = id ? "עריכת נושא בתוכנית" : "הוספת נושא בתוכנית";
+        modalTitle.innerText = id ? "עריכת שיעור בתוכנית" : "הוספת שיעור בתוכנית";
         modalBody.innerHTML = `
             <div class="form-group">
                 <label>מספר/כותרת קטנה:</label>
@@ -443,6 +512,60 @@ function deleteItem(type, id) {
     renderAll();
 }
 
+// Image Modal Engine
+function initImageModal() {
+    const changeImgBtn = document.getElementById('btn-change-images');
+    const modal = document.getElementById('images-modal');
+    const closeBtn = document.getElementById('images-modal-close-btn');
+    const cancelBtn = document.getElementById('images-modal-cancel-btn');
+    const saveBtn = document.getElementById('images-modal-save-btn');
+
+    const logoPathInput = document.getElementById('input-logo-path');
+    const heroPathInput = document.getElementById('input-hero-path');
+    const logoFileInput = document.getElementById('upload-logo-file');
+    const heroFileInput = document.getElementById('upload-hero-file');
+
+    changeImgBtn.addEventListener('click', () => {
+        logoPathInput.value = appState.logoSrc || 'assets/logo.jpg';
+        heroPathInput.value = appState.heroSrc || 'assets/hero.jpg';
+        modal.classList.remove('hidden');
+    });
+
+    closeBtn.onclick = () => modal.classList.add('hidden');
+    cancelBtn.onclick = () => modal.classList.add('hidden');
+
+    logoFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                logoPathInput.value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    heroFileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (evt) => {
+                heroPathInput.value = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    saveBtn.addEventListener('click', () => {
+        appState.logoSrc = logoPathInput.value.trim() || 'assets/logo.jpg';
+        appState.heroSrc = heroPathInput.value.trim() || 'assets/hero.jpg';
+        saveData();
+        renderAll();
+        modal.classList.add('hidden');
+        alert("התמונות עודכנו בהצלחה!");
+    });
+}
+
 // Calculator Logic
 function initCalculator() {
     const anxietySlider = document.getElementById('anxiety-slider');
@@ -466,7 +589,6 @@ function initCalculator() {
         earVal.innerText = ear + '%';
         lazyVal.innerText = lazy + '%';
 
-        // Calculate max depth: higher values mean shallower water
         const factor = (anx * 0.4 + ear * 0.4 + lazy * 0.2) / 100;
         let maxDepth = (2.0 - (factor * 1.8)).toFixed(1);
         if (maxDepth < 0.2) maxDepth = "0.2";
@@ -502,7 +624,6 @@ function initCertificate() {
     const displayReason = document.getElementById('cert-display-reason');
     const displayDate = document.getElementById('cert-display-date');
 
-    // Default Date to today
     const today = new Date().toISOString().split('T')[0];
     dateInput.value = today;
     displayDate.innerText = formatDate(today);
@@ -539,7 +660,7 @@ function initBubbles() {
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
         
-        const size = Math.random() * 25 + 8; // 8px to 33px
+        const size = Math.random() * 25 + 8;
         bubble.style.width = size + 'px';
         bubble.style.height = size + 'px';
         
