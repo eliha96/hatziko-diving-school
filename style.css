@@ -77,6 +77,31 @@ h1, h2, h3, h4, h5, h6 {
     color: #ffffff;
 }
 
+/* Half Star PNG Styling */
+.half-star-img {
+    height: 1.35em;
+    width: auto;
+    vertical-align: sub;
+    display: inline-block;
+    filter: drop-shadow(0 0 6px rgba(255, 183, 3, 0.6));
+}
+
+.cert-half-star-img {
+    height: 3.5rem;
+    width: auto;
+    vertical-align: middle;
+    display: inline-block;
+    filter: drop-shadow(0 2px 10px rgba(214, 158, 46, 0.6));
+}
+
+.star-rating-img {
+    height: 1.15em;
+    width: auto;
+    vertical-align: sub;
+    display: inline-block;
+    margin-right: 2px;
+}
+
 /* Glassmorphism Card */
 .glass-card {
     background: var(--bg-surface-glass);
@@ -128,7 +153,7 @@ h1, h2, h3, h4, h5, h6 {
 
 @keyframes pulse-glow {
     0% { box-shadow: 0 0 15px rgba(255, 183, 3, 0.4); }
-    100% { shadow: 0 0 30px rgba(255, 183, 3, 0.8); }
+    100% { box-shadow: 0 0 30px rgba(255, 183, 3, 0.8); }
 }
 
 .btn-glass {
@@ -318,6 +343,7 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
+/* Fish School Formations (Right to Left, Upside-Down) */
 .fish-school {
     position: absolute;
     display: flex;
@@ -929,6 +955,9 @@ input[type=range]::-webkit-slider-thumb {
     color: var(--accent-gold);
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
 }
 
 .testimonial-text {

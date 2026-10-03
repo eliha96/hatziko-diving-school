@@ -10,7 +10,7 @@ const DEFAULT_DATA = {
     logoSrc: "assets/new-logo.png",
     heroSrc: "assets/hero-new.jfif",
 
-    heroBadge: "⭐½ מסלול חצי כוכב יוקרתי",
+    heroBadge: '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב"> מסלול חצי כוכב יוקרתי',
     heroTitle: "חציכו – בית ספר לצלילה",
     heroMotto: '"חצי כוכב. חצי כוח."',
     heroDescription: "למה לצלול 30 מטר לעומק כשרק ברום המים אפשר לנשום? ברוכים הבאים לבית הספר היחיד בעולם שמבין שבעיות אוזניים וחרדה קלה הן לא מניעה – הן פשוט סיבה מצוינת לסיים בדיוק בחצי.",
@@ -113,21 +113,21 @@ const DEFAULT_DATA = {
             id: 't1',
             name: "אלופה עם בעיות אוזניים",
             role: "חצי-בוגרת מחזור א'",
-            stars: "⭐⭐½",
+            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
             text: "הגעתי לקורס עם פנטזיה על שוניות ודולפינים, וגיליתי שכבר ב-1.5 מטר האוזניים שלי מוחות. המדריך של חציכו הגיב מיד, העלה אותי למעלה והכין לי אייס קפה. 10/10 לא יורדת יותר מתחת למים!"
         },
         {
             id: 't2',
             name: "הפרטנר המודאג",
             role: "חצי-בוגרת מחזור א'",
-            stars: "⭐⭐½",
+            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
             text: "כשהגענו ל-2 מטר עומק וראיתי את הקרקעית מתרחקת, נכנסתי לחרדה קלה. במקום ללחוץ עליי, המדריך אמר 'חביבי, היבשה זה הדיבור'. קיבלנו חצי כוכב ונסענו לאכול חומוס."
         },
         {
             id: 't3',
             name: "ספקטיקנית לשעבר",
             role: "חצי-בוגרת מחזור ב'",
-            stars: "⭐⭐½",
+            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
             text: "כל החברות שלי עשו כוכב ראשון ושני. אני עשיתי חצי כוכב בחציכו וחסכתי 4 ימים של חנק. הכי משתלם בארץ!"
         }
     ],
@@ -173,6 +173,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initImageModal();
 });
 
+// Helper for rendering star strings with PNG half-star
+function renderStars(starStr) {
+    if (!starStr) return '';
+    if (starStr.includes('<img')) {
+        return starStr;
+    }
+    return escapeHtml(starStr).replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
+}
+
 // Load from LocalStorage
 function loadSavedData() {
     const saved = localStorage.getItem('hatziko_site_data');
@@ -187,6 +196,16 @@ function loadSavedData() {
             }
             if (!appState.stats || appState.stats.length === 0) {
                 appState.stats = JSON.parse(JSON.stringify(DEFAULT_DATA.stats));
+            }
+            if (appState.heroBadge && (appState.heroBadge.includes('⭐½') || appState.heroBadge.includes('⭐1/2') || appState.heroBadge.includes('⭐ 1/2'))) {
+                appState.heroBadge = appState.heroBadge.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
+            }
+            if (appState.testimonials) {
+                appState.testimonials.forEach(t => {
+                    if (t.stars && (t.stars.includes('⭐½') || t.stars.includes('⭐1/2') || t.stars.includes('⭐ 1/2') || t.stars.includes('½'))) {
+                        t.stars = t.stars.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
+                    }
+                });
             }
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
@@ -233,14 +252,18 @@ function renderStaticText() {
     document.querySelectorAll('.editable').forEach(el => {
         const key = el.getAttribute('data-key');
         if (key && appState[key] !== undefined) {
-            el.innerText = appState[key];
+            if (key === 'heroBadge' || (typeof appState[key] === 'string' && appState[key].includes('<img'))) {
+                el.innerHTML = appState[key];
+            } else {
+                el.innerText = appState[key];
+            }
         }
 
         if (isEditMode) {
             el.contentEditable = "true";
             el.title = "לחץ לעריכה";
             el.onblur = () => {
-                appState[key] = el.innerText.trim();
+                appState[key] = el.innerHTML.trim();
                 saveData();
             };
         } else {
@@ -315,7 +338,7 @@ function renderTestimonials() {
                         <div class="testimonial-role">${escapeHtml(item.role)}</div>
                     </div>
                 </div>
-                <div class="testimonial-stars">${escapeHtml(item.stars)}</div>
+                <div class="testimonial-stars">${renderStars(item.stars)}</div>
                 <p class="testimonial-text">"${escapeHtml(item.text)}"</p>
             </div>
             ${isEditMode ? `
@@ -533,11 +556,12 @@ function saveModalItem() {
             appState.syllabus.push(newItem);
         }
     } else if (type === 'testimonial') {
+        const rawStars = document.getElementById('m-stars').value;
         const newItem = {
             id,
             name: document.getElementById('m-name').value,
             role: document.getElementById('m-role').value,
-            stars: document.getElementById('m-stars').value,
+            stars: renderStars(rawStars),
             text: document.getElementById('m-text').value
         };
         if (editingModalItemId) {
