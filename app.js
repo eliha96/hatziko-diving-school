@@ -8,7 +8,7 @@ const DEFAULT_DATA = {
     brandSubtitle: "בית ספר לצלילה",
     navCta: "הרשמה לחצי כוכב",
     logoSrc: "assets/new-logo.png",
-    heroSrc: "assets/hero.jpg",
+    heroSrc: "assets/hero-new.jfif",
 
     heroBadge: "⭐½ מסלול חצי כוכב יוקרתי",
     heroTitle: "חציכו – בית ספר לצלילה",
@@ -185,6 +185,9 @@ function loadSavedData() {
             if (appState.logoSrc === 'assets/logo.jpg') {
                 appState.logoSrc = 'assets/new-logo.png';
             }
+            if (appState.heroSrc === 'assets/hero.jpg') {
+                appState.heroSrc = 'assets/hero-new.jfif';
+            }
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -209,14 +212,16 @@ function renderAll() {
 // Update Logo and Hero Image Sources
 function renderImages() {
     const mainLogo = document.getElementById('main-logo-img');
+    const heroLogo = document.getElementById('hero-logo-img');
     const certLogo = document.getElementById('cert-logo-img');
     const footerLogo = document.getElementById('footer-logo-img');
     const mainHero = document.getElementById('main-hero-img');
 
     const logoUrl = appState.logoSrc || 'assets/new-logo.png';
-    const heroUrl = appState.heroSrc || 'assets/hero.jpg';
+    const heroUrl = appState.heroSrc || 'assets/hero-new.jfif';
 
     if (mainLogo) mainLogo.src = logoUrl;
+    if (heroLogo) heroLogo.src = logoUrl;
     if (certLogo) certLogo.src = logoUrl;
     if (footerLogo) footerLogo.src = logoUrl;
     if (mainHero) mainHero.src = heroUrl;
@@ -533,7 +538,7 @@ function initImageModal() {
 
     changeImgBtn.addEventListener('click', () => {
         logoPathInput.value = appState.logoSrc || 'assets/new-logo.png';
-        heroPathInput.value = appState.heroSrc || 'assets/hero.jpg';
+        heroPathInput.value = appState.heroSrc || 'assets/hero-new.jfif';
         modal.classList.remove('hidden');
     });
 
@@ -564,7 +569,7 @@ function initImageModal() {
 
     saveBtn.addEventListener('click', () => {
         appState.logoSrc = logoPathInput.value.trim() || 'assets/new-logo.png';
-        appState.heroSrc = heroPathInput.value.trim() || 'assets/hero.jpg';
+        appState.heroSrc = heroPathInput.value.trim() || 'assets/hero-new.jfif';
         saveData();
         renderAll();
         modal.classList.add('hidden');

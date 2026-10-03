@@ -195,6 +195,24 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
 }
 
+.hero-logo-wrapper {
+    margin-bottom: 1rem;
+}
+
+.hero-brand-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid var(--accent-gold);
+    box-shadow: 0 0 25px rgba(255, 183, 3, 0.4);
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.hero-brand-logo:hover {
+    transform: scale(1.08) rotate(5deg);
+}
+
 .bubbles-container {
     position: absolute;
     top: 0;
@@ -323,10 +341,9 @@ h1, h2, h3, h4, h5, h6 {
 .school-fish {
     display: inline-block;
     font-size: 2.4rem;
-    transform: rotate(180deg); /* UPSIDE DOWN: Back facing down, belly/face facing UP */
+    transform: rotate(180deg);
 }
 
-/* Staggered positions for flocking effect */
 .sf-1 { transform: rotate(180deg) translateY(0px) scale(1); }
 .sf-2 { transform: rotate(180deg) translateY(-22px) scale(0.9); }
 .sf-3 { transform: rotate(180deg) translateY(18px) scale(1.1); }
