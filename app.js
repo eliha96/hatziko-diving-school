@@ -7,7 +7,7 @@ const DEFAULT_DATA = {
     brandTitle: "חציכו",
     brandSubtitle: "בית ספר לצלילה",
     navCta: "הרשמה לחצי כוכב",
-    logoSrc: "assets/logo.jpg",
+    logoSrc: "assets/new-logo.png",
     heroSrc: "assets/hero.jpg",
 
     heroBadge: "⭐½ מסלול חצי כוכב יוקרתי",
@@ -182,6 +182,9 @@ function loadSavedData() {
     if (saved) {
         try {
             appState = Object.assign({}, DEFAULT_DATA, JSON.parse(saved));
+            if (appState.logoSrc === 'assets/logo.jpg') {
+                appState.logoSrc = 'assets/new-logo.png';
+            }
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -210,10 +213,13 @@ function renderImages() {
     const footerLogo = document.getElementById('footer-logo-img');
     const mainHero = document.getElementById('main-hero-img');
 
-    if (mainLogo) mainLogo.src = appState.logoSrc || 'assets/logo.jpg';
-    if (certLogo) certLogo.src = appState.logoSrc || 'assets/logo.jpg';
-    if (footerLogo) footerLogo.src = appState.logoSrc || 'assets/logo.jpg';
-    if (mainHero) mainHero.src = appState.heroSrc || 'assets/hero.jpg';
+    const logoUrl = appState.logoSrc || 'assets/new-logo.png';
+    const heroUrl = appState.heroSrc || 'assets/hero.jpg';
+
+    if (mainLogo) mainLogo.src = logoUrl;
+    if (certLogo) certLogo.src = logoUrl;
+    if (footerLogo) footerLogo.src = logoUrl;
+    if (mainHero) mainHero.src = heroUrl;
 }
 
 // Render Simple Editable Text Elements
@@ -526,7 +532,7 @@ function initImageModal() {
     const heroFileInput = document.getElementById('upload-hero-file');
 
     changeImgBtn.addEventListener('click', () => {
-        logoPathInput.value = appState.logoSrc || 'assets/logo.jpg';
+        logoPathInput.value = appState.logoSrc || 'assets/new-logo.png';
         heroPathInput.value = appState.heroSrc || 'assets/hero.jpg';
         modal.classList.remove('hidden');
     });
@@ -557,7 +563,7 @@ function initImageModal() {
     });
 
     saveBtn.addEventListener('click', () => {
-        appState.logoSrc = logoPathInput.value.trim() || 'assets/logo.jpg';
+        appState.logoSrc = logoPathInput.value.trim() || 'assets/new-logo.png';
         appState.heroSrc = heroPathInput.value.trim() || 'assets/hero.jpg';
         saveData();
         renderAll();
@@ -651,24 +657,23 @@ function formatDate(dateStr) {
     return `${parts[2]}/${parts[1]}/${parts[0]}`;
 }
 
-// Full-Page Floating Bubbles Animation
+// Floating Bubbles Animation
 function initBubbles() {
     const container = document.getElementById('bubbles');
     if (!container) return;
 
     container.innerHTML = '';
-    // Generate 35 floating bubbles across the page width & height
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 25; i++) {
         const bubble = document.createElement('div');
         bubble.className = 'bubble';
         
-        const size = Math.random() * 28 + 8;
+        const size = Math.random() * 25 + 8;
         bubble.style.width = size + 'px';
         bubble.style.height = size + 'px';
         
         bubble.style.left = Math.random() * 100 + '%';
-        bubble.style.animationDelay = (Math.random() * 9) + 's';
-        bubble.style.animationDuration = (Math.random() * 7 + 6) + 's';
+        bubble.style.animationDelay = (Math.random() * 8) + 's';
+        bubble.style.animationDuration = (Math.random() * 6 + 6) + 's';
         
         container.appendChild(bubble);
     }
