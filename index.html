@@ -18,6 +18,7 @@
             <span class="edit-badge">✏️ מצב עריכה פעיל - לחץ על כל טקסט לעריכה</span>
             <div class="edit-actions">
                 <button class="btn btn-sm btn-outline" id="btn-change-images">🖼️ החלף תמונות</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-stat">➕ הוסף מדד/מספר</button>
                 <button class="btn btn-sm btn-outline" id="btn-add-syllabus">➕ הוסף שיעור</button>
                 <button class="btn btn-sm btn-outline" id="btn-add-testimonial">➕ הוסף המלצה</button>
                 <button class="btn btn-sm btn-outline" id="btn-add-faq">➕ הוסף שאלה</button>
@@ -115,20 +116,9 @@
                         למה לצלול 30 מטר לעומק כשרק ברום המים אפשר לנשום? ברוכים הבאים לבית הספר היחיד בעולם שמבין שבעיות אוזניים וחרדה קלה הן לא מניעה – הן פשוט סיבה מצוינת לסיים בדיוק בחצי.
                     </p>
 
-                    <!-- Editable Hero Stats -->
-                    <div class="hero-stats">
-                        <div class="stat-card">
-                            <span class="stat-number editable" data-key="stat1Number">0.5</span>
-                            <span class="stat-label editable" data-key="stat1Label">כוכבים בדיוק</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number editable" data-key="stat2Number">1.5m</span>
-                            <span class="stat-label editable" data-key="stat2Label">עומק מקסימלי</span>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-number editable" data-key="stat3Number">100%</span>
-                            <span class="stat-label editable" data-key="stat3Label">הפסקות קפה</span>
-                        </div>
+                    <!-- Dynamic Hero Stat Tiles -->
+                    <div class="hero-stats" id="hero-stats-container">
+                        <!-- Rendered by JS -->
                     </div>
 
                     <div class="hero-ctas">
@@ -139,14 +129,7 @@
 
                 <div class="hero-media">
                     <div class="hero-image-wrapper">
-                        <img src="assets/hero-new.jfif" alt="צוללן חציכו שותה קפה מתחת למים" class="hero-img" id="main-hero-img">
-                        <div class="image-overlay-card glass-card">
-                            <span class="card-icon editable" data-key="heroCardIcon">☕</span>
-                            <div>
-                                <strong class="editable" data-key="heroCardTitle">טכניקת הקפה הצף</strong>
-                                <p class="editable" data-key="heroCardText">צלילה בגובה העיניים – מקסימום שלווה, אפס השוואת לחצים.</p>
-                            </div>
-                        </div>
+                        <img src="assets/hero-new.jfif" alt="צוללן חציכו" class="hero-img" id="main-hero-img">
                     </div>
                 </div>
             </div>

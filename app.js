@@ -15,18 +15,15 @@ const DEFAULT_DATA = {
     heroMotto: '"חצי כוכב. חצי כוח."',
     heroDescription: "למה לצלול 30 מטר לעומק כשרק ברום המים אפשר לנשום? ברוכים הבאים לבית הספר היחיד בעולם שמבין שבעיות אוזניים וחרדה קלה הן לא מניעה – הן פשוט סיבה מצוינת לסיים בדיוק בחצי.",
 
-    stat1Number: "0.5",
-    stat1Label: "כוכבים בדיוק",
-    stat2Number: "1.5m",
-    stat2Label: "עומק מקסימלי",
-    stat3Number: "100%",
-    stat3Label: "הפסקות קפה",
+    stats: [
+        { id: 'st1', number: "0.5", label: "כוכבים בדיוק" },
+        { id: 'st2', number: "1.5m", label: "עומק מקסימלי" },
+        { id: 'st3', number: "100%", label: "הפסקות קפה" },
+        { id: 'st4', number: "0%", label: "לחץ באוזניים" }
+    ],
 
     heroCtaPrimary: "תשריינו לי חצי כוכב",
     heroCtaSecondary: "אני מפחד/ת – כנסו למחשבון",
-    heroCardIcon: "☕",
-    heroCardTitle: "טכניקת הקפה הצף",
-    heroCardText: "צלילה בגובה העיניים – מקסימום שלווה, אפס השוואת לחצים.",
 
     aboutSubtitle: "היתרונות הייחודיים לנו",
     aboutTitle: "למה דווקא מסלול \"חצי כוכב\"?",
@@ -188,6 +185,9 @@ function loadSavedData() {
             if (appState.heroSrc === 'assets/hero.jpg') {
                 appState.heroSrc = 'assets/hero-new.jfif';
             }
+            if (!appState.stats || appState.stats.length === 0) {
+                appState.stats = JSON.parse(JSON.stringify(DEFAULT_DATA.stats));
+            }
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -204,6 +204,7 @@ function saveData() {
 function renderAll() {
     renderImages();
     renderStaticText();
+    renderStats();
     renderSyllabus();
     renderTestimonials();
     renderFAQs();
@@ -248,6 +249,29 @@ function renderStaticText() {
             el.onblur = null;
         }
     });
+}
+
+// Render Dynamic Hero Stat Tiles
+function renderStats() {
+    const container = document.getElementById('hero-stats-container');
+    if (!container) return;
+
+    if (!appState.stats || appState.stats.length === 0) {
+        appState.stats = JSON.parse(JSON.stringify(DEFAULT_DATA.stats));
+    }
+
+    container.innerHTML = appState.stats.map(item => `
+        <div class="stat-card glass-card" data-id="${item.id}">
+            <span class="stat-number">${escapeHtml(item.number)}</span>
+            <span class="stat-label">${escapeHtml(item.label)}</span>
+            ${isEditMode ? `
+                <div class="item-actions-bar" style="margin-top:0.3rem; padding-top:0.3rem; justify-content:center;">
+                    <button class="btn btn-sm btn-outline" style="padding:0.1rem 0.4rem; font-size:0.75rem;" onclick="openEditModal('stat', '${item.id}')">✏️</button>
+                    <button class="btn btn-sm btn-outline" style="padding:0.1rem 0.4rem; font-size:0.75rem;" onclick="deleteItem('stat', '${item.id}')">🗑️</button>
+                </div>
+            ` : ''}
+        </div>
+    `).join('');
 }
 
 // Render Syllabus
@@ -364,6 +388,9 @@ function setupEventListeners() {
         }
     });
 
+    const addStatBtn = document.getElementById('btn-add-stat');
+    if (addStatBtn) addStatBtn.addEventListener('click', () => openEditModal('stat'));
+
     document.getElementById('btn-add-syllabus').addEventListener('click', () => openEditModal('syllabus'));
     document.getElementById('btn-add-testimonial').addEventListener('click', () => openEditModal('testimonial'));
     document.getElementById('btn-add-faq').addEventListener('click', () => openEditModal('faq'));
@@ -389,12 +416,25 @@ function openEditModal(type, id = null) {
 
     let item = null;
     if (id) {
+        if (type === 'stat') item = appState.stats.find(x => x.id === id);
         if (type === 'syllabus') item = appState.syllabus.find(x => x.id === id);
         if (type === 'testimonial') item = appState.testimonials.find(x => x.id === id);
         if (type === 'faq') item = appState.faqs.find(x => x.id === id);
     }
 
-    if (type === 'syllabus') {
+    if (type === 'stat') {
+        modalTitle.innerText = id ? "עריכת מדד/מספר" : "הוספת מדד/מספר חדש";
+        modalBody.innerHTML = `
+            <div class="form-group">
+                <label>ערך/מספר (למשל: 0.5, 100%, 0):</label>
+                <input type="text" id="m-stat-number" class="form-control" value="${item ? item.number : '100%'}">
+            </div>
+            <div class="form-group">
+                <label>תיאור/תווית (למשל: הפסקות קפה):</label>
+                <input type="text" id="m-stat-label" class="form-control" value="${item ? item.label : 'מדד חדש'}">
+            </div>
+        `;
+    } else if (type === 'syllabus') {
         modalTitle.innerText = id ? "עריכת שיעור בתוכנית" : "הוספת שיעור בתוכנית";
         modalBody.innerHTML = `
             <div class="form-group">
@@ -465,7 +505,19 @@ function saveModalItem() {
     const type = editingModalItemType;
     const id = editingModalItemId || 'item_' + Date.now();
 
-    if (type === 'syllabus') {
+    if (type === 'stat') {
+        const newItem = {
+            id,
+            number: document.getElementById('m-stat-number').value,
+            label: document.getElementById('m-stat-label').value
+        };
+        if (editingModalItemId) {
+            const idx = appState.stats.findIndex(x => x.id === id);
+            appState.stats[idx] = newItem;
+        } else {
+            appState.stats.push(newItem);
+        }
+    } else if (type === 'syllabus') {
         const newItem = {
             id,
             number: document.getElementById('m-number').value,
@@ -515,6 +567,7 @@ function saveModalItem() {
 
 function deleteItem(type, id) {
     if (!confirm("בטוח שברצונך למחוק פריט זה?")) return;
+    if (type === 'stat') appState.stats = appState.stats.filter(x => x.id !== id);
     if (type === 'syllabus') appState.syllabus = appState.syllabus.filter(x => x.id !== id);
     if (type === 'testimonial') appState.testimonials = appState.testimonials.filter(x => x.id !== id);
     if (type === 'faq') appState.faqs = appState.faqs.filter(x => x.id !== id);
