@@ -53,6 +53,19 @@ const DEFAULT_DATA = {
     calcLabel3: "😴 חשק לחזור למלון:",
     calcResultHeader: "העומק המומלץ עבורך:",
 
+    calcSliders: [
+        { id: 'c1', label: "😱 רמת חרדה ממעמקים:", value: 50, weight: 1 },
+        { id: 'c2', label: "👂 רמת רגישות/כאב באוזניים:", value: 60, weight: 1 },
+        { id: 'c3', label: "😴 חשק לחזור למלון:", value: 80, weight: 0.8 }
+    ],
+
+    calcZoneHigh: "עומק עזים (אזור מים עמוקים בחציכו)",
+    calcAdviceHigh: '"זהירות, מגיע לך עד החזה! מומלץ להחזיק בסולם ולא להוריד את הרגליים מהקרקעית."',
+    calcZoneMid: "בריכת פעוטות רדודה",
+    calcAdviceMid: '"מעולה! בגובה הזה הראש שלך כמעט מחוץ למים. אפשר לשים שנורקל ועדיין לשמוע את המוזיקה מהבר."',
+    calcZoneLow: "גיגית פלסטיק במרפסת",
+    calcAdviceLow: '"אפס סיכון! הירידה למים מומלצת עם כוס קפה קר וספר טוב. אין צורך לחבוש סנפירים."',
+
     testimonialsSubtitle: "מה אומרים החצי-בוגרים שלנו?",
     testimonialsTitle: "ביקורות מהללות (למחצה)",
     testimonialsDesc: "סיפורים אמיתיים של אנשים שנכנסו למים ויצאו כמעט מיד.",
@@ -197,6 +210,9 @@ function loadSavedData() {
             if (!appState.stats || appState.stats.length === 0) {
                 appState.stats = JSON.parse(JSON.stringify(DEFAULT_DATA.stats));
             }
+            if (!appState.calcSliders || appState.calcSliders.length === 0) {
+                appState.calcSliders = JSON.parse(JSON.stringify(DEFAULT_DATA.calcSliders));
+            }
             if (appState.heroBadge && (appState.heroBadge.includes('⭐½') || appState.heroBadge.includes('⭐1/2') || appState.heroBadge.includes('⭐ 1/2'))) {
                 appState.heroBadge = appState.heroBadge.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
             }
@@ -224,6 +240,7 @@ function renderAll() {
     renderImages();
     renderStaticText();
     renderStats();
+    renderCalculatorSliders();
     renderSyllabus();
     renderTestimonials();
     renderFAQs();
@@ -295,6 +312,79 @@ function renderStats() {
             ` : ''}
         </div>
     `).join('');
+}
+
+// Render Dynamic Calculator Sliders
+function renderCalculatorSliders() {
+    const container = document.getElementById('calc-sliders-container');
+    if (!container) return;
+
+    if (!appState.calcSliders || appState.calcSliders.length === 0) {
+        appState.calcSliders = JSON.parse(JSON.stringify(DEFAULT_DATA.calcSliders));
+    }
+
+    container.innerHTML = appState.calcSliders.map(item => `
+        <div class="slider-group" data-id="${item.id}">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                <label for="slider-${item.id}" style="margin:0;">
+                    <span class="slider-label-text">${escapeHtml(item.label)}</span>
+                    <span id="val-${item.id}" class="slider-value">${item.value}%</span>
+                </label>
+                ${isEditMode ? `
+                    <div class="item-actions-bar" style="margin:0; gap:0.3rem;">
+                        <button class="btn btn-sm btn-outline" style="padding:0.1rem 0.4rem; font-size:0.75rem;" onclick="openEditModal('calcSlider', '${item.id}')">✏️</button>
+                        <button class="btn btn-sm btn-outline" style="padding:0.1rem 0.4rem; font-size:0.75rem;" onclick="deleteItem('calcSlider', '${item.id}')">🗑️</button>
+                    </div>
+                ` : ''}
+            </div>
+            <input type="range" id="slider-${item.id}" min="0" max="100" value="${item.value}" oninput="updateCalculatorResult()">
+        </div>
+    `).join('');
+
+    updateCalculatorResult();
+}
+
+// Calculate Depth & Result Zone
+function updateCalculatorResult() {
+    if (!appState.calcSliders || appState.calcSliders.length === 0) return;
+
+    let totalWeight = 0;
+    let weightedSum = 0;
+
+    appState.calcSliders.forEach(item => {
+        const sliderEl = document.getElementById(`slider-${item.id}`);
+        const valEl = document.getElementById(`val-${item.id}`);
+        const val = sliderEl ? parseInt(sliderEl.value) : (item.value || 50);
+        item.value = val;
+        if (valEl) valEl.innerText = val + '%';
+
+        const weight = (typeof item.weight === 'number' && !isNaN(item.weight)) ? item.weight : 1;
+        weightedSum += val * weight;
+        totalWeight += weight;
+    });
+
+    const factor = totalWeight > 0 ? (weightedSum / (100 * totalWeight)) : 0.5;
+    let maxDepth = (2.0 - (factor * 1.8)).toFixed(1);
+    if (maxDepth < 0.2) maxDepth = "0.2";
+
+    const calcDepth = document.getElementById('calc-depth');
+    const calcZone = document.getElementById('calc-zone');
+    const calcAdvice = document.getElementById('calc-advice');
+
+    if (calcDepth) calcDepth.innerText = maxDepth + " מטר";
+
+    if (calcZone && calcAdvice) {
+        if (maxDepth >= 1.5) {
+            calcZone.innerText = appState.calcZoneHigh || DEFAULT_DATA.calcZoneHigh;
+            calcAdvice.innerText = appState.calcAdviceHigh || DEFAULT_DATA.calcAdviceHigh;
+        } else if (maxDepth >= 0.8) {
+            calcZone.innerText = appState.calcZoneMid || DEFAULT_DATA.calcZoneMid;
+            calcAdvice.innerText = appState.calcAdviceMid || DEFAULT_DATA.calcAdviceMid;
+        } else {
+            calcZone.innerText = appState.calcZoneLow || DEFAULT_DATA.calcZoneLow;
+            calcAdvice.innerText = appState.calcAdviceLow || DEFAULT_DATA.calcAdviceLow;
+        }
+    }
 }
 
 // Render Syllabus
@@ -414,6 +504,9 @@ function setupEventListeners() {
     const addStatBtn = document.getElementById('btn-add-stat');
     if (addStatBtn) addStatBtn.addEventListener('click', () => openEditModal('stat'));
 
+    const addCalcSliderBtn = document.getElementById('btn-add-calc-slider');
+    if (addCalcSliderBtn) addCalcSliderBtn.addEventListener('click', () => openEditModal('calcSlider'));
+
     document.getElementById('btn-add-syllabus').addEventListener('click', () => openEditModal('syllabus'));
     document.getElementById('btn-add-testimonial').addEventListener('click', () => openEditModal('testimonial'));
     document.getElementById('btn-add-faq').addEventListener('click', () => openEditModal('faq'));
@@ -440,6 +533,7 @@ function openEditModal(type, id = null) {
     let item = null;
     if (id) {
         if (type === 'stat') item = appState.stats.find(x => x.id === id);
+        if (type === 'calcSlider') item = appState.calcSliders.find(x => x.id === id);
         if (type === 'syllabus') item = appState.syllabus.find(x => x.id === id);
         if (type === 'testimonial') item = appState.testimonials.find(x => x.id === id);
         if (type === 'faq') item = appState.faqs.find(x => x.id === id);
@@ -455,6 +549,22 @@ function openEditModal(type, id = null) {
             <div class="form-group">
                 <label>תיאור/תווית (למשל: הפסקות קפה):</label>
                 <input type="text" id="m-stat-label" class="form-control" value="${item ? item.label : 'מדד חדש'}">
+            </div>
+        `;
+    } else if (type === 'calcSlider') {
+        modalTitle.innerText = id ? "עריכת מדד במחשבון" : "הוספת מדד חדש למחשבון";
+        modalBody.innerHTML = `
+            <div class="form-group">
+                <label>תווית/שם המדד (כולל אימוג'י):</label>
+                <input type="text" id="m-calc-label" class="form-control" value="${item ? item.label : '🦈 פחד מכרישים דמיוניים:'}">
+            </div>
+            <div class="form-group">
+                <label>ערך ברירת מחדל (0-100%):</label>
+                <input type="number" id="m-calc-val" class="form-control" min="0" max="100" value="${item ? item.value : 50}">
+            </div>
+            <div class="form-group">
+                <label>משקל/השפעה על המחשבון (למשל 1, 0.5, 2):</label>
+                <input type="number" step="0.1" id="m-calc-weight" class="form-control" value="${item ? (item.weight || 1) : 1}">
             </div>
         `;
     } else if (type === 'syllabus') {
@@ -540,6 +650,19 @@ function saveModalItem() {
         } else {
             appState.stats.push(newItem);
         }
+    } else if (type === 'calcSlider') {
+        const newItem = {
+            id,
+            label: document.getElementById('m-calc-label').value,
+            value: parseInt(document.getElementById('m-calc-val').value) || 50,
+            weight: parseFloat(document.getElementById('m-calc-weight').value) || 1
+        };
+        if (editingModalItemId) {
+            const idx = appState.calcSliders.findIndex(x => x.id === id);
+            appState.calcSliders[idx] = newItem;
+        } else {
+            appState.calcSliders.push(newItem);
+        }
     } else if (type === 'syllabus') {
         const newItem = {
             id,
@@ -592,6 +715,13 @@ function saveModalItem() {
 function deleteItem(type, id) {
     if (!confirm("בטוח שברצונך למחוק פריט זה?")) return;
     if (type === 'stat') appState.stats = appState.stats.filter(x => x.id !== id);
+    if (type === 'calcSlider') {
+        if (appState.calcSliders.length <= 1) {
+            alert("חובה להשאיר לפחות מדד אחד במחשבון.");
+            return;
+        }
+        appState.calcSliders = appState.calcSliders.filter(x => x.id !== id);
+    }
     if (type === 'syllabus') appState.syllabus = appState.syllabus.filter(x => x.id !== id);
     if (type === 'testimonial') appState.testimonials = appState.testimonials.filter(x => x.id !== id);
     if (type === 'faq') appState.faqs = appState.faqs.filter(x => x.id !== id);
@@ -654,52 +784,9 @@ function initImageModal() {
     });
 }
 
-// Calculator Logic
+// Calculator Initialization Wrapper
 function initCalculator() {
-    const anxietySlider = document.getElementById('anxiety-slider');
-    const earSlider = document.getElementById('ear-slider');
-    const lazySlider = document.getElementById('lazy-slider');
-
-    const anxietyVal = document.getElementById('anxiety-val');
-    const earVal = document.getElementById('ear-val');
-    const lazyVal = document.getElementById('lazy-val');
-
-    const calcDepth = document.getElementById('calc-depth');
-    const calcZone = document.getElementById('calc-zone');
-    const calcAdvice = document.getElementById('calc-advice');
-
-    function updateCalc() {
-        const anx = parseInt(anxietySlider.value);
-        const ear = parseInt(earSlider.value);
-        const lazy = parseInt(lazySlider.value);
-
-        anxietyVal.innerText = anx + '%';
-        earVal.innerText = ear + '%';
-        lazyVal.innerText = lazy + '%';
-
-        const factor = (anx * 0.4 + ear * 0.4 + lazy * 0.2) / 100;
-        let maxDepth = (2.0 - (factor * 1.8)).toFixed(1);
-        if (maxDepth < 0.2) maxDepth = "0.2";
-
-        calcDepth.innerText = maxDepth + " מטר";
-
-        if (maxDepth >= 1.5) {
-            calcZone.innerText = "עומק עזים (אזור מים עמוקים בחציכו)";
-            calcAdvice.innerText = '"זהירות, מגיע לך עד החזה! מומלץ להחזיק בסולם ולא להוריד את הרגליים מהקרקעית."';
-        } else if (maxDepth >= 0.8) {
-            calcZone.innerText = "בריכת פעוטות במלון";
-            calcAdvice.innerText = '"מעולה! בגובה הזה הראש שלך כמעט מחוץ למים. אפשר לשים שנורקל ועדיין לשמוע את המוזיקה מהבר."';
-        } else {
-            calcZone.innerText = "גיגית פלסטיק במרפסת";
-            calcAdvice.innerText = '"אפס סיכון! הירידה למים מומלצת עם כוס קפה קר וספר טוב. אין צורך לחבוש סנפירים."';
-        }
-    }
-
-    anxietySlider.addEventListener('input', updateCalc);
-    earSlider.addEventListener('input', updateCalc);
-    lazySlider.addEventListener('input', updateCalc);
-
-    updateCalc();
+    renderCalculatorSliders();
 }
 
 // Certificate Logic
