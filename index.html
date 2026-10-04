@@ -262,28 +262,28 @@
 
                 <div class="cert-wrapper">
                     <div class="cert-form glass-card">
-                        <h3>פרטי התעודה</h3>
+                        <h3 class="editable" data-key="certFormTitle">פרטי התעודה</h3>
                         <div class="form-group">
-                            <label for="cert-name-input">שם מלא למקבל/ת התעודה:</label>
+                            <label for="cert-name-input" class="editable" data-key="certNameLabel">שם מלא למקבל/ת התעודה:</label>
                             <input type="text" id="cert-name-input" class="form-control" value="אלופה עם בעיות אוזניים">
                         </div>
 
                         <div class="form-group">
-                            <label for="cert-reason-select">סיבת קבלת התעודה:</label>
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                <label for="cert-reason-select" class="editable" data-key="certReasonLabel" style="margin:0;">סיבת קבלת התעודה:</label>
+                                <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('certReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                            </div>
                             <select id="cert-reason-select" class="form-control">
-                                <option value="בעיות אוזניים מוצדקות וחרדה קלה">בעיות אוזניים מוצדקות וחרדה קלה</option>
-                                <option value="ויתור אמיץ בעומק 1.80 מטר">ויתור אמיץ בעומק 1.80 מטר</option>
-                                <option value="העדפת קפה על פני חנק מתחת למים">העדפת קפה על פני חנק מתחת למים</option>
-                                <option value="הצטיינות יתרה בציפה על הגב">הצטיינות יתרה בציפה על הגב</option>
+                                <!-- Rendered dynamically by JS -->
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label for="cert-date-input">תאריך הנפקה:</label>
+                            <label for="cert-date-input" class="editable" data-key="certDateLabel">תאריך הנפקה:</label>
                             <input type="date" id="cert-date-input" class="form-control">
                         </div>
 
-                        <button id="btn-print-cert" class="btn btn-primary btn-block">🖨️ הדפס / שמור תעודה</button>
+                        <button id="btn-print-cert" class="btn btn-primary btn-block editable" data-key="certPrintBtnText">🖨️ הדפס / שמור תעודה</button>
                     </div>
 
                     <!-- Rendered Certificate Card -->
@@ -297,23 +297,24 @@
                                 </div>
 
                                 <div class="cert-badge"><img src="assets/half-star.png" class="cert-half-star-img" alt="חצי כוכב"></div>
-                                <h2 class="cert-title">תעודת חצי כוכב רשמית</h2>
-                                <p class="cert-to-text">תעודה זו מוענקת בזאת בגאווה רבה ל:</p>
+                                <h2 class="cert-title editable" data-key="certDocTitle">תעודת חצי כוכב רשמית</h2>
+                                <p class="cert-to-text editable" data-key="certDocToText">תעודה זו מוענקת בזאת בגאווה רבה ל:</p>
                                 
                                 <div class="cert-person-name" id="cert-display-name">אלופה עם בעיות אוזניים</div>
 
-                                <p class="cert-body-text" id="cert-display-reason">
-                                    על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, ועמידה איתנה מול פחד מעמקים ובעיות לחץ באוזניים.
-                                </p>
+                                <div class="cert-body-wrapper" style="margin-bottom:1.5rem;">
+                                    <span class="cert-body-prefix editable" data-key="certDocBodyPrefix" style="color: #2d3748; font-size: 1.05rem;">על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, וסיבת פרישה: </span>
+                                    <span class="cert-body-text" id="cert-display-reason" style="font-weight: 700; color: #b7791f; font-size: 1.05rem;">בעיות אוזניים מוצדקות וחרדה קלה</span>
+                                </div>
 
                                 <div class="cert-footer">
                                     <div class="cert-sig">
                                         <div class="sig-line"></div>
-                                        <span>חזיכו - מדריך ראשי</span>
+                                        <span class="editable" data-key="certDocSig1">חזיכו - מדריך ראשי</span>
                                     </div>
                                     <div class="cert-seal">
                                         <span class="seal-icon">🏆</span>
-                                        <span>חצי מוכר</span>
+                                        <span class="editable" data-key="certDocSeal">חצי מוכר</span>
                                     </div>
                                     <div class="cert-sig">
                                         <div class="sig-line"></div>
@@ -354,40 +355,40 @@
                     <form id="satirical-form" class="register-form">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-name">שם מלא:</label>
-                                <input type="text" id="reg-name" class="form-control" placeholder="ישראל ישראלי" required>
+                                <label for="reg-name" class="editable" data-key="regNameLabel">שם מלא:</label>
+                                <input type="text" id="reg-name" class="form-control" data-key-placeholder="regNamePlaceholder" placeholder="ישראל ישראלי" required>
                             </div>
                             <div class="form-group">
-                                <label for="reg-phone">טלפון:</label>
-                                <input type="tel" id="reg-phone" class="form-control" placeholder="050-0000000" required>
+                                <label for="reg-phone" class="editable" data-key="regPhoneLabel">טלפון:</label>
+                                <input type="tel" id="reg-phone" class="form-control" data-key-placeholder="regPhonePlaceholder" placeholder="050-0000000" required>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="reg-reason">סיבת הפרישה המשוערת שלך:</label>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                    <label for="reg-reason" class="editable" data-key="regReasonLabel" style="margin:0;">סיבת הפרישה המשוערת שלך:</label>
+                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                                </div>
                                 <select id="reg-reason" class="form-control">
-                                    <option value="ears">כאבי אוזניים כבר בשני מטר</option>
-                                    <option value="anxiety">הצפת חרדה ממדוזות דמיוניות</option>
-                                    <option value="cold">מים קרים מדי לטעמי</option>
-                                    <option value="nap">פתאום בא לי שנאפ בחוף</option>
-                                    <option value="all">כל התשובות נכונות</option>
+                                    <!-- Rendered dynamically by JS -->
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="reg-motivation">רמת המוטיבציה שלך להשלים את הקורס:</label>
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                    <label for="reg-motivation" class="editable" data-key="regMotivationLabel" style="margin:0;">רמת המוטיבציה שלך להשלים את הקורס:</label>
+                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regMotivations')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                                </div>
                                 <select id="reg-motivation" class="form-control">
-                                    <option value="50">50% (בדיוק חצי כוח)</option>
-                                    <option value="30">30% (באתי בעיקר בשביל השנורקל)</option>
-                                    <option value="10">10% (הכרחו אותי לבוא)</option>
+                                    <!-- Rendered dynamically by JS -->
                                 </select>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label for="reg-notes">הערות מיוחדות (למשל: איזה ארטיק להכין לך בחוף?):</label>
-                            <textarea id="reg-notes" class="form-control" rows="3" placeholder="ארטיק לימון / קפה קר עם חלב שיבולת שועל..."></textarea>
+                            <label for="reg-notes" class="editable" data-key="regNotesLabel">הערות מיוחדות (למשל: איזה ארטיק להכין לך בחוף?):</label>
+                            <textarea id="reg-notes" class="form-control" rows="3" data-key-placeholder="regNotesPlaceholder" placeholder="ארטיק לימון / קפה קר עם חלב שיבולת שועל..."></textarea>
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg btn-block editable" data-key="registerBtnText">שגרו בקשה (בלי לחץ)</button>

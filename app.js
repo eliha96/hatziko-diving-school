@@ -73,6 +73,25 @@ const DEFAULT_DATA = {
     certSubtitle: "מזכרת לכל החיים",
     certTitle: "מחולל תעודת \"חצי כוכב\" רשמית",
     certDesc: "הזינו את השם שלכם או של חברים וקבלו תעודת סיום מותאמת אישית!",
+    certFormTitle: "פרטי התעודה",
+    certNameLabel: "שם מלא למקבל/ת התעודה:",
+    certNameDefault: "אלופה עם בעיות אוזניים",
+    certReasonLabel: "סיבת קבלת התעודה:",
+    certDateLabel: "תאריך הנפקה:",
+    certPrintBtnText: "🖨️ הדפס / שמור תעודה",
+
+    certDocTitle: "תעודת חצי כוכב רשמית",
+    certDocToText: "תעודה זו מוענקת בזאת בגאווה רבה ל:",
+    certDocBodyPrefix: "על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, וסיבת פרישה: ",
+    certDocSig1: "חזיכו - מדריך ראשי",
+    certDocSeal: "חצי מוכר",
+
+    certReasons: [
+        "בעיות אוזניים מוצדקות וחרדה קלה",
+        "ויתור אמיץ בעומק 1.80 מטר",
+        "העדפת קפה על פני חנק מתחת למים",
+        "הצטיינות יתרה בציפה על הגב"
+    ],
 
     faqSubtitle: "יש לכם שאלות?",
     faqTitle: "שאלות נפוצות (ותשובות כנות)",
@@ -80,7 +99,29 @@ const DEFAULT_DATA = {
 
     registerTitle: "שריון מקום בקורס החצי כוכב הקרוב",
     registerDesc: "מלאו את הפרטים ונחזור אליכם ברגע שנסיים את הקפה.",
+    regNameLabel: "שם מלא:",
+    regNamePlaceholder: "ישראל ישראלי",
+    regPhoneLabel: "טלפון:",
+    regPhonePlaceholder: "050-0000000",
+    regReasonLabel: "סיבת הפרישה המשוערת שלך:",
+    regMotivationLabel: "רמת המוטיבציה שלך להשלים את הקורס:",
+    regNotesLabel: "הערות מיוחדות (למשל: איזה ארטיק להכין לך בחוף?):",
+    regNotesPlaceholder: "ארטיק לימון / קפה קר עם חלב שיבולת שועל...",
     registerBtnText: "שגרו בקשה (בלי לחץ)",
+
+    regReasons: [
+        { id: 'rr1', label: "כאבי אוזניים כבר בשני מטר" },
+        { id: 'rr2', label: "הצפת חרדה ממדוזות דמיוניות" },
+        { id: 'rr3', label: "מים קרים מדי לטעמי" },
+        { id: 'rr4', label: "פתאום בא לי שנאפ בחוף" },
+        { id: 'rr5', label: "כל התשובות נכונות" }
+    ],
+
+    regMotivations: [
+        { id: 'rm1', label: "50% (בדיוק חצי כוח)" },
+        { id: 'rm2', label: "30% (באתי בעיקר בשביל השנורקל)" },
+        { id: 'rm3', label: "10% (הכרחו אותי לבוא)" }
+    ],
 
     footerDesc: "בית הספר הסאטירי המוביל בישראל לצלילות רדודות, חצי כוכב ואפס מאמץ.",
     footerDisclaimer: "האתר הינו אתר היתולי/סאטירי שנבנה בהמון אהבה והומור. אין לראות בתעודת \"חצי כוכב\" הסמכה רשמית לצלילה חופשית או צלילת מכשירים, אלא אם כן אתם צוללים באמבטיה.",
@@ -290,6 +331,15 @@ function loadSavedData() {
                     }
                 });
             }
+            if (!appState.certReasons || appState.certReasons.length === 0) {
+                appState.certReasons = JSON.parse(JSON.stringify(DEFAULT_DATA.certReasons));
+            }
+            if (!appState.regReasons || appState.regReasons.length === 0) {
+                appState.regReasons = JSON.parse(JSON.stringify(DEFAULT_DATA.regReasons));
+            }
+            if (!appState.regMotivations || appState.regMotivations.length === 0) {
+                appState.regMotivations = JSON.parse(JSON.stringify(DEFAULT_DATA.regMotivations));
+            }
         } catch (e) {
             console.error("Failed to parse saved data, loading default.", e);
             appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -306,6 +356,7 @@ function saveData() {
 function renderAll() {
     renderImages();
     renderStaticText();
+    renderDropdownOptions();
     renderStats();
     renderCalculatorSliders();
     renderSyllabus();
@@ -331,7 +382,7 @@ function renderImages() {
     if (mainHero) mainHero.src = heroUrl;
 }
 
-// Render Simple Editable Text Elements
+// Render Simple Editable Text Elements & Placeholders
 function renderStaticText() {
     document.querySelectorAll('.editable').forEach(el => {
         const key = el.getAttribute('data-key');
@@ -347,8 +398,11 @@ function renderStaticText() {
             el.contentEditable = "true";
             el.title = "לחץ לעריכה";
             el.onblur = () => {
-                appState[key] = el.innerHTML.trim();
+                appState[key] = el.innerText.trim();
                 saveData();
+                if (key === 'certDocBodyPrefix') {
+                    updateCertReasonDisplay();
+                }
             };
         } else {
             el.contentEditable = "false";
@@ -356,6 +410,52 @@ function renderStaticText() {
             el.onblur = null;
         }
     });
+
+    document.querySelectorAll('[data-key-placeholder]').forEach(el => {
+        const key = el.getAttribute('data-key-placeholder');
+        if (key && appState[key] !== undefined) {
+            el.placeholder = appState[key];
+        }
+    });
+}
+
+// Render Select Dropdown Options Dynamically
+function renderDropdownOptions() {
+    const certReasonSelect = document.getElementById('cert-reason-select');
+    if (certReasonSelect && appState.certReasons) {
+        const currentVal = certReasonSelect.value;
+        certReasonSelect.innerHTML = appState.certReasons.map(r => 
+            `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`
+        ).join('');
+        if (currentVal && appState.certReasons.includes(currentVal)) {
+            certReasonSelect.value = currentVal;
+        }
+        updateCertReasonDisplay();
+    }
+
+    const regReasonSelect = document.getElementById('reg-reason');
+    if (regReasonSelect && appState.regReasons) {
+        regReasonSelect.innerHTML = appState.regReasons.map(item => {
+            const label = typeof item === 'object' ? item.label : item;
+            return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
+        }).join('');
+    }
+
+    const regMotSelect = document.getElementById('reg-motivation');
+    if (regMotSelect && appState.regMotivations) {
+        regMotSelect.innerHTML = appState.regMotivations.map(item => {
+            const label = typeof item === 'object' ? item.label : item;
+            return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
+        }).join('');
+    }
+}
+
+function updateCertReasonDisplay() {
+    const displayReason = document.getElementById('cert-display-reason');
+    const reasonSelect = document.getElementById('cert-reason-select');
+    if (displayReason && reasonSelect) {
+        displayReason.innerText = reasonSelect.value || '';
+    }
 }
 
 // Render Dynamic Hero Stat Tiles
@@ -744,9 +844,99 @@ function openEditModal(type, id = null) {
                 <textarea id="m-answer" class="form-control" rows="3">${item ? item.answer : ''}</textarea>
             </div>
         `;
+    } else if (type === 'certReasons') {
+        modalTitle.innerText = "עריכת סיבות פרישה (תעודה)";
+        const optionsList = appState.certReasons || [];
+        modalBody.innerHTML = `
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק סיבות פרישה שיופיעו בתיבת הבחירה של מחולל התעודות:</p>
+            <div id="m-cert-reasons-list">
+                ${optionsList.map(opt => `
+                    <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
+                        <input type="text" class="form-control m-cert-opt-input" value="${escapeHtml(opt)}">
+                        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                    </div>
+                `).join('')}
+            </div>
+            <button type="button" class="btn btn-sm btn-outline" style="margin-top:0.5rem;" onclick="addCertReasonRow()">➕ הוסף סיבת פרישה חדשה</button>
+        `;
+    } else if (type === 'regReasons') {
+        modalTitle.innerText = "עריכת סיבות פרישה משוערות (טופס הרשמה)";
+        const optionsList = appState.regReasons || [];
+        modalBody.innerHTML = `
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק סיבות פרישה בטופס הקבלה/הרשמה:</p>
+            <div id="m-reg-reasons-list">
+                ${optionsList.map(item => {
+                    const val = typeof item === 'object' ? item.label : item;
+                    return `
+                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
+                            <input type="text" class="form-control m-reg-opt-input" value="${escapeHtml(val)}">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            <button type="button" class="btn btn-sm btn-outline" style="margin-top:0.5rem;" onclick="addRegReasonRow()">➕ הוסף אפשרות חדשה</button>
+        `;
+    } else if (type === 'regMotivations') {
+        modalTitle.innerText = "עריכת רמות מוטיבציה (טופס הרשמה)";
+        const optionsList = appState.regMotivations || [];
+        modalBody.innerHTML = `
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק רמות מוטיבציה בטופס הקבלה/הרשמה:</p>
+            <div id="m-reg-mot-list">
+                ${optionsList.map(item => {
+                    const val = typeof item === 'object' ? item.label : item;
+                    return `
+                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
+                            <input type="text" class="form-control m-mot-opt-input" value="${escapeHtml(val)}">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                        </div>
+                    `;
+                }).join('')}
+            </div>
+            <button type="button" class="btn btn-sm btn-outline" style="margin-top:0.5rem;" onclick="addRegMotRow()">➕ הוסף אפשרות חדשה</button>
+        `;
     }
 
     modal.classList.remove('hidden');
+}
+
+function addCertReasonRow() {
+    const list = document.getElementById('m-cert-reasons-list');
+    if (!list) return;
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.innerHTML = `
+        <input type="text" class="form-control m-cert-opt-input" placeholder="סיבת פרישה חדשה..." value="">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+    `;
+    list.appendChild(div);
+}
+
+function addRegReasonRow() {
+    const list = document.getElementById('m-reg-reasons-list');
+    if (!list) return;
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.innerHTML = `
+        <input type="text" class="form-control m-reg-opt-input" placeholder="אפשרות חדשה..." value="">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+    `;
+    list.appendChild(div);
+}
+
+function addRegMotRow() {
+    const list = document.getElementById('m-reg-mot-list');
+    if (!list) return;
+    const div = document.createElement('div');
+    div.className = 'form-group';
+    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.innerHTML = `
+        <input type="text" class="form-control m-mot-opt-input" placeholder="אפשרות חדשה..." value="">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+    `;
+    list.appendChild(div);
 }
 
 function closeModal() {
@@ -755,11 +945,37 @@ function closeModal() {
     editingModalItemId = null;
 }
 
+// Expose functions globally for inline HTML event handlers
+window.openEditModal = openEditModal;
+window.closeModal = closeModal;
+window.saveModalItem = saveModalItem;
+window.addCertReasonRow = addCertReasonRow;
+window.addRegReasonRow = addRegReasonRow;
+window.addRegMotRow = addRegMotRow;
+
 function saveModalItem() {
     const type = editingModalItemType;
     const id = editingModalItemId || 'item_' + Date.now();
 
-    if (type === 'stat') {
+    if (type === 'certReasons') {
+        const inputs = document.querySelectorAll('.m-cert-opt-input');
+        const newReasons = Array.from(inputs).map(inp => inp.value.trim()).filter(v => v.length > 0);
+        if (newReasons.length > 0) {
+            appState.certReasons = newReasons;
+        }
+    } else if (type === 'regReasons') {
+        const inputs = document.querySelectorAll('.m-reg-opt-input');
+        const newReasons = Array.from(inputs).map((inp, idx) => ({ id: 'rr_' + idx, label: inp.value.trim() })).filter(x => x.label.length > 0);
+        if (newReasons.length > 0) {
+            appState.regReasons = newReasons;
+        }
+    } else if (type === 'regMotivations') {
+        const inputs = document.querySelectorAll('.m-mot-opt-input');
+        const newMots = Array.from(inputs).map((inp, idx) => ({ id: 'rm_' + idx, label: inp.value.trim() })).filter(x => x.label.length > 0);
+        if (newMots.length > 0) {
+            appState.regMotivations = newMots;
+        }
+    } else if (type === 'stat') {
         const newItem = {
             id,
             number: document.getElementById('m-stat-number').value,
@@ -859,6 +1075,10 @@ function deleteItem(type, id) {
     saveData();
     renderAll();
 }
+
+window.deleteItem = deleteItem;
+window.switchSyllabusTab = switchSyllabusTab;
+window.updateCalculatorResult = updateCalculatorResult;
 
 // Image Modal Engine
 function initImageModal() {
