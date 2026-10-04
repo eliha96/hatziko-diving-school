@@ -81,18 +81,18 @@ function initSpeedUpButton() {
 
         if (speedBoostClicks === 1) {
             startTimerInterval(200); // 5x speed
-            card.className = "countdown-wrapper speed-boost-1";
+            card.className = "cs-countdown-card speed-boost-1";
             showToast("⚡ מהירות בנייה x5! (הקפה נשפך על המקלדת והשעון טס)");
             btn.innerText = "⚡⚡ האצת בנייה (מהר יותר!)";
         } else if (speedBoostClicks === 2) {
             startTimerInterval(40); // 25x speed
-            card.className = "countdown-wrapper speed-boost-2 glitch-shake";
+            card.className = "cs-countdown-card speed-boost-2 glitch-shake";
             showToast("🔥 מהירות בנייה x25! (השרת מעלה עשן והמעבד רותח!)");
             btn.innerText = "💥 לחץ פעם אחרונה (על אחריותך)";
         } else if (speedBoostClicks >= 3) {
             // CRASH / BREAK IT!
             if (timerInterval) clearInterval(timerInterval);
-            card.className = "countdown-wrapper crash-glitch";
+            card.className = "cs-countdown-card crash-glitch";
             
             document.getElementById('cd-days').innerText = "88";
             document.getElementById('cd-hours').innerText = "ERR";
@@ -109,7 +109,7 @@ function initSpeedUpButton() {
                 localStorage.setItem('hatziko_cs_target_date', countdownTargetDate.toString());
 
                 speedBoostClicks = 0;
-                card.className = "countdown-wrapper";
+                card.className = "cs-countdown-card";
                 btn.disabled = false;
                 btn.innerText = "⚡ האצת בנייה";
                 showToast("☕ המערכת אותחלה בהצלחה (וחזרה לקצב הקפה הרגיל)");

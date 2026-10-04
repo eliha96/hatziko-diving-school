@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חציכו | האתר עדיין בבנייה</title>
+    <title>האתר עדיין בבנייה</title>
     <meta name="description" content="אופס... האתר עדיין בבנייה. צוות המפתחים שלנו שוקד מסביב לשעון לפתיחתו.">
     
     <!-- Google Fonts -->
@@ -22,82 +22,64 @@
     <!-- Random Rat Container -->
     <div id="rat-container" class="rat-container"></div>
 
-    <!-- Confidential Header Navigation -->
-    <header class="header coming-soon-header">
-        <div class="container nav-container">
-            <div class="brand">
-                <img src="assets/new-logo.png" alt="לוגו" class="brand-logo">
-                <div>
-                    <span class="brand-title">חציכו</span>
-                    <span class="brand-subtitle">פיתוח וטכנולוגיה</span>
-                </div>
-            </div>
-            
-            <div class="nav-controls">
-                <button id="dev-portal-btn" class="btn btn-sm btn-outline dev-btn">
-                    👨‍💻 כניסת מפתחים
-                </button>
-            </div>
+    <!-- Minimal Subtle Header (No Logo) -->
+    <header class="cs-header-minimal">
+        <div class="container cs-nav-container">
+            <button id="dev-portal-btn" class="btn-dev-subtle">
+                👨‍💻 כניסת מפתחים
+            </button>
         </div>
     </header>
 
     <!-- Main Content Container -->
     <main class="coming-soon-main">
         <div class="container">
-            <div class="coming-soon-card glass-card">
+            <div class="cs-card-subtle">
                 
-                <!-- Badge -->
-                <div class="badge-half-star">
-                    <span>🚧 סטטוס פיתוח: שחזור נתונים</span>
-                </div>
+                <!-- Main Heading -->
+                <h1 class="cs-title">אופס... האתר עדיין בבנייה</h1>
                 
-                <!-- Main Requested Heading -->
-                <h1 class="coming-soon-title">אופס... האתר עדיין בבנייה</h1>
-                
-                <!-- Small Subtitle requested by user -->
-                <p class="coming-soon-subtitle-small">
+                <!-- Subtitle -->
+                <p class="cs-subtitle">
                     כלומר, הוא כבר נבנה, אבל נמחק בצורה טראגית אתמול מאוחר מדי בלילה
                 </p>
 
-                <!-- Paragraph text requested by user -->
-                <p class="coming-soon-desc">
+                <!-- Paragraph Description -->
+                <p class="cs-desc">
                     צוות המפתחים שלנו שוקד מסביב לשעון על מנת לפתוח אותו בהקדם האפשרי
                 </p>
 
-                <!-- Countdown Timer (Left to Right Order via dir="ltr") -->
-                <div class="countdown-wrapper" id="countdown-card" dir="ltr">
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-days">03</span>
-                        <span class="countdown-label">ימים</span>
+                <!-- Minimal Countdown Timer (Left to Right Order via dir="ltr") -->
+                <div class="cs-countdown-card" id="countdown-card" dir="ltr">
+                    <div class="cs-countdown-box">
+                        <span class="cs-countdown-num" id="cd-days">03</span>
+                        <span class="cs-countdown-label">ימים</span>
                     </div>
-                    <div class="countdown-colon">:</div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-hours">12</span>
-                        <span class="countdown-label">שעות</span>
+                    <div class="cs-countdown-colon">:</div>
+                    <div class="cs-countdown-box">
+                        <span class="cs-countdown-num" id="cd-hours">12</span>
+                        <span class="cs-countdown-label">שעות</span>
                     </div>
-                    <div class="countdown-colon">:</div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-mins">45</span>
-                        <span class="countdown-label">דקות</span>
+                    <div class="cs-countdown-colon">:</div>
+                    <div class="cs-countdown-box">
+                        <span class="cs-countdown-num" id="cd-mins">45</span>
+                        <span class="cs-countdown-label">דקות</span>
                     </div>
-                    <div class="countdown-colon">:</div>
-                    <div class="countdown-box">
-                        <span class="countdown-num" id="cd-secs">30</span>
-                        <span class="countdown-label">שניות</span>
+                    <div class="cs-countdown-colon">:</div>
+                    <div class="cs-countdown-box">
+                        <span class="cs-countdown-num" id="cd-secs">30</span>
+                        <span class="cs-countdown-label">שניות</span>
                     </div>
                 </div>
 
                 <!-- Interactive Speed Boost Button ("האצת בנייה") -->
-                <div class="interactive-actions">
-                    <button id="btn-speed-up" class="btn btn-lg btn-accent pulse-btn">
+                <div class="cs-actions">
+                    <button id="btn-speed-up" class="btn-accent-subtle">
                         ⚡ האצת בנייה
                     </button>
                     <div id="speed-status-toast" class="speed-toast hidden"></div>
                 </div>
 
-                <p class="coming-soon-footer-note">
-                    ☕ <i>"סבלנות היא מעלה, במיוחד כשמשחזרים קוד בשלוש לפנות בוקר."</i>
-                </p>
             </div>
         </div>
     </main>
@@ -106,11 +88,11 @@
     <div id="dev-modal" class="modal-backdrop hidden">
         <div class="modal-content glass-card dev-modal-card">
             <div class="modal-header">
-                <h3>👨‍💻 כניסת מפתחים חסויה</h3>
+                <h3>👨‍💻 כניסת מפתחים</h3>
                 <button id="dev-modal-close" class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <p>הזן סיסמת מפתח למעבר למצב מסוף הליבה (ניתן להקיש כל סיסמה וללחוץ Enter):</p>
+                <p style="font-size:0.9rem; color:var(--text-secondary);">הזן סיסמת מפתח למעבר למצב מסוף (ניתן להקיש כל סיסמה וללחוץ Enter):</p>
                 <form id="dev-login-form">
                     <div class="form-group" style="margin-top:1rem;">
                         <input type="password" id="dev-password-input" class="form-control" placeholder="••••••••" autofocus required>
@@ -124,7 +106,7 @@
     <!-- ASCII / Matrix Hacker Terminal Screen -->
     <div id="matrix-terminal" class="matrix-terminal hidden">
         <div class="terminal-header">
-            <span class="terminal-title">HATZIKO_OS // DEVELOPER_CORE_v0.5</span>
+            <span class="terminal-title">DEVELOPER_CORE_v0.5</span>
             <button id="btn-exit-terminal" class="btn btn-sm btn-outline btn-terminal-exit">❌ יציאה ממצב מפתח</button>
         </div>
         
@@ -136,16 +118,15 @@
   | __  _/ |/ __| |   / /  | |/ _ \/ _ \ 
   | || || | | (__| |  / /__| |  __/ (_) |
   |_||_||_|_|\___|_| /_____|_|\___|\___/ 
-      [ HALF STAR. HALF POWER. HALF CODED. ]
             </pre>
             
             <div class="terminal-logs" id="terminal-logs">
-                <p class="log-line">[SYSTEM] Initializing Hatziko Core Services...</p>
+                <p class="log-line">[SYSTEM] Initializing Core Services...</p>
                 <p class="log-line">[OK] Coffee Machine online (Coffee level: 98%).</p>
-                <p class="log-line">[WARN] Code deleted accidentally at 03:42 AM.</p>
-                <p class="log-line">[INFO] Restoring git commit tree from backup...</p>
+                <p class="log-line">[WARN] Code deleted accidentally yesterday at 03:42 AM.</p>
+                <p class="log-line">[DEV] Restoring commit tree from backup...</p>
                 <p class="log-line">[SYSTEM] Accelerating compilation speed...</p>
-                <p class="log-line prompt-line"><span class="prompt-symbol">hatziko@dev-terminal:~$</span> <span class="typing-text">run --restore-deleted-code</span></p>
+                <p class="log-line prompt-line"><span class="prompt-symbol">dev-terminal:~$</span> <span class="typing-text">run --restore-deleted-code</span></p>
             </div>
         </div>
     </div>
