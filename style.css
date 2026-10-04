@@ -2174,3 +2174,42 @@ body.system-meltdown {
     text-align: left;
 }
 
+/* Rat Counter Badge Mini-Game Styles */
+.rat-counter-badge {
+    background: rgba(7, 19, 34, 0.75);
+    border: 1px solid var(--border-gold);
+    color: var(--accent-gold);
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.rat-counter-badge span {
+    font-family: var(--font-heading);
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.rat-counter-badge.new-record-flash {
+    animation: goldRecordFlash 0.5s 2 alternate ease-in-out;
+    border-color: #00ff66;
+    color: #00ff66;
+}
+
+.rat-counter-badge.new-record-flash span {
+    color: #00ff66;
+}
+
+@keyframes goldRecordFlash {
+    0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 102, 0.4); }
+    100% { transform: scale(1.15); box-shadow: 0 0 25px rgba(0, 255, 102, 0.9); }
+}
+
