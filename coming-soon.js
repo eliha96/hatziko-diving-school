@@ -155,6 +155,11 @@ function initDevPortal() {
             if (errorMsg) errorMsg.classList.add('hidden');
             modal.classList.remove('hidden');
             if (passInput) passInput.focus();
+
+            // Smooth scroll down to modal
+            setTimeout(() => {
+                modal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 50);
         });
     }
 
@@ -185,6 +190,12 @@ function initDevPortal() {
                 modal.classList.add('hidden');
                 terminal.classList.remove('hidden');
                 startTerminalStream();
+
+                // Smooth scroll down to terminal
+                setTimeout(() => {
+                    terminal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                }, 50);
             }
         });
     }
