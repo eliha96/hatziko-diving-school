@@ -2019,8 +2019,9 @@ body.system-meltdown {
 }
 
 .rat-scanline-image-wrapper {
-    margin: 1.5rem 0;
-    max-width: 540px;
+    margin: 1rem 0 2rem;
+    max-width: 460px;
+    max-height: 58vh;
     width: 100%;
     border: 2px solid #00ff66;
     border-radius: 12px;
@@ -2031,7 +2032,7 @@ body.system-meltdown {
 
 @keyframes scanlineExpand {
     0% { max-height: 0; opacity: 0; filter: brightness(3) contrast(2); }
-    100% { max-height: 1200px; opacity: 1; filter: brightness(1) contrast(1); }
+    100% { max-height: 58vh; opacity: 1; filter: brightness(1) contrast(1); }
 }
 
 @keyframes imageFinishFlash {
@@ -2042,7 +2043,8 @@ body.system-meltdown {
 
 .rat-scanline-img {
     width: 100%;
-    height: auto;
+    max-height: 58vh;
+    object-fit: contain;
     display: block;
 }
 

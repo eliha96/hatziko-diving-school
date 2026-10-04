@@ -261,13 +261,16 @@ function startTerminalStream() {
         imgWrapper.innerHTML = `<img src="matrix_rat_catch_me_if_you_can.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
         logsContainer.appendChild(imgWrapper);
         
-        // Auto scroll to bottom as image finishes loading & flashing
-        setTimeout(() => {
+        // Continuously scroll to keep bottom of expanding image visible
+        let scrollCount = 0;
+        const scrollInterval = setInterval(() => {
             logsContainer.scrollTop = logsContainer.scrollHeight;
-        }, 100);
-        setTimeout(() => {
-            logsContainer.scrollTop = logsContainer.scrollHeight;
-        }, 1600);
+            if (imgWrapper.scrollIntoView) {
+                imgWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
+            }
+            scrollCount++;
+            if (scrollCount > 40) clearInterval(scrollInterval);
+        }, 50);
     }, imageStartTime);
     terminalTimeouts.push(imgTimeout);
 }
