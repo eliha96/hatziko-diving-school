@@ -205,13 +205,18 @@ function startTerminalStream() {
     clearTerminalTimeouts();
 
     const initialLogs = [
-        { delay: 400, text: "initiating system...", type: "normal" },
-        { delay: 1300, text: "verifying identity...", type: "normal" },
-        { delay: 2200, text: "ERROR - we have an intruder!", type: "error" },
-        { delay: 3100, text: "downloading virus...", type: "warning" },
-        { delay: 3900, text: "[████████████████████████████████] 100% VIRUS INJECTED", type: "error" },
-        { delay: 4700, text: "[CRITICAL] Firewall overridden from IP: 127.0.0.1", type: "error" },
-        { delay: 5500, text: "[SYSTEM] Intruder identification photo loaded...", type: "warning" }
+        { delay: 600,   text: "initiating system...", type: "normal" },
+        { delay: 2000,  text: "connecting to core mainframes...", type: "normal" },
+        { delay: 3400,  text: "accessing database...", type: "normal" },
+        { delay: 4800,  text: "bypassing security protocols...", type: "normal" },
+        { delay: 6200,  text: "loading developer credentials...", type: "normal" },
+        { delay: 7600,  text: "verifying identity...", type: "normal" },
+        { delay: 9200,  text: "ERROR - we have an intruder!", type: "error" },
+        { delay: 10800, text: "downloading virus...", type: "warning" },
+        { delay: 12400, text: "[████████████████████████████████] 100% VIRUS INJECTED", type: "error" },
+        { delay: 14000, text: "[CRITICAL] Firewall overridden from IP: 127.0.0.1", type: "error" },
+        { delay: 15600, text: "[SYSTEM] Capturing security camera feed...", type: "warning" },
+        { delay: 17200, text: "[ALERT] Intruder photo rendered successfully.", type: "warning" }
     ];
 
     initialLogs.forEach(item => {
@@ -225,52 +230,20 @@ function startTerminalStream() {
         terminalTimeouts.push(timeout);
     });
 
-    // ASCII Art Rat on Pinecone holding 31 Birthday Cake
-    const asciiArtRatLines = [
-        " ",
-        "              ( 3 )   ( 1 )",
-        "               ||      ||  ",
-        "             [============]",
-        "          (\\ _ /)   |     |",
-        "          ( o.o ) /=========\\",
-        "         >   ^   <",
-        "        /    |    \\   🐀",
-        "       (____ | ____)",
-        "      /  \\_______/  \\",
-        "     /               \\",
-        "    /  /\\   /\\   /\\   \\",
-        "   (  /  \\ /  \\ /  \\   )",
-        "    \\/____\\/____\\/____\\/",
-        " "
-    ];
+    const imageStartTime = 18800;
 
-    const renderStartTime = 6300;
-
-    asciiArtRatLines.forEach((lineText, idx) => {
-        const timeout = setTimeout(() => {
-            const preLine = document.createElement('pre');
-            preLine.className = 'ascii-rat-line';
-            preLine.innerText = lineText;
-            logsContainer.appendChild(preLine);
-            logsContainer.scrollTop = logsContainer.scrollHeight;
-        }, renderStartTime + (idx * 140));
-        terminalTimeouts.push(timeout);
-    });
-
-    const imageStartTime = renderStartTime + (asciiArtRatLines.length * 140) + 300;
-
-    // Display green scanline image of rat on pinecone with 31 cake
+    // Display REAL photorealistic image of rat on pinecone with 31 cake
     const imgTimeout = setTimeout(() => {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'rat-scanline-image-wrapper';
-        imgWrapper.innerHTML = `<img src="rat_pinecone_cake.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
+        imgWrapper.innerHTML = `<img src="real_rat_pinecone_cake.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
         logsContainer.appendChild(imgWrapper);
         logsContainer.scrollTop = logsContainer.scrollHeight;
     }, imageStartTime);
     terminalTimeouts.push(imgTimeout);
 
     // Type out "catch me if you can" underneath character by character
-    const textStartTime = imageStartTime + 900;
+    const textStartTime = imageStartTime + 1600;
     const bannerText = "catch me if you can";
 
     const bannerTimeout = setTimeout(() => {
@@ -287,7 +260,7 @@ function startTerminalStream() {
             } else {
                 clearInterval(charInterval);
             }
-        }, 90);
+        }, 110);
     }, textStartTime);
     terminalTimeouts.push(bannerTimeout);
 }
