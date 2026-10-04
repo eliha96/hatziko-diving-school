@@ -35,6 +35,10 @@
     --radius-full: 9999px;
 }
 
+.hidden {
+    display: none !important;
+}
+
 /* Reset & Global */
 *, *::before, *::after {
     box-sizing: border-box;
