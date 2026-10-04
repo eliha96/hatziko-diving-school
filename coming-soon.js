@@ -73,6 +73,7 @@ function updateCountdownDisplay() {
 function initSpeedUpButton() {
     const btn = document.getElementById('btn-speed-up');
     const card = document.getElementById('countdown-card');
+    const warnBadge = document.getElementById('system-warning-badge');
 
     if (!btn) return;
 
@@ -82,30 +83,46 @@ function initSpeedUpButton() {
         if (speedBoostClicks === 1) {
             startTimerInterval(200); // 5x speed
             card.className = "cs-countdown-card speed-boost-1";
+            if (warnBadge) warnBadge.classList.add('hidden');
         } else if (speedBoostClicks === 2) {
             startTimerInterval(40); // 25x speed
             card.className = "cs-countdown-card speed-boost-2 glitch-shake";
+            document.body.classList.add('screen-rumble');
+            if (warnBadge) {
+                warnBadge.innerText = "⚠️ WARNING: SYSTEM OVERLOAD - CORE TEMPERATURE CRITICAL";
+                warnBadge.classList.remove('hidden');
+            }
         } else if (speedBoostClicks >= 3) {
-            // CRASH / BREAK IT - BLACK & WHITE SCREEN & RESET!
+            // CATASTROPHIC SYSTEM MELTDOWN & CRASH!
             if (timerInterval) clearInterval(timerInterval);
-            document.body.classList.add('crash-black-white');
+            
+            document.body.classList.remove('screen-rumble');
+            document.body.classList.add('system-meltdown');
             card.className = "cs-countdown-card crash-glitch";
             
+            if (warnBadge) {
+                warnBadge.innerText = "💥 CATASTROPHIC SYSTEM FAILURE - REBOOTING...";
+                warnBadge.classList.remove('hidden');
+            }
+
             const daysEl = document.getElementById('cd-days');
             const hoursEl = document.getElementById('cd-hours');
             const minsEl = document.getElementById('cd-mins');
             const secsEl = document.getElementById('cd-secs');
 
-            if (daysEl) daysEl.innerText = "00";
-            if (hoursEl) hoursEl.innerText = "00";
-            if (minsEl) minsEl.innerText = "00";
-            if (secsEl) secsEl.innerText = "00";
+            if (daysEl) daysEl.innerText = "88";
+            if (hoursEl) hoursEl.innerText = "ERR";
+            if (minsEl) minsEl.innerText = "404";
+            if (secsEl) secsEl.innerText = "🔥";
 
             btn.disabled = true;
 
             setTimeout(() => {
-                // Reset after 2.5 seconds back to normal
-                document.body.classList.remove('crash-black-white');
+                // Reset back to normal after 2.8 seconds
+                document.body.classList.remove('system-meltdown');
+                document.body.classList.remove('screen-rumble');
+                if (warnBadge) warnBadge.classList.add('hidden');
+
                 const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
                 countdownTargetDate = Date.now() + threeDaysMs;
                 localStorage.setItem('hatziko_cs_target_date', countdownTargetDate.toString());
@@ -114,7 +131,7 @@ function initSpeedUpButton() {
                 card.className = "cs-countdown-card";
                 btn.disabled = false;
                 startTimerInterval(1000);
-            }, 2500);
+            }, 2800);
         }
     });
 }

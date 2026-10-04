@@ -1663,10 +1663,55 @@ input[type=range]::-webkit-slider-thumb {
     margin-bottom: 1rem;
 }
 
-/* Black & White Crash Effect on 3rd click */
-body.crash-black-white {
-    filter: grayscale(100%) contrast(140%) brightness(85%);
-    transition: filter 0.2s ease;
+/* Flashing System Warning Badge */
+.system-warning-badge {
+    background: rgba(255, 71, 87, 0.25);
+    border: 1px solid #ff4757;
+    color: #ff4757;
+    padding: 0.45rem 1.2rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin: 0 auto 1.25rem;
+    display: inline-block;
+    animation: flashWarning 0.4s infinite alternate;
+}
+
+@keyframes flashWarning {
+    0% { opacity: 0.5; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1.03); box-shadow: 0 0 20px rgba(255, 71, 87, 0.7); }
+}
+
+/* Screen Rumble on Click 2 */
+body.screen-rumble {
+    animation: bodyRumble 0.12s infinite;
+}
+
+@keyframes bodyRumble {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-1.5px, 1.5px); }
+    50% { transform: translate(1.5px, -1.5px); }
+    75% { transform: translate(-1.5px, -1.5px); }
+    100% { transform: translate(1.5px, 1.5px); }
+}
+
+/* Catastrophic System Meltdown on Click 3 */
+body.system-meltdown {
+    animation: meltdownVibrate 0.05s infinite, meltdownFlash 0.3s infinite alternate;
+}
+
+@keyframes meltdownVibrate {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-5px, 4px) rotate(1deg); }
+    50% { transform: translate(5px, -4px) rotate(-1deg); }
+    75% { transform: translate(-4px, -3px) rotate(0.5deg); }
+    100% { transform: translate(4px, 3px) rotate(-0.5deg); }
+}
+
+@keyframes meltdownFlash {
+    0% { filter: invert(0) grayscale(0); }
+    100% { filter: invert(0.85) grayscale(90%) sepia(100%) hue-rotate(-50deg) saturate(600%); }
 }
 
 /* Speed Boost Glitch Animations */
@@ -1682,23 +1727,25 @@ body.crash-black-white {
 
 .cs-countdown-card.speed-boost-2 {
     border-color: #ff9f43;
-    background: rgba(255, 159, 67, 0.1);
-    box-shadow: 0 0 25px rgba(255, 159, 67, 0.4);
+    background: rgba(255, 159, 67, 0.12);
+    box-shadow: 0 0 25px rgba(255, 159, 67, 0.5);
 }
 
 .cs-countdown-card.speed-boost-2 .cs-countdown-num {
     color: #ff9f43;
+    text-shadow: 0 0 15px rgba(255, 159, 67, 0.6);
 }
 
 .cs-countdown-card.crash-glitch {
     border-color: #ef4444;
-    background: rgba(239, 68, 68, 0.1);
-    box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+    background: rgba(239, 68, 68, 0.15);
+    box-shadow: 0 0 35px rgba(239, 68, 68, 0.8);
     animation: glitchShake 0.08s infinite;
 }
 
 .cs-countdown-card.crash-glitch .cs-countdown-num {
     color: #ef4444;
+    text-shadow: 0 0 20px #ef4444;
 }
 
 /* Subtle Accent Button */
