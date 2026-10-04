@@ -114,24 +114,8 @@
             <button id="btn-exit-terminal" class="btn btn-sm btn-outline btn-terminal-exit">❌ יציאה ממצב מפתח</button>
         </div>
         
-        <div class="terminal-body">
-            <pre class="ascii-art">
-   _  _          _   ______ _             
-  | || |        | | |___  /(_)            
-  | || |_|_  ___| |    / /  _  ___  ___  
-  | __  _/ |/ __| |   / /  | |/ _ \/ _ \ 
-  | || || | | (__| |  / /__| |  __/ (_) |
-  |_||_||_|_|\___|_| /_____|_|\___|\___/ 
-            </pre>
-            
-            <div class="terminal-logs" id="terminal-logs">
-                <p class="log-line">[SYSTEM] Initializing Core Services...</p>
-                <p class="log-line">[OK] Coffee Machine online (Coffee level: 98%).</p>
-                <p class="log-line">[WARN] Code deleted accidentally yesterday at 03:42 AM.</p>
-                <p class="log-line">[DEV] Restoring commit tree from backup...</p>
-                <p class="log-line">[SYSTEM] Accelerating compilation speed...</p>
-                <p class="log-line prompt-line"><span class="prompt-symbol">dev-terminal:~$</span> <span class="typing-text">run --restore-deleted-code</span></p>
-            </div>
+        <div class="terminal-body" id="terminal-body">
+            <div class="terminal-logs" id="terminal-logs"></div>
         </div>
     </div>
 

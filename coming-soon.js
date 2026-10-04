@@ -171,6 +171,7 @@ function initDevPortal() {
     if (exitTermBtn) {
         exitTermBtn.addEventListener('click', () => {
             terminal.classList.add('hidden');
+            clearTerminalTimeouts();
         });
     }
 
@@ -179,6 +180,7 @@ function initDevPortal() {
         if (e.key === 'Escape') {
             if (terminal && !terminal.classList.contains('hidden')) {
                 terminal.classList.add('hidden');
+                clearTerminalTimeouts();
             }
             if (modal && !modal.classList.contains('hidden')) {
                 modal.classList.add('hidden');
@@ -187,34 +189,107 @@ function initDevPortal() {
     });
 }
 
-let terminalStreamInterval = null;
-const terminalMessages = [
-    "[SYSTEM] Overriding compilation parameters...",
-    "[OK] Coffee Machine online (Coffee level: 98%).",
-    "[WARN] Code deleted accidentally yesterday at 03:42 AM.",
-    "[DEV] Developer 'Hatziko' active: restoring deleted code...",
-    "[SECURITY] Confidential project mode active.",
-    "[SYSTEM] Rebuilding HTML & CSS modules...",
-    "[INFO] Server compilation speed: 99.9%",
-    "[WARN] Rat detected near developer keyboard!",
-    "[OK] System recovery progressing smoothly."
-];
+let terminalTimeouts = [];
+
+function clearTerminalTimeouts() {
+    terminalTimeouts.forEach(t => clearTimeout(t));
+    terminalTimeouts = [];
+}
 
 function startTerminalStream() {
     const logsContainer = document.getElementById('terminal-logs');
     if (!logsContainer) return;
 
-    let index = 0;
-    if (terminalStreamInterval) clearInterval(terminalStreamInterval);
+    // Completely clear terminal on open
+    logsContainer.innerHTML = '';
+    clearTerminalTimeouts();
 
-    terminalStreamInterval = setInterval(() => {
-        const line = document.createElement('p');
-        line.className = 'log-line';
-        line.innerText = terminalMessages[index % terminalMessages.length];
-        logsContainer.appendChild(line);
+    const initialLogs = [
+        { delay: 400, text: "initiating system...", type: "normal" },
+        { delay: 1300, text: "verifying identity...", type: "normal" },
+        { delay: 2200, text: "ERROR - we have an intruder!", type: "error" },
+        { delay: 3100, text: "downloading virus...", type: "warning" },
+        { delay: 3900, text: "[████████████████████████████████] 100% VIRUS INJECTED", type: "error" },
+        { delay: 4700, text: "[CRITICAL] Firewall overridden from IP: 127.0.0.1", type: "error" },
+        { delay: 5500, text: "[SYSTEM] Intruder identification photo loaded...", type: "warning" }
+    ];
+
+    initialLogs.forEach(item => {
+        const timeout = setTimeout(() => {
+            const line = document.createElement('p');
+            line.className = 'log-line ' + (item.type === 'error' ? 'log-error' : (item.type === 'warning' ? 'log-warn' : ''));
+            line.innerText = item.text;
+            logsContainer.appendChild(line);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }, item.delay);
+        terminalTimeouts.push(timeout);
+    });
+
+    // ASCII Art Rat on Pinecone holding 31 Birthday Cake
+    const asciiArtRatLines = [
+        " ",
+        "              ( 3 )   ( 1 )",
+        "               ||      ||  ",
+        "             [============]",
+        "          (\\ _ /)   |     |",
+        "          ( o.o ) /=========\\",
+        "         >   ^   <",
+        "        /    |    \\   🐀",
+        "       (____ | ____)",
+        "      /  \\_______/  \\",
+        "     /               \\",
+        "    /  /\\   /\\   /\\   \\",
+        "   (  /  \\ /  \\ /  \\   )",
+        "    \\/____\\/____\\/____\\/",
+        " "
+    ];
+
+    const renderStartTime = 6300;
+
+    asciiArtRatLines.forEach((lineText, idx) => {
+        const timeout = setTimeout(() => {
+            const preLine = document.createElement('pre');
+            preLine.className = 'ascii-rat-line';
+            preLine.innerText = lineText;
+            logsContainer.appendChild(preLine);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }, renderStartTime + (idx * 140));
+        terminalTimeouts.push(timeout);
+    });
+
+    const imageStartTime = renderStartTime + (asciiArtRatLines.length * 140) + 300;
+
+    // Display green scanline image of rat on pinecone with 31 cake
+    const imgTimeout = setTimeout(() => {
+        const imgWrapper = document.createElement('div');
+        imgWrapper.className = 'rat-scanline-image-wrapper';
+        imgWrapper.innerHTML = `<img src="rat_pinecone_cake.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
+        logsContainer.appendChild(imgWrapper);
         logsContainer.scrollTop = logsContainer.scrollHeight;
-        index++;
-    }, 1200);
+    }, imageStartTime);
+    terminalTimeouts.push(imgTimeout);
+
+    // Type out "catch me if you can" underneath character by character
+    const textStartTime = imageStartTime + 900;
+    const bannerText = "catch me if you can";
+
+    const bannerTimeout = setTimeout(() => {
+        const bannerContainer = document.createElement('div');
+        bannerContainer.className = 'terminal-catch-banner';
+        logsContainer.appendChild(bannerContainer);
+
+        let charIdx = 0;
+        const charInterval = setInterval(() => {
+            if (charIdx < bannerText.length) {
+                bannerContainer.innerText += bannerText[charIdx];
+                charIdx++;
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+            } else {
+                clearInterval(charInterval);
+            }
+        }, 90);
+    }, textStartTime);
+    terminalTimeouts.push(bannerTimeout);
 }
 
 // Random Rat Running Across Screen Engine
