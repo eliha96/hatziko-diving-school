@@ -165,6 +165,18 @@ function initDevPortal() {
             terminal.classList.add('hidden');
         });
     }
+
+    // Allow pressing Escape key to exit terminal or modal instantly
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            if (terminal && !terminal.classList.contains('hidden')) {
+                terminal.classList.add('hidden');
+            }
+            if (modal && !modal.classList.contains('hidden')) {
+                modal.classList.add('hidden');
+            }
+        }
+    });
 }
 
 let terminalStreamInterval = null;
