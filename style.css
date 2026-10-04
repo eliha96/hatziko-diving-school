@@ -1940,14 +1940,19 @@ body.system-meltdown {
     animation: ratRunLeft linear forwards;
 }
 
+.rat-move-left .rat-emoji {
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
 @keyframes ratRunRight {
-    0% { left: -60px; transform: scaleX(1); }
-    100% { left: 105%; transform: scaleX(1); }
+    0% { left: -60px; }
+    100% { left: 105%; }
 }
 
 @keyframes ratRunLeft {
-    0% { right: -60px; transform: scaleX(-1); }
-    100% { right: 105%; transform: scaleX(-1); }
+    0% { right: -60px; }
+    100% { right: 105%; }
 }
 
 .rat-speech-bubble {
@@ -1964,6 +1969,9 @@ body.system-meltdown {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
     border: 2px solid var(--accent-gold);
     animation: popIn 0.3s ease;
+    direction: rtl !important;
+    text-align: right !important;
+    transform: none !important;
 }
 
 @keyframes popIn {

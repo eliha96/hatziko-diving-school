@@ -327,7 +327,8 @@ function initRatSpawner() {
             
             const speechBubble = document.createElement('div');
             speechBubble.className = 'rat-speech-bubble';
-            speechBubble.innerText = '🐀 "אני רק בודקת תקלות בחיווט!"';
+            speechBubble.setAttribute('dir', 'rtl');
+            speechBubble.innerText = '🐀 "אני אצליח לפצח את זה!"';
             rat.appendChild(speechBubble);
 
             setTimeout(() => {
