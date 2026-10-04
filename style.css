@@ -1542,16 +1542,18 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .cs-header-minimal {
-    padding: 1.5rem 2rem;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    z-index: 100;
 }
 
 .cs-nav-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    gap: 0.75rem;
+    box-sizing: border-box;
 }
 
 .btn-dev-subtle {
@@ -1565,6 +1567,7 @@ input[type=range]::-webkit-slider-thumb {
     font-family: var(--font-body);
     cursor: pointer;
     transition: all 0.25s ease;
+    white-space: nowrap;
 }
 
 .btn-dev-subtle:hover {
@@ -1983,6 +1986,27 @@ body.system-meltdown {
    Comprehensive Mobile Responsiveness (Coming Soon & Developer Area)
    ========================================================================== */
 @media (max-width: 768px) {
+    .cs-header-minimal {
+        padding: 0.85rem 0.75rem;
+    }
+
+    .cs-nav-container {
+        gap: 0.4rem;
+    }
+
+    .rat-counter-badge {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+        gap: 0.25rem;
+    }
+
+    .btn-dev-subtle {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.78rem;
+        white-space: nowrap;
+    }
+
     .coming-soon-main {
         padding: 1.5rem 0.5rem;
     }
@@ -2078,6 +2102,25 @@ body.system-meltdown {
 }
 
 @media (max-width: 400px) {
+    .cs-header-minimal {
+        padding: 0.75rem 0.35rem;
+    }
+
+    .cs-nav-container {
+        gap: 0.25rem;
+    }
+
+    .rat-counter-badge {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+        gap: 0.15rem;
+    }
+
+    .btn-dev-subtle {
+        padding: 0.3rem 0.55rem;
+        font-size: 0.7rem;
+    }
+
     .cs-title {
         font-size: 1.5rem;
     }
