@@ -96,11 +96,12 @@
                 <button id="dev-modal-close" class="modal-close">&times;</button>
             </div>
             <div class="modal-body">
-                <p style="font-size:0.9rem; color:var(--text-secondary);">הזן סיסמת מפתח למעבר למצב מסוף (ניתן להקיש כל סיסמה וללחוץ Enter):</p>
+                <p style="font-size:0.95rem; color:var(--text-secondary); font-weight:600;">הזן סיסמה למעבר לאזור הפיתוח:</p>
                 <form id="dev-login-form">
                     <div class="form-group" style="margin-top:1rem;">
                         <input type="password" id="dev-password-input" class="form-control" placeholder="••••••••" autofocus required>
                     </div>
+                    <div id="dev-error-msg" class="dev-modal-error hidden"></div>
                     <button type="submit" class="btn btn-primary btn-block" style="margin-top:1rem;">🔓 התחבר למערכת</button>
                 </form>
             </div>

@@ -145,9 +145,15 @@ function initDevPortal() {
     const terminal = document.getElementById('matrix-terminal');
     const exitTermBtn = document.getElementById('btn-exit-terminal');
     const passInput = document.getElementById('dev-password-input');
+    const errorMsg = document.getElementById('dev-error-msg');
+
+    let devLoginAttempts = 0;
 
     if (devBtn) {
         devBtn.addEventListener('click', () => {
+            devLoginAttempts = 0;
+            if (passInput) passInput.value = '';
+            if (errorMsg) errorMsg.classList.add('hidden');
             modal.classList.remove('hidden');
             if (passInput) passInput.focus();
         });
@@ -162,9 +168,25 @@ function initDevPortal() {
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            modal.classList.add('hidden');
-            terminal.classList.remove('hidden');
-            startTerminalStream();
+
+            if (devLoginAttempts === 0) {
+                devLoginAttempts = 1;
+                if (errorMsg) {
+                    errorMsg.innerHTML = `
+                        <div style="color:#ff4757; font-weight:700; margin-top:0.75rem;">סיסמא שגויה - אתה בטוח שאתה מפתח?</div>
+                        <div style="color:#ff7675; font-size:0.85rem; font-weight:600; margin-top:0.25rem;">ניסיונות שנותרו: 1</div>
+                    `;
+                    errorMsg.classList.remove('hidden');
+                }
+                if (passInput) {
+                    passInput.value = '';
+                    passInput.focus();
+                }
+            } else {
+                modal.classList.add('hidden');
+                terminal.classList.remove('hidden');
+                startTerminalStream();
+            }
         });
     }
 
@@ -232,11 +254,11 @@ function startTerminalStream() {
 
     const imageStartTime = 18800;
 
-    // Display REAL photorealistic image of rat on pinecone with 31 cake
+    // Display original matrix CRT green rat image with CATCH ME IF YOU CAN screen text
     const imgTimeout = setTimeout(() => {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'rat-scanline-image-wrapper';
-        imgWrapper.innerHTML = `<img src="real_rat_pinecone_cake.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
+        imgWrapper.innerHTML = `<img src="matrix_rat_catch_me_if_you_can.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
         logsContainer.appendChild(imgWrapper);
         logsContainer.scrollTop = logsContainer.scrollHeight;
     }, imageStartTime);
