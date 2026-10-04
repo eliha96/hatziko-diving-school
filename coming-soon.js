@@ -260,31 +260,16 @@ function startTerminalStream() {
         imgWrapper.className = 'rat-scanline-image-wrapper';
         imgWrapper.innerHTML = `<img src="matrix_rat_catch_me_if_you_can.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
         logsContainer.appendChild(imgWrapper);
-        logsContainer.scrollTop = logsContainer.scrollHeight;
+        
+        // Auto scroll to bottom as image finishes loading & flashing
+        setTimeout(() => {
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }, 100);
+        setTimeout(() => {
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }, 1600);
     }, imageStartTime);
     terminalTimeouts.push(imgTimeout);
-
-    // Type out "catch me if you can" underneath character by character
-    const textStartTime = imageStartTime + 1600;
-    const bannerText = "catch me if you can";
-
-    const bannerTimeout = setTimeout(() => {
-        const bannerContainer = document.createElement('div');
-        bannerContainer.className = 'terminal-catch-banner';
-        logsContainer.appendChild(bannerContainer);
-
-        let charIdx = 0;
-        const charInterval = setInterval(() => {
-            if (charIdx < bannerText.length) {
-                bannerContainer.innerText += bannerText[charIdx];
-                charIdx++;
-                logsContainer.scrollTop = logsContainer.scrollHeight;
-            } else {
-                clearInterval(charInterval);
-            }
-        }, 110);
-    }, textStartTime);
-    terminalTimeouts.push(bannerTimeout);
 }
 
 // Random Rat Running Across Screen Engine
