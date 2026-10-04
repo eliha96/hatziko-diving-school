@@ -42,10 +42,10 @@ function updateCountdownDisplay() {
 
     // If speed boosted, artificially decrement target faster
     if (speedBoostClicks === 1) {
-        countdownTargetDate -= 4000; // subtract 4s extra per tick
+        countdownTargetDate -= 4000;
         diff = countdownTargetDate - now;
     } else if (speedBoostClicks === 2) {
-        countdownTargetDate -= 20000; // subtract 20s extra per tick
+        countdownTargetDate -= 20000;
         diff = countdownTargetDate - now;
     }
 
@@ -69,11 +69,10 @@ function updateCountdownDisplay() {
     if (secsEl) secsEl.innerText = String(secs).padStart(2, '0');
 }
 
-// "האץ פיתוח" Speed Boost Button Logic
+// "האצת בנייה" Speed Boost Button Logic
 function initSpeedUpButton() {
     const btn = document.getElementById('btn-speed-up');
     const card = document.getElementById('countdown-card');
-    const toast = document.getElementById('speed-status-toast');
 
     if (!btn) return;
 
@@ -83,12 +82,12 @@ function initSpeedUpButton() {
         if (speedBoostClicks === 1) {
             startTimerInterval(200); // 5x speed
             card.className = "countdown-wrapper speed-boost-1";
-            showToast("⚡ מהירות פיתוח x5! (הקפה נשפך על המקלדת והשעון טס)");
-            btn.innerText = "⚡⚡ האץ פיתוח (חזק יותר!)";
+            showToast("⚡ מהירות בנייה x5! (הקפה נשפך על המקלדת והשעון טס)");
+            btn.innerText = "⚡⚡ האצת בנייה (מהר יותר!)";
         } else if (speedBoostClicks === 2) {
             startTimerInterval(40); // 25x speed
             card.className = "countdown-wrapper speed-boost-2 glitch-shake";
-            showToast("🔥 מהירות פיתוח x25! (השרת מעלה עשן והמעבד רותח!)");
+            showToast("🔥 מהירות בנייה x25! (השרת מעלה עשן והמעבד רותח!)");
             btn.innerText = "💥 לחץ פעם אחרונה (על אחריותך)";
         } else if (speedBoostClicks >= 3) {
             // CRASH / BREAK IT!
@@ -100,7 +99,7 @@ function initSpeedUpButton() {
             document.getElementById('cd-mins').innerText = "404";
             document.getElementById('cd-secs').innerText = "🔥";
 
-            showToast("💥 יופי הכל נשבר! מההתחלה...", true);
+            showToast("💥 יופי הכל נשבר, מההתחלה...", true);
             btn.disabled = true;
 
             setTimeout(() => {
@@ -112,7 +111,7 @@ function initSpeedUpButton() {
                 speedBoostClicks = 0;
                 card.className = "countdown-wrapper";
                 btn.disabled = false;
-                btn.innerText = "⚡ האץ פיתוח";
+                btn.innerText = "⚡ האצת בנייה";
                 showToast("☕ המערכת אותחלה בהצלחה (וחזרה לקצב הקפה הרגיל)");
                 startTimerInterval(1000);
             }, 2500);
@@ -181,15 +180,15 @@ function initDevPortal() {
 
 let terminalStreamInterval = null;
 const terminalMessages = [
-    "[SYSTEM] Overriding water depth limit (Max depth set to 0.5m)",
-    "[OK] Coffee Machine ping: 1ms (Optimal latency)",
-    "[WARN] Ear pressure equalizer not detected - switching to earplugs",
-    "[DEV] Developer 'Hatziko' modified index.html: added extra nap time",
-    "[SECURITY] Satirical shield active. Pure humor verified.",
-    "[SYSTEM] Generating half-star certificates in background...",
-    "[INFO] Underwater Wi-Fi signal strength: 99%",
+    "[SYSTEM] Overriding compilation parameters...",
+    "[OK] Coffee Machine online (Coffee level: 98%).",
+    "[WARN] Code deleted accidentally yesterday at 03:42 AM.",
+    "[DEV] Developer 'Hatziko' active: restoring deleted code...",
+    "[SECURITY] Confidential project mode active.",
+    "[SYSTEM] Rebuilding HTML & CSS modules...",
+    "[INFO] Server compilation speed: 99.9%",
     "[WARN] Rat detected near developer keyboard!",
-    "[OK] Rubber duck buoyancy validated."
+    "[OK] System recovery progressing smoothly."
 ];
 
 function startTerminalStream() {
