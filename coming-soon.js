@@ -82,28 +82,30 @@ function initSpeedUpButton() {
         if (speedBoostClicks === 1) {
             startTimerInterval(200); // 5x speed
             card.className = "cs-countdown-card speed-boost-1";
-            showToast("⚡ מהירות בנייה x5! (הקפה נשפך על המקלדת והשעון טס)");
-            btn.innerText = "⚡⚡ האצת בנייה (מהר יותר!)";
         } else if (speedBoostClicks === 2) {
             startTimerInterval(40); // 25x speed
             card.className = "cs-countdown-card speed-boost-2 glitch-shake";
-            showToast("🔥 מהירות בנייה x25! (השרת מעלה עשן והמעבד רותח!)");
-            btn.innerText = "💥 לחץ פעם אחרונה (על אחריותך)";
         } else if (speedBoostClicks >= 3) {
-            // CRASH / BREAK IT!
+            // CRASH / BREAK IT - BLACK & WHITE SCREEN & RESET!
             if (timerInterval) clearInterval(timerInterval);
+            document.body.classList.add('crash-black-white');
             card.className = "cs-countdown-card crash-glitch";
             
-            document.getElementById('cd-days').innerText = "88";
-            document.getElementById('cd-hours').innerText = "ERR";
-            document.getElementById('cd-mins').innerText = "404";
-            document.getElementById('cd-secs').innerText = "🔥";
+            const daysEl = document.getElementById('cd-days');
+            const hoursEl = document.getElementById('cd-hours');
+            const minsEl = document.getElementById('cd-mins');
+            const secsEl = document.getElementById('cd-secs');
 
-            showToast("💥 יופי הכל נשבר, מההתחלה...", true);
+            if (daysEl) daysEl.innerText = "00";
+            if (hoursEl) hoursEl.innerText = "00";
+            if (minsEl) minsEl.innerText = "00";
+            if (secsEl) secsEl.innerText = "00";
+
             btn.disabled = true;
 
             setTimeout(() => {
-                // Reset after 2.5 seconds
+                // Reset after 2.5 seconds back to normal
+                document.body.classList.remove('crash-black-white');
                 const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
                 countdownTargetDate = Date.now() + threeDaysMs;
                 localStorage.setItem('hatziko_cs_target_date', countdownTargetDate.toString());
@@ -111,20 +113,10 @@ function initSpeedUpButton() {
                 speedBoostClicks = 0;
                 card.className = "cs-countdown-card";
                 btn.disabled = false;
-                btn.innerText = "⚡ האצת בנייה";
-                showToast("☕ המערכת אותחלה בהצלחה (וחזרה לקצב הקפה הרגיל)");
                 startTimerInterval(1000);
             }, 2500);
         }
     });
-}
-
-function showToast(msg, isError = false) {
-    const toast = document.getElementById('speed-status-toast');
-    if (!toast) return;
-    toast.innerText = msg;
-    toast.className = `speed-toast ${isError ? 'toast-error' : 'toast-info'}`;
-    toast.classList.remove('hidden');
 }
 
 // Developer Portal & Matrix Terminal Logic
