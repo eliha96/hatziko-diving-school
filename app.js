@@ -139,22 +139,36 @@ const DEFAULT_DATA = {
             id: 't1',
             name: "אלופה עם בעיות אוזניים",
             role: "חצי-בוגרת מחזור א'",
-            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
+            stars: 3,
             text: "הגעתי לקורס עם פנטזיה על שוניות ודולפינים, וגיליתי שכבר ב-1.5 מטר האוזניים שלי מוחות. המדריך של חציכו הגיב מיד, העלה אותי למעלה והכין לי אייס קפה. 10/10 לא יורדת יותר מתחת למים!"
         },
         {
             id: 't2',
             name: "הפרטנר המודאג",
             role: "חצי-בוגרת מחזור א'",
-            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
+            stars: 2,
             text: "כשהגענו ל-2 מטר עומק וראיתי את הקרקעית מתרחקת, נכנסתי לחרדה קלה. במקום ללחוץ עליי, המדריך אמר 'חביבי, היבשה זה הדיבור'. קיבלנו חצי כוכב ונסענו לאכול חומוס."
         },
         {
             id: 't3',
             name: "ספקטיקנית לשעבר",
             role: "חצי-בוגרת מחזור ב'",
-            stars: '⭐⭐<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">',
+            stars: 4,
             text: "כל החברות שלי עשו כוכב ראשון ושני. אני עשיתי חצי כוכב בחציכו וחסכתי 4 ימים של חנק. הכי משתלם בארץ!"
+        },
+        {
+            id: 't4',
+            name: "עייף מציוד ומשקל",
+            role: "חצי-בוגר מחזור ג'",
+            stars: 1,
+            text: "שמתי את מאזן הציפה ביבשה, הרגשתי שזה שוקל 40 קילו ואמרתי למדריך שאני מעדיף לחכות בבר של המלון. קיבלתי תעודת חצי כוכב מוכרת במקום!"
+        },
+        {
+            id: 't5',
+            name: "חרדתי מצטיין",
+            role: "חצי-בוגר מחזור ג'",
+            stars: 5,
+            text: "נכנסתי למים עד הפופיק, ראיתי צל של דג זהב ונבהלתי. המדריך של חציכו הרגיע אותי והסביר שזה בסדר גמור לפרוש. הקורס הטוב בחיי!"
         }
     ],
 
@@ -200,13 +214,42 @@ document.addEventListener('DOMContentLoaded', () => {
     initImageModal();
 });
 
-// Helper for rendering star strings with PNG half-star
-function renderStars(starStr) {
-    if (!starStr) return '';
-    if (starStr.includes('<img')) {
-        return starStr;
+// Helper for rendering star count as PNG half-stars
+function renderStars(starVal) {
+    const count = getStarCount(starVal);
+    let html = '';
+    for (let i = 0; i < count; i++) {
+        html += '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">';
     }
-    return escapeHtml(starStr).replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
+    return html;
+}
+
+function getStarCount(starVal) {
+    if (starVal === null || starVal === undefined || starVal === '') return 3;
+    if (typeof starVal === 'number') return Math.max(1, Math.min(10, starVal));
+    if (typeof starVal === 'string') {
+        const parsed = parseFloat(starVal);
+        if (!isNaN(parsed) && parsed > 0) {
+            return Math.max(1, Math.min(10, Math.round(parsed)));
+        }
+        const imgMatches = (starVal.match(/<img/g) || []).length;
+        const emojiMatches = (starVal.match(/⭐|½|1\/2/g) || []).length;
+        const total = imgMatches + emojiMatches;
+        return total > 0 ? Math.min(10, total) : 3;
+    }
+    return 3;
+}
+
+function updateCharCounter(el) {
+    const counter = document.getElementById('char-count');
+    if (counter) {
+        counter.innerText = el.value.length;
+        if (el.value.length >= 480) {
+            counter.style.color = '#ef4444';
+        } else {
+            counter.style.color = 'var(--text-secondary)';
+        }
+    }
 }
 
 // Load from LocalStorage
@@ -565,7 +608,13 @@ function setupEventListeners() {
     if (addCalcSliderBtn) addCalcSliderBtn.addEventListener('click', () => openEditModal('calcSlider'));
 
     document.getElementById('btn-add-syllabus').addEventListener('click', () => openEditModal('syllabus'));
-    document.getElementById('btn-add-testimonial').addEventListener('click', () => openEditModal('testimonial'));
+    document.getElementById('btn-add-testimonial').addEventListener('click', () => {
+        if (appState.testimonials && appState.testimonials.length >= 5) {
+            alert("ניתן להוסיף עד 5 המלצות בסך הכל (כדי לשמור על תצוגה מאוזנת ומהודקת).");
+            return;
+        }
+        openEditModal('testimonial');
+    });
     document.getElementById('btn-add-faq').addEventListener('click', () => openEditModal('faq'));
 
     document.getElementById('modal-close-btn').addEventListener('click', closeModal);
@@ -658,23 +707,29 @@ function openEditModal(type, id = null) {
             </div>
         `;
     } else if (type === 'testimonial') {
+        const starsCount = item ? getStarCount(item.stars) : 3;
+        const textVal = item ? (item.text || '') : '';
         modalTitle.innerText = id ? "עריכת המלצה" : "הוספת המלצה חדשה";
         modalBody.innerHTML = `
             <div class="form-group">
                 <label>שם הממליץ/ה:</label>
-                <input type="text" id="m-name" class="form-control" value="${item ? item.name : ''}">
+                <input type="text" id="m-name" class="form-control" value="${item ? escapeHtml(item.name) : ''}">
             </div>
             <div class="form-group">
                 <label>תפקיד/תיאור:</label>
-                <input type="text" id="m-role" class="form-control" value="${item ? item.role : 'חצי-בוגר/ת מחזור א'}">
+                <input type="text" id="m-role" class="form-control" value="${item ? escapeHtml(item.role) : 'חצי-בוגר/ת מחזור א'}">
             </div>
             <div class="form-group">
-                <label>דירוג כוכבים (למשל ⭐⭐½):</label>
-                <input type="text" id="m-stars" class="form-control" value="${item ? item.stars : '⭐⭐½'}">
+                <label>מספר חצאי כוכבים (למשל: 1, 2, 3, 4, 5):</label>
+                <input type="number" id="m-stars-count" class="form-control" min="1" max="10" value="${starsCount}">
+                <small style="color:var(--text-secondary); font-size:0.8rem;">הזן מספר – תמונת חצי הכוכב תופיע כמספר הפעמים שתבחר.</small>
             </div>
-            <div class="form-group">
-                <label>תוכן ההמלצה:</label>
-                <textarea id="m-text" class="form-control" rows="3">${item ? item.text : ''}</textarea>
+            <div class="form-group" style="margin-top:1rem;">
+                <label>תוכן ההמלצה (עד 500 תווים / כ-80 מילים):</label>
+                <textarea id="m-text" class="form-control" rows="4" maxlength="500" oninput="updateCharCounter(this)">${escapeHtml(textVal)}</textarea>
+                <div id="char-counter" style="font-size:0.8rem; color:var(--text-secondary); text-align:left; margin-top:0.35rem;">
+                    <span id="char-count">${textVal.length}</span> / 500 תווים (עד 80 מילים)
+                </div>
             </div>
         `;
     } else if (type === 'faq') {
@@ -750,18 +805,22 @@ function saveModalItem() {
             btn.classList.toggle('active', btn.getAttribute('data-part') === currentSyllabusTab);
         });
     } else if (type === 'testimonial') {
-        const rawStars = document.getElementById('m-stars').value;
+        const countVal = parseInt(document.getElementById('m-stars-count').value) || 1;
         const newItem = {
             id,
             name: document.getElementById('m-name').value,
             role: document.getElementById('m-role').value,
-            stars: renderStars(rawStars),
+            stars: countVal,
             text: document.getElementById('m-text').value
         };
         if (editingModalItemId) {
             const idx = appState.testimonials.findIndex(x => x.id === id);
             appState.testimonials[idx] = newItem;
         } else {
+            if (appState.testimonials && appState.testimonials.length >= 5) {
+                alert("ניתן להוסיף עד 5 המלצות בסך הכל (כדי לשמור על מראה מאוזן ומהודק).");
+                return;
+            }
             appState.testimonials.push(newItem);
         }
     } else if (type === 'faq') {
