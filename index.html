@@ -182,6 +182,24 @@
                     <p class="section-desc editable" data-key="syllabusDesc">מבנה קורס מוקפד המותאם במיוחד לאנשים עם כוונות טובות ויכולת ביצוע חלקית.</p>
                 </div>
 
+                <!-- Syllabus Parts Tabs -->
+                <div class="syllabus-tabs-wrapper">
+                    <div class="syllabus-tabs" id="syllabus-tabs">
+                        <button class="syllabus-tab active" data-part="pool" onclick="switchSyllabusTab('pool')">
+                            <span class="tab-icon">🏊‍♂️</span>
+                            <span class="tab-title">חלק א': בריכה</span>
+                        </button>
+                        <button class="syllabus-tab" data-part="sea" onclick="switchSyllabusTab('sea')">
+                            <span class="tab-icon">🌊</span>
+                            <span class="tab-title">חלק ב': ים</span>
+                        </button>
+                        <button class="syllabus-tab" data-part="final" onclick="switchSyllabusTab('final')">
+                            <span class="tab-icon">🏅</span>
+                            <span class="tab-title">חלק ג': כישלון מסכם ותעודה</span>
+                        </button>
+                    </div>
+                </div>
+
                 <div class="syllabus-grid" id="syllabus-container">
                     <!-- Dynamic Syllabus items rendered by JS -->
                 </div>

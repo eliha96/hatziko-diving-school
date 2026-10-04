@@ -754,10 +754,73 @@ body.in-edit-mode .editable:hover {
     font-size: 1rem;
 }
 
+/* Syllabus Tabs & Themed Cards */
+.syllabus-tabs-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.5rem;
+}
+
+.syllabus-tabs {
+    display: inline-flex;
+    gap: 0.5rem;
+    background: rgba(7, 19, 34, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.5rem;
+    border-radius: var(--radius-full);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.syllabus-tab {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 0.6rem 1.4rem;
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+}
+
+.syllabus-tab:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.syllabus-tab.active[data-part="pool"] {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), rgba(0, 102, 255, 0.35));
+    color: #ffffff;
+    border: 1px solid rgba(0, 210, 255, 0.6);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
+
+.syllabus-tab.active[data-part="sea"] {
+    background: linear-gradient(135deg, rgba(0, 206, 201, 0.25), rgba(0, 150, 136, 0.35));
+    color: #ffffff;
+    border: 1px solid rgba(0, 206, 201, 0.6);
+    box-shadow: 0 0 20px rgba(0, 206, 201, 0.4);
+}
+
+.syllabus-tab.active[data-part="final"] {
+    background: linear-gradient(135deg, rgba(255, 123, 0, 0.3), rgba(224, 86, 36, 0.4));
+    color: #ffffff;
+    border: 1px solid rgba(255, 123, 0, 0.7);
+    box-shadow: 0 0 20px rgba(255, 123, 0, 0.5);
+}
+
 /* Syllabus Grid */
 .syllabus-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
 }
 
@@ -767,14 +830,17 @@ body.in-edit-mode .editable:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.syllabus-card:hover {
+    transform: translateY(-5px);
 }
 
 .syllabus-number {
     position: absolute;
     top: 1.25rem;
     left: 1.25rem;
-    background: rgba(0, 210, 255, 0.15);
-    color: var(--primary-cyan);
     font-weight: 800;
     padding: 0.25rem 0.75rem;
     border-radius: var(--radius-full);
@@ -782,9 +848,10 @@ body.in-edit-mode .editable:hover {
 }
 
 .syllabus-title {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
+    font-weight: 700;
 }
 
 .syllabus-duration {
@@ -798,15 +865,90 @@ body.in-edit-mode .editable:hover {
     color: var(--text-secondary);
     font-size: 0.95rem;
     margin-bottom: 1.25rem;
+    line-height: 1.6;
 }
 
 .syllabus-difficulty {
     font-size: 0.85rem;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.4rem 0.75rem;
+    padding: 0.5rem 0.85rem;
     border-radius: var(--radius-sm);
-    color: #4ade80;
     text-align: center;
+    font-weight: 600;
+}
+
+/* Pool Theme - Light Blue / Azure */
+.syllabus-card.theme-pool {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.12) 0%, rgba(7, 19, 34, 0.85) 100%);
+    border: 1px solid rgba(0, 210, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 210, 255, 0.15), inset 0 0 15px rgba(0, 210, 255, 0.05);
+}
+
+.syllabus-card.theme-pool .syllabus-number {
+    background: rgba(0, 210, 255, 0.2);
+    color: #00d2ff;
+    border: 1px solid rgba(0, 210, 255, 0.4);
+}
+
+.syllabus-card.theme-pool .syllabus-title {
+    background: linear-gradient(135deg, #ffffff 0%, #00d2ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.syllabus-card.theme-pool .syllabus-difficulty {
+    background: rgba(0, 210, 255, 0.1);
+    color: #70e1ff;
+    border: 1px solid rgba(0, 210, 255, 0.3);
+}
+
+/* Sea Theme - Turquoise */
+.syllabus-card.theme-sea {
+    background: linear-gradient(135deg, rgba(0, 206, 201, 0.14) 0%, rgba(7, 19, 34, 0.85) 100%);
+    border: 1px solid rgba(0, 206, 201, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 206, 201, 0.18), inset 0 0 15px rgba(0, 206, 201, 0.05);
+}
+
+.syllabus-card.theme-sea .syllabus-number {
+    background: rgba(0, 206, 201, 0.2);
+    color: #00cec9;
+    border: 1px solid rgba(0, 206, 201, 0.4);
+}
+
+.syllabus-card.theme-sea .syllabus-title {
+    background: linear-gradient(135deg, #ffffff 0%, #00cec9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.syllabus-card.theme-sea .syllabus-difficulty {
+    background: rgba(0, 206, 201, 0.1);
+    color: #55efc4;
+    border: 1px solid rgba(0, 206, 201, 0.3);
+}
+
+/* Final Summary Failure Theme - Orange */
+.syllabus-card.theme-final {
+    background: linear-gradient(135deg, rgba(255, 123, 0, 0.16) 0%, rgba(7, 19, 34, 0.85) 100%);
+    border: 1px solid rgba(255, 123, 0, 0.5);
+    box-shadow: 0 8px 32px rgba(255, 123, 0, 0.22), inset 0 0 20px rgba(255, 123, 0, 0.08);
+}
+
+.syllabus-card.theme-final .syllabus-number {
+    background: rgba(255, 123, 0, 0.25);
+    color: #ff9f43;
+    border: 1px solid rgba(255, 123, 0, 0.5);
+}
+
+.syllabus-card.theme-final .syllabus-title {
+    background: linear-gradient(135deg, #ffffff 0%, #ff9f43 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.syllabus-card.theme-final .syllabus-difficulty {
+    background: rgba(255, 123, 0, 0.12);
+    color: #ffb142;
+    border: 1px solid rgba(255, 123, 0, 0.4);
 }
 
 /* Calculator Section */

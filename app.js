@@ -89,35 +89,48 @@ const DEFAULT_DATA = {
     syllabus: [
         {
             id: 's1',
+            part: 'pool',
             number: "שיעור 1",
-            title: "חבישת ציוד וחרדה ראשונית",
+            title: "הכרת מים רדודים וחרדה מבוקרת",
             duration: "15 דקות",
-            desc: "לומדים איך לשים מאזן ציפה, להרגיש שזה ממש כבד, ולהגיד 'בעצם חם לי מדי בחליפה'.",
-            difficulty: "דרגת קושי: קל עד אפסי"
+            desc: "לומדים לעמוד במים עד המותניים בבריכה המחוממת, לחבוש מסכה ולהבין שהקרקעית ממש קרובה ובטוחה.",
+            difficulty: "רמת קושי: קלה ביותר (אפס מאמץ)"
         },
         {
             id: 's2',
+            part: 'pool',
             number: "שיעור 2",
-            title: "טכניקות השוואת לחצים (ביבשה)",
+            title: "טכניקות ציפה ונשימה ללא מאמץ",
             duration: "45 דקות (כולל קפה)",
-            desc: "אימון פמפום אוזניים מתקדם בישיבה בבית קפה מול הים. כולל הסבר למה אין שום סיבה לרדת למטה.",
-            difficulty: "דרגת קושי: מנוחה מוחלטת"
+            desc: "תרגול שכיבה על הגב עם שנורקל, ציפה פסיבית והרמת יד מיידית לקריאה למציל במקרה של תחושת עייפות קלה.",
+            difficulty: "רמת קושי: מנוחת צהריים מוחלטת"
         },
         {
             id: 's3',
+            part: 'sea',
             number: "שיעור 3",
-            title: "צלילה עמוקה ל-1.20 מטר",
-            duration: "7 דקות",
-            desc: "טבילת ראש ראשונה! אפשרות לעמוד על הקרקעית בכל רגע נתון ולזעוק 'המים מלוחים'.",
-            difficulty: "דרגת קושי: בריכת ילדים"
+            title: "כניסה מבוקרת לים עד הברכיים",
+            duration: "20 דקות",
+            desc: "צועדים בזהירות 3 מטרים מהחוף, מרגישים את הגלים הראשונים ומחליטים מיד אם כדאי לחזור לשמשייה.",
+            difficulty: "רמת קושי: בינונית (חול באצבעות)"
         },
         {
             id: 's4',
+            part: 'sea',
+            number: "שיעור 4",
+            title: "צלילת עומק רדוד (1.20 מטר)",
+            duration: "7 דקות",
+            desc: "טבילת ראש ראשונה בים הפתוח! אפשרות לזעוק 'המים מלוחים מדי' ולעמוד בחזרה בביטחון מלא על שתי רגליים.",
+            difficulty: "רמת קושי: אתגר גלים קל"
+        },
+        {
+            id: 's5',
+            part: 'final',
             number: "שיעור מסכם",
-            title: "טקס קבלת החצי כוכב",
-            duration: "שעתיים (ארוחת צהריים)",
-            desc: "הענקת תעודה רשמית, צילומים עם שנורקל מחוץ למים, והבטחה הדדית שזה היה הקורס האחרון שלנו.",
-            difficulty: "דרגת קושי: חגיגי"
+            title: "ירידה למעמקים (להמחשה למה ביבשה יותר נעים)",
+            duration: "שעתיים (כולל ארוחת צהריים)",
+            desc: "ירידה מבוקרת ל-1.50 מטר, חוויית לחץ קל באוזניים, הסכמה מוחלטת של הקבוצה שביבשה הרבה יותר נעים, וענידת תעודת חצי כוכב!",
+            difficulty: "רמת קושי: ויתור אצילי וחגיגי"
         }
     ],
 
@@ -174,6 +187,7 @@ let appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
 let isEditMode = false;
 let editingModalItemType = null;
 let editingModalItemId = null;
+let currentSyllabusTab = 'pool';
 
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
@@ -212,6 +226,16 @@ function loadSavedData() {
             }
             if (!appState.calcSliders || appState.calcSliders.length === 0) {
                 appState.calcSliders = JSON.parse(JSON.stringify(DEFAULT_DATA.calcSliders));
+            }
+            if (appState.syllabus) {
+                appState.syllabus.forEach(item => {
+                    if (!item.part) {
+                        if (item.id === 's1' || item.id === 's2') item.part = 'pool';
+                        else if (item.id === 's3' || item.id === 's4') item.part = 'sea';
+                        else if (item.id === 's5') item.part = 'final';
+                        else item.part = 'pool';
+                    }
+                });
             }
             if (appState.heroBadge && (appState.heroBadge.includes('⭐½') || appState.heroBadge.includes('⭐1/2') || appState.heroBadge.includes('⭐ 1/2'))) {
                 appState.heroBadge = appState.heroBadge.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב">');
@@ -387,30 +411,63 @@ function updateCalculatorResult() {
     }
 }
 
+// Switch Active Syllabus Tab
+function switchSyllabusTab(part) {
+    currentSyllabusTab = part;
+    document.querySelectorAll('.syllabus-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-part') === part);
+    });
+    renderSyllabus();
+}
+
 // Render Syllabus
 function renderSyllabus() {
     const container = document.getElementById('syllabus-container');
     if (!container) return;
 
-    container.innerHTML = appState.syllabus.map(item => `
-        <div class="syllabus-card glass-card" data-id="${item.id}">
-            <span class="syllabus-number">${escapeHtml(item.number)}</span>
-            <div>
-                <h3 class="syllabus-title">${escapeHtml(item.title)}</h3>
-                <div class="syllabus-duration">⏱️ ${escapeHtml(item.duration)}</div>
-                <p class="syllabus-desc">${escapeHtml(item.desc)}</p>
+    if (!appState.syllabus || appState.syllabus.length === 0) {
+        appState.syllabus = JSON.parse(JSON.stringify(DEFAULT_DATA.syllabus));
+    }
+
+    const filtered = appState.syllabus.filter(item => {
+        const itemPart = item.part || 'pool';
+        return itemPart === currentSyllabusTab;
+    });
+
+    if (filtered.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align:center; padding:3rem 1rem; color: var(--text-secondary);">
+                <p style="font-size:1.1rem; margin-bottom:1rem;">אין עדיין שיעורים בחלק זה.</p>
+                ${isEditMode ? `<button class="btn btn-outline" onclick="openEditModal('syllabus')">➕ הוסף שיעור לחלק זה</button>` : ''}
             </div>
-            <div>
-                <div class="syllabus-difficulty">${escapeHtml(item.difficulty)}</div>
-                ${isEditMode ? `
-                    <div class="item-actions-bar">
-                        <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">✏️ ערוך שיעור</button>
-                        <button class="btn btn-sm btn-outline" onclick="deleteItem('syllabus', '${item.id}')">🗑️ מחק</button>
-                    </div>
-                ` : ''}
+        `;
+        return;
+    }
+
+    container.innerHTML = filtered.map(item => {
+        const itemPart = item.part || 'pool';
+        const themeClass = itemPart === 'sea' ? 'theme-sea' : (itemPart === 'final' ? 'theme-final' : 'theme-pool');
+
+        return `
+            <div class="syllabus-card glass-card ${themeClass}" data-id="${item.id}">
+                <span class="syllabus-number">${escapeHtml(item.number || 'שיעור')}</span>
+                <div>
+                    <h3 class="syllabus-title">${escapeHtml(item.title)}</h3>
+                    ${item.duration ? `<div class="syllabus-duration">⏱️ ${escapeHtml(item.duration)}</div>` : ''}
+                    <p class="syllabus-desc">${escapeHtml(item.desc)}</p>
+                </div>
+                <div>
+                    <div class="syllabus-difficulty">${escapeHtml(item.difficulty)}</div>
+                    ${isEditMode ? `
+                        <div class="item-actions-bar" style="margin-top:1rem;">
+                            <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">✏️ ערוך שיעור</button>
+                            <button class="btn btn-sm btn-outline" onclick="deleteItem('syllabus', '${item.id}')">🗑️ מחק</button>
+                        </div>
+                    ` : ''}
+                </div>
             </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 // Render Testimonials
@@ -568,11 +625,20 @@ function openEditModal(type, id = null) {
             </div>
         `;
     } else if (type === 'syllabus') {
+        const selectedPart = item ? (item.part || 'pool') : currentSyllabusTab;
         modalTitle.innerText = id ? "עריכת שיעור בתוכנית" : "הוספת שיעור בתוכנית";
         modalBody.innerHTML = `
             <div class="form-group">
-                <label>מספר/כותרת קטנה:</label>
-                <input type="text" id="m-number" class="form-control" value="${item ? item.number : 'שיעור חדש'}">
+                <label>חלק / קטגוריה בסילבוס:</label>
+                <select id="m-part" class="form-control">
+                    <option value="pool" ${selectedPart === 'pool' ? 'selected' : ''}>חלק א': בריכה (תכלת)</option>
+                    <option value="sea" ${selectedPart === 'sea' ? 'selected' : ''}>חלק ב': ים (טורקיז)</option>
+                    <option value="final" ${selectedPart === 'final' ? 'selected' : ''}>חלק ג': כישלון מסכם ותעודה (כתום)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>מספר/כותרת קטנה (למשל: שיעור 1, שיעור מסכם):</label>
+                <input type="text" id="m-number" class="form-control" value="${item ? (item.number || 'שיעור') : 'שיעור'}">
             </div>
             <div class="form-group">
                 <label>כותרת השיעור:</label>
@@ -580,15 +646,15 @@ function openEditModal(type, id = null) {
             </div>
             <div class="form-group">
                 <label>משך זמן:</label>
-                <input type="text" id="m-duration" class="form-control" value="${item ? item.duration : '20 דקות'}">
+                <input type="text" id="m-duration" class="form-control" value="${item ? (item.duration || '20 דקות') : '20 דקות'}">
             </div>
             <div class="form-group">
-                <label>תיאור:</label>
+                <label>פירוט השיעור:</label>
                 <textarea id="m-desc" class="form-control" rows="3">${item ? item.desc : ''}</textarea>
             </div>
             <div class="form-group">
                 <label>רמת קושי:</label>
-                <input type="text" id="m-difficulty" class="form-control" value="${item ? item.difficulty : 'דרגת קושי: קל מאוד'}">
+                <input type="text" id="m-difficulty" class="form-control" value="${item ? item.difficulty : 'רמת קושי: קלה ביותר'}">
             </div>
         `;
     } else if (type === 'testimonial') {
@@ -666,6 +732,7 @@ function saveModalItem() {
     } else if (type === 'syllabus') {
         const newItem = {
             id,
+            part: document.getElementById('m-part').value,
             number: document.getElementById('m-number').value,
             title: document.getElementById('m-title').value,
             duration: document.getElementById('m-duration').value,
@@ -678,6 +745,10 @@ function saveModalItem() {
         } else {
             appState.syllabus.push(newItem);
         }
+        currentSyllabusTab = newItem.part;
+        document.querySelectorAll('.syllabus-tab').forEach(btn => {
+            btn.classList.toggle('active', btn.getAttribute('data-part') === currentSyllabusTab);
+        });
     } else if (type === 'testimonial') {
         const rawStars = document.getElementById('m-stars').value;
         const newItem = {
