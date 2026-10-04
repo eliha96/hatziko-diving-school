@@ -258,19 +258,28 @@ function startTerminalStream() {
     const imgTimeout = setTimeout(() => {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'rat-scanline-image-wrapper';
-        imgWrapper.innerHTML = `<img src="matrix_rat_catch_me_if_you_can.jpg" alt="Catch me if you can" class="rat-scanline-img" />`;
+        
+        const img = document.createElement('img');
+        img.src = 'matrix_rat_catch_me_if_you_can.jpg';
+        img.alt = 'Catch me if you can';
+        img.className = 'rat-scanline-img';
+
+        imgWrapper.appendChild(img);
         logsContainer.appendChild(imgWrapper);
         
         // Continuously scroll to keep bottom of expanding image visible
         let scrollCount = 0;
         const scrollInterval = setInterval(() => {
             logsContainer.scrollTop = logsContainer.scrollHeight;
-            if (imgWrapper.scrollIntoView) {
-                imgWrapper.scrollIntoView({ behavior: 'smooth', block: 'end' });
-            }
             scrollCount++;
             if (scrollCount > 40) clearInterval(scrollInterval);
         }, 50);
+
+        // When scanline animation finishes, ensure max-height is unconstrained
+        setTimeout(() => {
+            imgWrapper.style.maxHeight = 'none';
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }, 1600);
     }, imageStartTime);
     terminalTimeouts.push(imgTimeout);
 }
