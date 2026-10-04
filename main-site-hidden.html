@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חציכו - בית ספר לצלילה | חצי כוכב. חצי כוח.</title>
+    <meta name="description" content="בית הספר לצלילה היחיד בארץ שמבטיח שתסיימו 50% מהקורס. מתאים במיוחד לסובלים מבעיות אוזניים וחרדה לעומק!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&family=Rubik:ital,wght@0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/new-logo.png" type="image/png">
+</head>
+<body>
+    <!-- Edit Mode Bar -->
+    <div id="edit-mode-bar" class="edit-mode-bar hidden">
+        <div class="container edit-bar-content">
+            <span class="edit-badge">✏️ מצב עריכה פעיל - לחץ על כל טקסט לעריכה</span>
+            <div class="edit-actions">
+                <button class="btn btn-sm btn-outline" id="btn-change-images">🖼️ החלף תמונות</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-stat">➕ הוסף מדד/מספר</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-calc-slider">➕ הוסף מדד למחשבון</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-syllabus">➕ הוסף שיעור</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-testimonial">➕ הוסף המלצה</button>
+                <button class="btn btn-sm btn-outline" id="btn-add-faq">➕ הוסף שאלה</button>
+                <button class="btn btn-sm btn-success" id="btn-save-data">💾 שמור שינויים</button>
+                <button class="btn btn-sm btn-warning" id="btn-reset-data">🔄 אפס למקור</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Animated Waves & Rubber Duck -->
+    <div class="ocean-surface-header">
+        <div class="duck-wrapper">
+            <div class="rubber-duck" title="ברווז גומי צף בחציכו">🦆</div>
+        </div>
+        <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+            <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+            </defs>
+            <g class="parallax-waves">
+                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(0, 210, 255, 0.4)" />
+                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(0, 102, 255, 0.3)" />
+                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(13, 31, 54, 0.7)" />
+                <use xlink:href="#gentle-wave" x="48" y="7" fill="#071322" />
+            </g>
+        </svg>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="header" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="brand">
+                <img src="assets/new-logo.png" alt="לוגו חציכו" class="brand-logo" id="main-logo-img">
+                <div class="brand-text">
+                    <span class="brand-title editable" data-key="brandTitle">חציכו</span>
+                    <span class="brand-subtitle editable" data-key="brandSubtitle">בית ספר לצלילה</span>
+                </div>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="#about" class="nav-link">למה חציכו?</a>
+                <a href="#syllabus" class="nav-link">תוכנית הלימודים</a>
+                <a href="#calculator" class="nav-link">מחשבון חרדה</a>
+                <a href="#testimonials" class="nav-link">המלצות</a>
+                <a href="#certificate" class="nav-link">מחולל תעודה</a>
+                <a href="#faq" class="nav-link">שאלות נפוצות</a>
+            </nav>
+
+            <div class="nav-controls">
+                <a href="coming-soon.html" class="btn btn-sm btn-outline" style="border-color: var(--accent-gold); color: var(--accent-gold);">🚧 עמוד בבנייה</a>
+                <button id="toggle-edit-mode" class="btn btn-outline-gold">
+                    <span id="edit-toggle-icon">✏️</span> <span id="edit-toggle-text">מצב עריכה</span>
+                </button>
+                <a href="#register" class="btn btn-primary btn-glow editable" data-key="navCta">הרשמה לחצי כוכב</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating School of Upside-Down Fish -->
+    <div class="sea-creatures-layer" id="sea-creatures">
+        <div class="fish-school school-top">
+            <span class="school-fish sf-1">🐠</span>
+            <span class="school-fish sf-2">🐟</span>
+            <span class="school-fish sf-3">🐡</span>
+            <span class="school-fish sf-4">🐠</span>
+            <span class="school-fish sf-5">🐟</span>
+        </div>
+
+        <div class="fish-school school-mid">
+            <span class="school-fish sf-1">🐟</span>
+            <span class="school-fish sf-2">🐡</span>
+            <span class="school-fish sf-3">🐠</span>
+            <span class="school-fish sf-4">🐟</span>
+            <span class="school-fish sf-5">🐡</span>
+            <span class="school-fish sf-6">🐠</span>
+        </div>
+
+        <div class="swimming-shark shark-1">🦈</div>
+    </div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section" id="hero">
+            <div class="bubbles-container" id="bubbles"></div>
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="hero-logo-wrapper">
+                        <img src="assets/new-logo.png" alt="לוגו חציכו" class="hero-brand-logo" id="hero-logo-img">
+                    </div>
+                    <div class="badge-half-star">
+                        <span class="editable" data-key="heroBadge"><img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב"> מסלול חצי כוכב יוקרתי</span>
+                    </div>
+                    <h1 class="hero-title editable" data-key="heroTitle">חציכו – בית ספר לצלילה</h1>
+                    <p class="hero-motto editable" data-key="heroMotto">"חצי כוכב. חצי כוח."</p>
+                    <p class="hero-description editable" data-key="heroDescription">
+                        למה לצלול 30 מטר לעומק כשרק ברום המים אפשר לנשום? ברוכים הבאים לבית הספר היחיד בעולם שמבין שבעיות אוזניים וחרדה קלה הן לא מניעה – הן פשוט סיבה מצוינת לסיים בדיוק בחצי.
+                    </p>
+
+                    <!-- Dynamic Hero Stat Tiles -->
+                    <div class="hero-stats" id="hero-stats-container">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <div class="hero-ctas">
+                        <a href="#register" class="btn btn-primary btn-lg editable" data-key="heroCtaPrimary">תשריינו לי חצי כוכב</a>
+                        <a href="#calculator" class="btn btn-glass btn-lg editable" data-key="heroCtaSecondary">אני מפחד/ת – כנסו למחשבון</a>
+                    </div>
+                </div>
+
+                <div class="hero-media">
+                    <div class="hero-image-wrapper">
+                        <img src="assets/hero-new.jfif" alt="צוללן חציכו" class="hero-img" id="main-hero-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Hatziko / Features Section -->
+        <section class="section about-section" id="about">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle editable" data-key="aboutSubtitle">היתרונות הייחודיים לנו</span>
+                    <h2 class="section-title editable" data-key="aboutTitle">למה דווקא מסלול "חצי כוכב"?</h2>
+                    <p class="section-desc editable" data-key="aboutDesc">אנחנו לא מאמינים במאמץ מיותר. הנה 3 סיבות למה הקורס שלנו הוא המשתלם ביותר:</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon editable" data-key="feat1Icon">👂</div>
+                        <h3 class="feature-title editable" data-key="feat1Title">0% לחץ באוזניים</h3>
+                        <p class="feature-text editable" data-key="feat1Text">
+                            בזכות שיטת העומק הרדוד שלנו (עד מטר וחצי), האוזניים שלך יישארו פתוחות, רגועות ובלי צורך לפמפם שום דבר חוץ מאשר את האגו.
+                        </p>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon editable" data-key="feat2Icon">🛋️</div>
+                        <h3 class="feature-title editable" data-key="feat2Title">אפס חרדות – 100% בנוחות</h3>
+                        <p class="feature-text editable" data-key="feat2Text">
+                            נכנסת ללחץ מ-2 מטר עומק? אין בעיה! המדריך מיד עוצר את הצלילה, עולים ליבשה ומזמינים ארטיק רמזור בחוף.
+                        </p>
+                    </div>
+
+                    <div class="feature-card glass-card">
+                        <div class="feature-icon editable" data-key="feat3Icon">📜</div>
+                        <h3 class="feature-title editable" data-key="feat3Title">תעודה חצי-מוכרת</h3>
+                        <p class="feature-text editable" data-key="feat3Text">
+                            התעודה שלנו מוכרת על ידינו בלבד, תקפה מים המלח ועד הבריכה בבית, ומבטיחה שכולם ידעו שהשתדלת – וזה מה שחשוב.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Syllabus / Course Plan Section -->
+        <section class="section syllabus-section" id="syllabus">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle editable" data-key="syllabusSubtitle">תוכנית הלימודים היוקרתית</span>
+                    <h2 class="section-title editable" data-key="syllabusTitle">מה לומדים בדרך לחצי כוכב?</h2>
+                    <p class="section-desc editable" data-key="syllabusDesc">מבנה קורס מוקפד המותאם במיוחד לאנשים עם כוונות טובות ויכולת ביצוע חלקית.</p>
+                </div>
+
+                <!-- Syllabus Parts Tabs -->
+                <div class="syllabus-tabs-wrapper">
+                    <div class="syllabus-tabs" id="syllabus-tabs">
+                        <button class="syllabus-tab active" data-part="pool" onclick="switchSyllabusTab('pool')">
+                            <span class="tab-icon">🏊‍♂️</span>
+                            <span class="tab-title">חלק א': בריכה</span>
+                        </button>
+                        <button class="syllabus-tab" data-part="sea" onclick="switchSyllabusTab('sea')">
+                            <span class="tab-icon">🌊</span>
+                            <span class="tab-title">חלק ב': ים</span>
+                        </button>
+                        <button class="syllabus-tab" data-part="final" onclick="switchSyllabusTab('final')">
+                            <span class="tab-icon">🏅</span>
+                            <span class="tab-title">חלק ג': כישלון מסכם ותעודה</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="syllabus-grid" id="syllabus-container">
+                    <!-- Dynamic Syllabus items rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Anxiety & Depth Calculator -->
+        <section class="section calculator-section" id="calculator">
+            <div class="container">
+                <div class="calculator-card glass-card">
+                    <div class="calc-header">
+                        <span class="calc-badge editable" data-key="calcBadge">🧮 מחשבון חציכו בלעדי</span>
+                        <h2 class="editable" data-key="calcTitle">מחשבון עומק, אוזניים וחרדה</h2>
+                        <p class="editable" data-key="calcDesc">הזינו את המדדים שלכם וגלו מה העומק המקסימלי הבטוח עבורכם היום:</p>
+                    </div>
+
+                    <div class="calc-body">
+                        <div class="calc-controls" id="calc-sliders-container">
+                            <!-- Dynamic Sliders rendered by JS -->
+                        </div>
+
+                        <div class="calc-result">
+                            <div class="result-box">
+                                <span class="result-title editable" data-key="calcResultHeader">העומק המומלץ עבורך:</span>
+                                <div class="result-depth" id="calc-depth">1.1 מטר</div>
+                                <div class="result-zone editable" data-key="calcZoneMid" id="calc-zone">בריכת פעוטות רדודה</div>
+                                <p class="result-advice editable" data-key="calcAdviceMid" id="calc-advice">
+                                    "מעולה! בגובה הזה הראש שלך כמעט מחוץ למים. אפשר לשים שנורקל ועדיין לשמוע את המוזיקה מהבר."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section testimonials-section" id="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle editable" data-key="testimonialsSubtitle">מה אומרים החצי-בוגרים שלנו?</span>
+                    <h2 class="section-title editable" data-key="testimonialsTitle">ביקורות מהללות (למחצה)</h2>
+                    <p class="section-desc editable" data-key="testimonialsDesc">סיפורים אמיתיים של אנשים שנכנסו למים ויצאו כמעט מיד.</p>
+                </div>
+
+                <div class="testimonials-grid" id="testimonials-container">
+                    <!-- Dynamic Testimonials rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificate Generator Section -->
+        <section class="section certificate-section" id="certificate">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle editable" data-key="certSubtitle">מזכרת לכל החיים</span>
+                    <h2 class="section-title editable" data-key="certTitle">מחולל תעודת "חצי כוכב" רשמית</h2>
+                    <p class="section-desc editable" data-key="certDesc">הזינו את השם שלכם או של חברים וקבלו תעודת סיום מותאמת אישית!</p>
+                </div>
+
+                <div class="cert-wrapper">
+                    <div class="cert-form glass-card">
+                        <h3 class="editable" data-key="certFormTitle">פרטי התעודה</h3>
+                        <div class="form-group">
+                            <label for="cert-name-input" class="editable" data-key="certNameLabel">שם מלא למקבל/ת התעודה:</label>
+                            <input type="text" id="cert-name-input" class="form-control" value="אלופה עם בעיות אוזניים">
+                        </div>
+
+                        <div class="form-group">
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                <label for="cert-reason-select" class="editable" data-key="certReasonLabel" style="margin:0;">סיבת קבלת התעודה:</label>
+                                <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('certReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                            </div>
+                            <select id="cert-reason-select" class="form-control">
+                                <!-- Rendered dynamically by JS -->
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cert-date-input" class="editable" data-key="certDateLabel">תאריך הנפקה:</label>
+                            <input type="date" id="cert-date-input" class="form-control">
+                        </div>
+
+                        <button id="btn-print-cert" class="btn btn-primary btn-block editable" data-key="certPrintBtnText">🖨️ הדפס / שמור תעודה</button>
+                    </div>
+
+                    <!-- Rendered Certificate Card -->
+                    <div class="cert-preview-container" id="printable-certificate">
+                        <div class="cert-card">
+                            <div class="cert-border-inner">
+                                <div class="cert-header">
+                                    <img src="assets/new-logo.png" alt="לוגו" class="cert-logo" id="cert-logo-img">
+                                    <div class="cert-brand-title editable" data-key="brandTitle">חציכו - בית ספר לצלילה</div>
+                                    <div class="cert-motto editable" data-key="heroMotto">"חצי כוכב. חצי כוח."</div>
+                                </div>
+
+                                <div class="cert-badge"><img src="assets/half-star.png" class="cert-half-star-img" alt="חצי כוכב"></div>
+                                <h2 class="cert-title editable" data-key="certDocTitle">תעודת חצי כוכב רשמית</h2>
+                                <p class="cert-to-text editable" data-key="certDocToText">תעודה זו מוענקת בזאת בגאווה רבה ל:</p>
+                                
+                                <div class="cert-person-name" id="cert-display-name">אלופה עם בעיות אוזניים</div>
+
+                                <div class="cert-body-wrapper" style="margin-bottom:1.5rem;">
+                                    <span class="cert-body-prefix editable" data-key="certDocBodyPrefix" style="color: #2d3748; font-size: 1.05rem;">על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, וסיבת פרישה: </span>
+                                    <span class="cert-body-text" id="cert-display-reason" style="font-weight: 700; color: #b7791f; font-size: 1.05rem;">בעיות אוזניים מוצדקות וחרדה קלה</span>
+                                </div>
+
+                                <div class="cert-footer">
+                                    <div class="cert-sig">
+                                        <div class="sig-line"></div>
+                                        <span class="editable" data-key="certDocSig1">חזיכו - מדריך ראשי</span>
+                                    </div>
+                                    <div class="cert-seal">
+                                        <span class="seal-icon">🏆</span>
+                                        <span class="editable" data-key="certDocSeal">חצי מוכר</span>
+                                    </div>
+                                    <div class="cert-sig">
+                                        <div class="sig-line"></div>
+                                        <span id="cert-display-date">03/10/2026</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="section faq-section" id="faq">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle editable" data-key="faqSubtitle">יש לכם שאלות?</span>
+                    <h2 class="section-title editable" data-key="faqTitle">שאלות נפוצות (ותשובות כנות)</h2>
+                    <p class="section-desc editable" data-key="faqDesc">כל מה שרציתם לדעת לפני שאתם מבינים שאין לכם כוח לזה.</p>
+                </div>
+
+                <div class="faq-list" id="faq-container">
+                    <!-- Dynamic FAQ items rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Satirical Sign-Up Form Section -->
+        <section class="section register-section" id="register">
+            <div class="container">
+                <div class="register-card glass-card">
+                    <div class="register-header">
+                        <h2 class="editable" data-key="registerTitle">שריון מקום בקורס החצי כוכב הקרוב</h2>
+                        <p class="editable" data-key="registerDesc">מלאו את הפרטים ונחזור אליכם ברגע שנסיים את הקפה.</p>
+                    </div>
+
+                    <form id="satirical-form" class="register-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="reg-name" class="editable" data-key="regNameLabel">שם מלא:</label>
+                                <input type="text" id="reg-name" class="form-control" data-key-placeholder="regNamePlaceholder" placeholder="ישראל ישראלי" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-phone" class="editable" data-key="regPhoneLabel">טלפון:</label>
+                                <input type="tel" id="reg-phone" class="form-control" data-key-placeholder="regPhonePlaceholder" placeholder="050-0000000" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                    <label for="reg-reason" class="editable" data-key="regReasonLabel" style="margin:0;">סיבת הפרישה המשוערת שלך:</label>
+                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                                </div>
+                                <select id="reg-reason" class="form-control">
+                                    <!-- Rendered dynamically by JS -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+                                    <label for="reg-motivation" class="editable" data-key="regMotivationLabel" style="margin:0;">רמת המוטיבציה שלך להשלים את הקורס:</label>
+                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regMotivations')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
+                                </div>
+                                <select id="reg-motivation" class="form-control">
+                                    <!-- Rendered dynamically by JS -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg-notes" class="editable" data-key="regNotesLabel">הערות מיוחדות (למשל: איזה ארטיק להכין לך בחוף?):</label>
+                            <textarea id="reg-notes" class="form-control" rows="3" data-key-placeholder="regNotesPlaceholder" placeholder="ארטיק לימון / קפה קר עם חלב שיבולת שועל..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-block editable" data-key="registerBtnText">שגרו בקשה (בלי לחץ)</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Ocean Floor / Seabed Footer Section -->
+    <div class="seabed-decoration">
+        <div class="seabed-sand"></div>
+        <div class="seabed-elements container">
+            <div class="seabed-shipwreck" title="ספינה טבועה - עומק 2.0 מטר">🚢</div>
+            <div class="seabed-seaweed seaweed-1">🌿</div>
+            <div class="seabed-starfish" title="כוכב ים">⭐</div>
+            <div class="seabed-seaweed seaweed-2">🌿</div>
+            <div class="seabed-chest" title="תיבת אוצר עם קפה קר">🪙</div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <div class="brand">
+                    <img src="assets/new-logo.png" alt="לוגו חציכו" class="brand-logo" id="footer-logo-img">
+                    <div class="brand-text">
+                        <span class="brand-title editable" data-key="brandTitle">חציכו</span>
+                        <span class="brand-subtitle editable" data-key="brandSubtitle">בית ספר לצלילה</span>
+                    </div>
+                </div>
+                <p class="footer-desc editable" data-key="footerDesc">בית הספר הסאטירי המוביל בישראל לצלילות רדודות, חצי כוכב ואפס מאמץ.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>קישורים מהירים</h4>
+                <ul>
+                    <li><a href="#about">למה חציכו?</a></li>
+                    <li><a href="#syllabus">תוכנית הלימודים</a></li>
+                    <li><a href="#calculator">מחשבון חרדה</a></li>
+                    <li><a href="#testimonials">המלצות</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-disclaimer">
+                <h4>הבהרה משפטית</h4>
+                <p class="editable" data-key="footerDisclaimer">האתר הינו אתר היתולי/סאטירי שנבנה בהמון אהבה והומור. אין לראות בתעודת "חצי כוכב" הסמכה רשמית לצלילה חופשית או צלילת מכשירים, אלא אם כן אתם צוללים באמבטיה.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p class="editable" data-key="footerCopyright">© 2026 חציכו – כל הזכויות שמורות לחצי כוכב וחצי כוח.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Edit Item Modal -->
+    <div id="edit-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="modal-title">עריכת פריט</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Dynamic Modal form fields -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="modal-cancel-btn">ביטול</button>
+                <button class="btn btn-success" id="modal-save-btn">שמור פריט</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Images Edit Modal -->
+    <div id="images-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>החלפת תמונות לוגו וצולל</h3>
+                <button class="modal-close" id="images-modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 1rem; color: var(--accent-gold);">ניתן להעלות קובץ תמונה מהמחשב או להזין קישור/נתיב קובץ:</p>
+                
+                <div class="form-group">
+                    <label>לוגו (מומלץ ריבועי 512x512 פיקסלים):</label>
+                    <input type="text" id="input-logo-path" class="form-control" placeholder="assets/new-logo.png">
+                    <input type="file" id="upload-logo-file" accept="image/*" class="form-control" style="margin-top: 0.4rem;">
+                </div>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label>תמונת צולל ראשית (מומלץ 1920x1080 פיקסלים):</label>
+                    <input type="text" id="input-hero-path" class="form-control" placeholder="assets/hero-new.jfif">
+                    <input type="file" id="upload-hero-file" accept="image/*" class="form-control" style="margin-top: 0.4rem;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="images-modal-cancel-btn">ביטול</button>
+                <button class="btn btn-success" id="images-modal-save-btn">עדכן תמונות</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
