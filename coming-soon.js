@@ -16,15 +16,15 @@ let timerInterval = null;
 let currentTickSpeed = 1000; // 1 second standard
 let speedBoostClicks = 0;
 
+function getThursdayTargetTimestamp() {
+    // Thursday October 8, 2026 at 10:00:00 AM Israel Time (GMT+3)
+    return new Date('2026-10-08T10:00:00+03:00').getTime();
+}
+
 function initCountdown() {
-    // Save target date 3 days in the future to localStorage so it stays consistent
-    let savedTarget = localStorage.getItem('hatziko_cs_target_date');
-    if (!savedTarget) {
-        const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
-        savedTarget = (Date.now() + threeDaysMs).toString();
-        localStorage.setItem('hatziko_cs_target_date', savedTarget);
-    }
-    countdownTargetDate = parseInt(savedTarget);
+    const targetMs = getThursdayTargetTimestamp();
+    localStorage.setItem('hatziko_cs_target_date', targetMs.toString());
+    countdownTargetDate = targetMs;
 
     startTimerInterval(1000);
 }
@@ -123,8 +123,7 @@ function initSpeedUpButton() {
                 document.body.classList.remove('screen-rumble');
                 if (warnBadge) warnBadge.classList.add('hidden');
 
-                const threeDaysMs = 3 * 24 * 60 * 60 * 1000;
-                countdownTargetDate = Date.now() + threeDaysMs;
+                countdownTargetDate = getThursdayTargetTimestamp();
                 localStorage.setItem('hatziko_cs_target_date', countdownTargetDate.toString());
 
                 speedBoostClicks = 0;
