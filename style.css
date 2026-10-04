@@ -133,6 +133,7 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     text-decoration: none;
     transition: all 0.25s ease;
+    white-space: nowrap;
 }
 
 .btn-primary {
@@ -672,6 +673,12 @@ body.in-edit-mode .editable:hover {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
+    align-items: center;
+}
+
+.hero-ctas .btn {
+    white-space: nowrap;
+    max-width: 100%;
 }
 
 .hero-image-wrapper {
