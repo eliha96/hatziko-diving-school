@@ -173,6 +173,15 @@ function initDevPortal() {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const typedPass = passInput ? passInput.value.trim().toLowerCase() : '';
+
+            // Secret Developer Override Password: 'kambucha'
+            if (typedPass === 'kambucha') {
+                modal.classList.add('hidden');
+                triggerKambuchaSecretUnlock();
+                return;
+            }
+
             if (devLoginAttempts === 0) {
                 devLoginAttempts = 1;
                 if (errorMsg) {
@@ -219,6 +228,96 @@ function initDevPortal() {
             }
         }
     });
+
+    // Typing 'kambucha' anywhere on the page easter egg listener
+    let secretBuffer = '';
+    document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        secretBuffer += e.key.toLowerCase();
+        if (secretBuffer.length > 25) secretBuffer = secretBuffer.slice(-25);
+        if (secretBuffer.includes('kambucha')) {
+            secretBuffer = '';
+            triggerKambuchaSecretUnlock();
+        }
+    });
+}
+
+// Web Audio API Sci-Fi Sound Synthesizer
+function playKambuchaSound() {
+    try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+
+        // High-tech 4-note ascending sci-fi chime
+        const notes = [440, 554.37, 659.25, 880];
+        notes.forEach((freq, i) => {
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.value = freq;
+
+            gain.gain.setValueAtTime(0.15, ctx.currentTime + i * 0.12);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.4);
+
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+
+            osc.start(ctx.currentTime + i * 0.12);
+            osc.stop(ctx.currentTime + i * 0.12 + 0.4);
+        });
+
+        // Sub-bass ocean sonar drop
+        const subOsc = ctx.createOscillator();
+        const subGain = ctx.createGain();
+        subOsc.type = 'triangle';
+        subOsc.frequency.setValueAtTime(160, ctx.currentTime + 0.4);
+        subOsc.frequency.exponentialRampToValueAtTime(45, ctx.currentTime + 1.8);
+
+        subGain.gain.setValueAtTime(0.3, ctx.currentTime + 0.4);
+        subGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.8);
+
+        subOsc.connect(subGain);
+        subGain.connect(ctx.destination);
+
+        subOsc.start(ctx.currentTime + 0.4);
+        subOsc.stop(ctx.currentTime + 1.8);
+    } catch (e) {
+        console.log('Audio synth error:', e);
+    }
+}
+
+// Trigger Kambucha Developer Portal Unlock & Redirect Sequence
+function triggerKambuchaSecretUnlock() {
+    playKambuchaSound();
+
+    let overlay = document.getElementById('kambucha-portal-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'kambucha-portal-overlay';
+        overlay.className = 'kambucha-portal-overlay';
+        overlay.innerHTML = `
+            <div class="kambucha-portal-card">
+                <div class="kambucha-icon">🌊🔓</div>
+                <h1 class="kambucha-portal-title">ACCESS GRANTED</h1>
+                <p class="kambucha-portal-sub">DEVELOPER OVERRIDE: KAMBUCHA ACCEPTED</p>
+                <div class="kambucha-loading-bar">
+                    <div class="kambucha-bar-fill"></div>
+                </div>
+                <p class="kambucha-status-text">פותח את אתר בית הספר לצלילה המלא...</p>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    } else {
+        overlay.classList.remove('hidden');
+    }
+
+    document.body.classList.add('kambucha-flash-active');
+
+    // Redirect to the full main site after 2.3 seconds
+    setTimeout(() => {
+        window.location.href = 'main-site-hidden.html';
+    }, 2300);
 }
 
 let terminalTimeouts = [];
