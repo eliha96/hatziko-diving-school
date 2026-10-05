@@ -2339,7 +2339,7 @@ body.system-meltdown {
     width: 0%;
     background: linear-gradient(90deg, #00ff66, #00e5ff);
     box-shadow: 0 0 20px #00e5ff;
-    animation: kambuchaFillBar 2s ease-in-out forwards;
+    animation: kambuchaFillBar 4.5s ease-in-out forwards;
 }
 
 @keyframes kambuchaFillBar {

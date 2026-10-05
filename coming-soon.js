@@ -298,13 +298,13 @@ function triggerKambuchaSecretUnlock() {
         overlay.className = 'kambucha-portal-overlay';
         overlay.innerHTML = `
             <div class="kambucha-portal-card">
-                <div class="kambucha-icon">🌊🔓</div>
+                <div class="kambucha-icon">🍄⚡🔓</div>
                 <h1 class="kambucha-portal-title">ACCESS GRANTED</h1>
-                <p class="kambucha-portal-sub">DEVELOPER OVERRIDE: KAMBUCHA ACCEPTED</p>
+                <p class="kambucha-portal-sub">SCOBY OVERRIDE: KAMBUCHA MUSHROOM PROTOCOL ACTIVE</p>
                 <div class="kambucha-loading-bar">
                     <div class="kambucha-bar-fill"></div>
                 </div>
-                <p class="kambucha-status-text">פותח את אתר בית הספר לצלילה המלא...</p>
+                <p class="kambucha-status-text">🍄 התססת פטריית הקמבוצ'ה הושלמה בהצלחה...</p>
             </div>
         `;
         document.body.appendChild(overlay);
@@ -314,10 +314,10 @@ function triggerKambuchaSecretUnlock() {
 
     document.body.classList.add('kambucha-flash-active');
 
-    // Redirect to the full main site after 2.3 seconds
+    // Redirect to the full main site after 4.8 seconds
     setTimeout(() => {
         window.location.href = 'main-site-hidden.html';
-    }, 2300);
+    }, 4800);
 }
 
 let terminalTimeouts = [];
