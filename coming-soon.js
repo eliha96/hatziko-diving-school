@@ -16,13 +16,13 @@ let timerInterval = null;
 let currentTickSpeed = 1000; // 1 second standard
 let speedBoostClicks = 0;
 
-function getThursdayTargetTimestamp() {
-    // Thursday October 8, 2026 at 10:00:00 AM Israel Time (GMT+3)
-    return new Date('2026-10-08T10:00:00+03:00').getTime();
+function getFridayTargetTimestamp() {
+    // Friday October 9, 2026 at 10:00:00 AM Israel Time (GMT+3)
+    return new Date('2026-10-09T10:00:00+03:00').getTime();
 }
 
 function initCountdown() {
-    const targetMs = getThursdayTargetTimestamp();
+    const targetMs = getFridayTargetTimestamp();
     localStorage.setItem('hatziko_cs_target_date', targetMs.toString());
     countdownTargetDate = targetMs;
 

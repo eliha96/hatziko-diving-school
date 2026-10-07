@@ -1626,7 +1626,21 @@ input[type=range]::-webkit-slider-thumb {
     color: var(--text-secondary);
     font-size: 1.1rem;
     line-height: 1.65;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cs-notice-banner {
+    background: rgba(255, 183, 3, 0.12);
+    border: 1px solid var(--accent-gold);
+    color: var(--accent-gold);
+    padding: 0.95rem 1.4rem;
+    border-radius: 16px;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(255, 183, 3, 0.15);
+    backdrop-filter: blur(8px);
 }
 
 /* Minimal Countdown Display */
