@@ -7,7 +7,7 @@ const DEFAULT_DATA = {
     brandTitle: "חציכו",
     brandSubtitle: "בית ספר לצלילה",
     navCta: "הרשמה לחצי כוכב",
-    logoSrc: "assets/logo-half-star.png",
+    logoSrc: "assets/new-transparent-logo.png",
     heroSrc: "assets/hero-new.jfif",
 
     heroBadge: '<img src="assets/half-star.png" class="half-star-img" alt="חצי כוכב"> מסלול חצי כוכב יוקרתי',
@@ -299,9 +299,7 @@ function loadSavedData() {
     if (saved) {
         try {
             appState = Object.assign({}, DEFAULT_DATA, JSON.parse(saved));
-            if (!appState.logoSrc || !appState.logoSrc.includes('logo-half-star')) {
-                appState.logoSrc = 'assets/logo-half-star.png';
-            }
+            appState.logoSrc = 'assets/new-transparent-logo.png';
             if (appState.heroSrc === 'assets/hero.jpg') {
                 appState.heroSrc = 'assets/hero-new.jfif';
             }
@@ -372,7 +370,7 @@ function renderImages() {
     const footerLogo = document.getElementById('footer-logo-img');
     const mainHero = document.getElementById('main-hero-img');
 
-    const logoUrl = appState.logoSrc || 'assets/logo-half-star.png';
+    const logoUrl = appState.logoSrc || 'assets/new-transparent-logo.png';
     const heroUrl = appState.heroSrc || 'assets/hero-new.jfif';
 
     if (mainLogo) mainLogo.src = logoUrl;
@@ -1094,7 +1092,7 @@ function initImageModal() {
     const heroFileInput = document.getElementById('upload-hero-file');
 
     changeImgBtn.addEventListener('click', () => {
-        logoPathInput.value = appState.logoSrc || 'assets/logo-half-star.png';
+        logoPathInput.value = appState.logoSrc || 'assets/new-transparent-logo.png';
         heroPathInput.value = appState.heroSrc || 'assets/hero-new.jfif';
         modal.classList.remove('hidden');
     });
@@ -1125,7 +1123,7 @@ function initImageModal() {
     });
 
     saveBtn.addEventListener('click', () => {
-        appState.logoSrc = logoPathInput.value.trim() || 'assets/logo-half-star.png';
+        appState.logoSrc = logoPathInput.value.trim() || 'assets/new-transparent-logo.png';
         appState.heroSrc = heroPathInput.value.trim() || 'assets/hero-new.jfif';
         saveData();
         renderAll();
