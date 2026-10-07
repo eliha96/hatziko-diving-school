@@ -299,7 +299,7 @@ function loadSavedData() {
     if (saved) {
         try {
             appState = Object.assign({}, DEFAULT_DATA, JSON.parse(saved));
-            if (appState.logoSrc === 'assets/logo.jpg' || appState.logoSrc === 'assets/new-logo.png') {
+            if (!appState.logoSrc || !appState.logoSrc.includes('new-transparent-logo')) {
                 appState.logoSrc = 'assets/new-transparent-logo.png';
             }
             if (appState.heroSrc === 'assets/hero.jpg') {
