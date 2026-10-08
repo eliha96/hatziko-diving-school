@@ -6,6 +6,42 @@ import { escapeHtml } from '../core/utils.js';
 import { DEFAULT_DATA } from '../data/defaultData.js';
 import { getState, getEditMode } from '../core/store.js';
 
+export const DEFAULT_CALC_LEVELS = [
+    {
+        maxFactor: 0.20,
+        zone: "אחי, אתה סטרייט מדי",
+        advice: "\"לך לך לאילת, תעשה צלילה חופשית ושהמחסור בחמצן יצדיק את מעט תאי המוח הפעילים שלך.\"",
+        calcDepth: (f) => (2.0 - f * 2.5).toFixed(1) + " מטר"
+    },
+    {
+        maxFactor: 0.40,
+        zone: "בריכת פעוטות",
+        advice: "\"כאן מיוצרת אמבה אוכלת מוח. עדיף להימנע, אם אפשר גם מלהביא פעוטות\"",
+        calcDepth: (f) => (1.4 - (f - 0.2) * 3.0).toFixed(1) + " מטר"
+    },
+    {
+        maxFactor: 0.60,
+        zone: "גיגית במרפסת",
+        advice: "\"מקום הראוי לבגדים לפני תלייה, או לתינוקות לפני המצאת האמבט. מומלץ להתרחק\"",
+        calcDepth: (f) => (0.50 - (f - 0.4) * 1.0).toFixed(2) + " מטר"
+    },
+    {
+        maxFactor: 0.80,
+        zone: "שלולית בצד הכביש",
+        advice: "\"אם מוחמד לא בא לשלולית האוטובוס יביא את השלולית למוחמד. תמיד עמוק יותר ממה שנראה ורטוב בגרביים למשך יום שלם.\"",
+        calcDepth: (f) => (0.20 - (f - 0.6) * 0.5).toFixed(2) + " מטר"
+    },
+    {
+        maxFactor: 1.01,
+        zone: "ספונג'ת ריצפה",
+        advice: "\"זהירות לא להחליק! מומלץ להצטייד בכפכפים ובבן זוג שיעשה את זה במקומך\"",
+        calcDepth: (f) => {
+            const val = (0.05 - (f - 0.8) * 0.2).toFixed(2);
+            return (val < 0.01 ? "0.01" : val) + " מטר";
+        }
+    }
+];
+
 export function renderCalculatorSliders(appState, isEditMode) {
     const container = document.getElementById('calc-sliders-container');
     if (!container) return;
@@ -55,27 +91,37 @@ export function updateCalculatorResult() {
     });
 
     const factor = totalWeight > 0 ? (weightedSum / (100 * totalWeight)) : 0.5;
-    let maxDepth = (2.0 - (factor * 1.8)).toFixed(1);
-    if (maxDepth < 0.2) maxDepth = "0.2";
+
+    const customLevels = (appState.calcLevels && appState.calcLevels.length === 5)
+        ? appState.calcLevels
+        : null;
+
+    let chosenIdx = 4;
+    for (let i = 0; i < DEFAULT_CALC_LEVELS.length; i++) {
+        if (factor <= DEFAULT_CALC_LEVELS[i].maxFactor) {
+            chosenIdx = i;
+            break;
+        }
+    }
+
+    const defaultLevel = DEFAULT_CALC_LEVELS[chosenIdx];
+    const zoneName = (customLevels && customLevels[chosenIdx] && customLevels[chosenIdx].zone)
+        ? customLevels[chosenIdx].zone
+        : defaultLevel.zone;
+
+    const adviceText = (customLevels && customLevels[chosenIdx] && customLevels[chosenIdx].advice)
+        ? customLevels[chosenIdx].advice
+        : defaultLevel.advice;
+
+    const depthText = defaultLevel.calcDepth(factor);
 
     const calcDepth = document.getElementById('calc-depth');
     const calcZone = document.getElementById('calc-zone');
     const calcAdvice = document.getElementById('calc-advice');
 
-    if (calcDepth) calcDepth.innerText = maxDepth + " מטר";
-
-    if (calcZone && calcAdvice) {
-        if (maxDepth >= 1.5) {
-            calcZone.innerText = appState.calcZoneHigh || DEFAULT_DATA.calcZoneHigh;
-            calcAdvice.innerText = appState.calcAdviceHigh || DEFAULT_DATA.calcAdviceHigh;
-        } else if (maxDepth >= 0.8) {
-            calcZone.innerText = appState.calcZoneMid || DEFAULT_DATA.calcZoneMid;
-            calcAdvice.innerText = appState.calcAdviceMid || DEFAULT_DATA.calcAdviceMid;
-        } else {
-            calcZone.innerText = appState.calcZoneLow || DEFAULT_DATA.calcZoneLow;
-            calcAdvice.innerText = appState.calcAdviceLow || DEFAULT_DATA.calcAdviceLow;
-        }
-    }
+    if (calcDepth) calcDepth.innerText = depthText;
+    if (calcZone) calcZone.innerText = zoneName;
+    if (calcAdvice) calcAdvice.innerText = adviceText;
 }
 
 export function initCalculator() {

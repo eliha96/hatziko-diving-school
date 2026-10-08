@@ -82,12 +82,39 @@
         "weight": 2
       }
     ],
-    "calcZoneHigh": "\u05E2\u05D5\u05DE\u05E7 \u05E2\u05D6\u05D9\u05DD (\u05D0\u05D6\u05D5\u05E8 \u05DE\u05D9\u05DD \u05E2\u05DE\u05D5\u05E7\u05D9\u05DD \u05D1\u05D7\u05E6\u05D9\u05DB\u05D5)",
-    "calcAdviceHigh": '"\u05D6\u05D4\u05D9\u05E8\u05D5\u05EA, \u05DE\u05D2\u05D9\u05E2 \u05DC\u05DA \u05E2\u05D3 \u05D4\u05D7\u05D6\u05D4! \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05D7\u05D6\u05D9\u05E7 \u05D1\u05E1\u05D5\u05DC\u05DD \u05D5\u05DC\u05D0 \u05DC\u05D4\u05D5\u05E8\u05D9\u05D3 \u05D0\u05EA \u05D4\u05E8\u05D2\u05DC\u05D9\u05D9\u05DD \u05DE\u05D4\u05E7\u05E8\u05E7\u05E2\u05D9\u05EA."',
-    "calcZoneMid": "\u05E1\u05E4\u05D5\u05E0\u05D2'\u05EA \u05E8\u05E6\u05E4\u05D4",
-    "calcAdviceMid": '"\u05E8\u05E6\u05D5\u05D9 \u05DC\u05DC\u05D1\u05D5\u05E9 \u05DB\u05E4\u05DB\u05E4\u05D9\u05DD \u05DC\u05D9\u05EA\u05E8 \u05D1\u05D9\u05D8\u05D7\u05D5\u05DF, \u05D5\u05DC\u05EA\u05EA \u05DC\u05D1\u05DF \u05D4\u05D6\u05D5\u05D2 \u05DC\u05D2\u05E8\u05D5\u05E3 \u05D0\u05EA \u05D4\u05DE\u05D9\u05DD \u05DC\u05DE\u05D6\u05E2\u05D5\u05E8 \u05E1\u05D9\u05DB\u05D5\u05E0\u05D9\u05DD"',
-    "calcZoneLow": "\u05D2\u05D9\u05D2\u05D9\u05EA \u05E4\u05DC\u05E1\u05D8\u05D9\u05E7 \u05D1\u05DE\u05E8\u05E4\u05E1\u05EA",
-    "calcAdviceLow": '"\u05D0\u05E4\u05E1 \u05E1\u05D9\u05DB\u05D5\u05DF! \u05D4\u05D9\u05E8\u05D9\u05D3\u05D4 \u05DC\u05DE\u05D9\u05DD \u05DE\u05D5\u05DE\u05DC\u05E6\u05EA \u05E2\u05DD \u05DB\u05D5\u05E1 \u05E7\u05E4\u05D4 \u05E7\u05E8 \u05D5\u05E1\u05E4\u05E8 \u05D8\u05D5\u05D1. \u05D0\u05D9\u05DF \u05E6\u05D5\u05E8\u05DA \u05DC\u05D7\u05D1\u05D5\u05E9 \u05E1\u05E0\u05E4\u05D9\u05E8\u05D9\u05DD."',
+    "calcLevels": [
+      {
+        "id": "lvl_straight",
+        "zone": "\u05D0\u05D7\u05D9, \u05D0\u05EA\u05D4 \u05E1\u05D8\u05E8\u05D9\u05D9\u05D8 \u05DE\u05D3\u05D9",
+        "advice": '"\u05DC\u05DA \u05DC\u05DA \u05DC\u05D0\u05D9\u05DC\u05EA, \u05EA\u05E2\u05E9\u05D4 \u05E6\u05DC\u05D9\u05DC\u05D4 \u05D7\u05D5\u05E4\u05E9\u05D9\u05EA \u05D5\u05E9\u05D4\u05DE\u05D7\u05E1\u05D5\u05E8 \u05D1\u05D7\u05DE\u05E6\u05DF \u05D9\u05E6\u05D3\u05D9\u05E7 \u05D0\u05EA \u05DE\u05E2\u05D8 \u05EA\u05D0\u05D9 \u05D4\u05DE\u05D5\u05D7 \u05D4\u05E4\u05E2\u05D9\u05DC\u05D9\u05DD \u05E9\u05DC\u05DA."'
+      },
+      {
+        "id": "lvl_toddler",
+        "zone": "\u05D1\u05E8\u05D9\u05DB\u05EA \u05E4\u05E2\u05D5\u05D8\u05D5\u05EA",
+        "advice": '"\u05DB\u05D0\u05DF \u05DE\u05D9\u05D5\u05E6\u05E8\u05EA \u05D0\u05DE\u05D1\u05D4 \u05D0\u05D5\u05DB\u05DC\u05EA \u05DE\u05D5\u05D7. \u05E2\u05D3\u05D9\u05E3 \u05DC\u05D4\u05D9\u05DE\u05E0\u05E2, \u05D0\u05DD \u05D0\u05E4\u05E9\u05E8 \u05D2\u05DD \u05DE\u05DC\u05D4\u05D1\u05D9\u05D0 \u05E4\u05E2\u05D5\u05D8\u05D5\u05EA"'
+      },
+      {
+        "id": "lvl_tub",
+        "zone": "\u05D2\u05D9\u05D2\u05D9\u05EA \u05D1\u05DE\u05E8\u05E4\u05E1\u05EA",
+        "advice": '"\u05DE\u05E7\u05D5\u05DD \u05D4\u05E8\u05D0\u05D5\u05D9 \u05DC\u05D1\u05D2\u05D3\u05D9\u05DD \u05DC\u05E4\u05E0\u05D9 \u05EA\u05DC\u05D9\u05D9\u05D4, \u05D0\u05D5 \u05DC\u05EA\u05D9\u05E0\u05D5\u05E7\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9 \u05D4\u05DE\u05E6\u05D0\u05EA \u05D4\u05D0\u05DE\u05D1\u05D8. \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05EA\u05E8\u05D7\u05E7"'
+      },
+      {
+        "id": "lvl_puddle",
+        "zone": "\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05D1\u05E6\u05D3 \u05D4\u05DB\u05D1\u05D9\u05E9",
+        "advice": '"\u05D0\u05DD \u05DE\u05D5\u05D7\u05DE\u05D3 \u05DC\u05D0 \u05D1\u05D0 \u05DC\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05D4\u05D0\u05D5\u05D8\u05D5\u05D1\u05D5\u05E1 \u05D9\u05D1\u05D9\u05D0 \u05D0\u05EA \u05D4\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05DC\u05DE\u05D5\u05D7\u05DE\u05D3. \u05EA\u05DE\u05D9\u05D3 \u05E2\u05DE\u05D5\u05E7 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05DE\u05D4 \u05E9\u05E0\u05E8\u05D0\u05D4 \u05D5\u05E8\u05D8\u05D5\u05D1 \u05D1\u05D2\u05E8\u05D1\u05D9\u05D9\u05DD \u05DC\u05DE\u05E9\u05DA \u05D9\u05D5\u05DD \u05E9\u05DC\u05DD."'
+      },
+      {
+        "id": "lvl_sponge",
+        "zone": "\u05E1\u05E4\u05D5\u05E0\u05D2'\u05EA \u05E8\u05D9\u05E6\u05E4\u05D4",
+        "advice": '"\u05D6\u05D4\u05D9\u05E8\u05D5\u05EA \u05DC\u05D0 \u05DC\u05D4\u05D7\u05DC\u05D9\u05E7! \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05E6\u05D8\u05D9\u05D9\u05D3 \u05D1\u05DB\u05E4\u05DB\u05E4\u05D9\u05DD \u05D5\u05D1\u05D1\u05DF \u05D6\u05D5\u05D2 \u05E9\u05D9\u05E2\u05E9\u05D4 \u05D0\u05EA \u05D6\u05D4 \u05D1\u05DE\u05E7\u05D5\u05DE\u05DA"'
+      }
+    ],
+    "calcZoneHigh": "\u05D0\u05D7\u05D9, \u05D0\u05EA\u05D4 \u05E1\u05D8\u05E8\u05D9\u05D9\u05D8 \u05DE\u05D3\u05D9",
+    "calcAdviceHigh": '"\u05DC\u05DA \u05DC\u05DA \u05DC\u05D0\u05D9\u05DC\u05EA, \u05EA\u05E2\u05E9\u05D4 \u05E6\u05DC\u05D9\u05DC\u05D4 \u05D7\u05D5\u05E4\u05E9\u05D9\u05EA \u05D5\u05E9\u05D4\u05DE\u05D7\u05E1\u05D5\u05E8 \u05D1\u05D7\u05DE\u05E6\u05DF \u05D9\u05E6\u05D3\u05D9\u05E7 \u05D0\u05EA \u05DE\u05E2\u05D8 \u05EA\u05D0\u05D9 \u05D4\u05DE\u05D5\u05D7 \u05D4\u05E4\u05E2\u05D9\u05DC\u05D9\u05DD \u05E9\u05DC\u05DA."',
+    "calcZoneMid": "\u05D2\u05D9\u05D2\u05D9\u05EA \u05D1\u05DE\u05E8\u05E4\u05E1\u05EA",
+    "calcAdviceMid": '"\u05DE\u05E7\u05D5\u05DD \u05D4\u05E8\u05D0\u05D5\u05D9 \u05DC\u05D1\u05D2\u05D3\u05D9\u05DD \u05DC\u05E4\u05E0\u05D9 \u05EA\u05DC\u05D9\u05D9\u05D4, \u05D0\u05D5 \u05DC\u05EA\u05D9\u05E0\u05D5\u05E7\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9 \u05D4\u05DE\u05E6\u05D0\u05EA \u05D4\u05D0\u05DE\u05D1\u05D8. \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05EA\u05E8\u05D7\u05E7"',
+    "calcZoneLow": "\u05E1\u05E4\u05D5\u05E0\u05D2'\u05EA \u05E8\u05D9\u05E6\u05E4\u05D4",
+    "calcAdviceLow": '"\u05D6\u05D4\u05D9\u05E8\u05D5\u05EA \u05DC\u05D0 \u05DC\u05D4\u05D7\u05DC\u05D9\u05E7! \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05E6\u05D8\u05D9\u05D9\u05D3 \u05D1\u05DB\u05E4\u05DB\u05E4\u05D9\u05DD \u05D5\u05D1\u05D1\u05DF \u05D6\u05D5\u05D2 \u05E9\u05D9\u05E2\u05E9\u05D4 \u05D0\u05EA \u05D6\u05D4 \u05D1\u05DE\u05E7\u05D5\u05DE\u05DA"',
     "testimonialsSubtitle": "\u05DE\u05D4 \u05D0\u05D5\u05DE\u05E8\u05D9\u05DD \u05D4\u05D7\u05E6\u05D9-\u05D1\u05D5\u05D2\u05E8\u05D9\u05DD \u05E9\u05DC\u05E0\u05D5?",
     "testimonialsTitle": "\u05D1\u05D9\u05E7\u05D5\u05E8\u05D5\u05EA \u05DE\u05D4\u05DC\u05DC\u05D5\u05EA (\u05DC\u05DE\u05D7\u05E6\u05D4)",
     "testimonialsDesc": "\u05E1\u05D9\u05E4\u05D5\u05E8\u05D9\u05DD \u05D0\u05DE\u05D9\u05EA\u05D9\u05D9\u05DD \u05E9\u05DC \u05D0\u05E0\u05E9\u05D9\u05DD \u05DE\u05D5\u05DE\u05E6\u05D0\u05D9\u05DD",
@@ -552,6 +579,41 @@
   }
 
   // js/features/calculator.js
+  var DEFAULT_CALC_LEVELS = [
+    {
+      maxFactor: 0.2,
+      zone: "\u05D0\u05D7\u05D9, \u05D0\u05EA\u05D4 \u05E1\u05D8\u05E8\u05D9\u05D9\u05D8 \u05DE\u05D3\u05D9",
+      advice: '"\u05DC\u05DA \u05DC\u05DA \u05DC\u05D0\u05D9\u05DC\u05EA, \u05EA\u05E2\u05E9\u05D4 \u05E6\u05DC\u05D9\u05DC\u05D4 \u05D7\u05D5\u05E4\u05E9\u05D9\u05EA \u05D5\u05E9\u05D4\u05DE\u05D7\u05E1\u05D5\u05E8 \u05D1\u05D7\u05DE\u05E6\u05DF \u05D9\u05E6\u05D3\u05D9\u05E7 \u05D0\u05EA \u05DE\u05E2\u05D8 \u05EA\u05D0\u05D9 \u05D4\u05DE\u05D5\u05D7 \u05D4\u05E4\u05E2\u05D9\u05DC\u05D9\u05DD \u05E9\u05DC\u05DA."',
+      calcDepth: (f) => (2 - f * 2.5).toFixed(1) + " \u05DE\u05D8\u05E8"
+    },
+    {
+      maxFactor: 0.4,
+      zone: "\u05D1\u05E8\u05D9\u05DB\u05EA \u05E4\u05E2\u05D5\u05D8\u05D5\u05EA",
+      advice: '"\u05DB\u05D0\u05DF \u05DE\u05D9\u05D5\u05E6\u05E8\u05EA \u05D0\u05DE\u05D1\u05D4 \u05D0\u05D5\u05DB\u05DC\u05EA \u05DE\u05D5\u05D7. \u05E2\u05D3\u05D9\u05E3 \u05DC\u05D4\u05D9\u05DE\u05E0\u05E2, \u05D0\u05DD \u05D0\u05E4\u05E9\u05E8 \u05D2\u05DD \u05DE\u05DC\u05D4\u05D1\u05D9\u05D0 \u05E4\u05E2\u05D5\u05D8\u05D5\u05EA"',
+      calcDepth: (f) => (1.4 - (f - 0.2) * 3).toFixed(1) + " \u05DE\u05D8\u05E8"
+    },
+    {
+      maxFactor: 0.6,
+      zone: "\u05D2\u05D9\u05D2\u05D9\u05EA \u05D1\u05DE\u05E8\u05E4\u05E1\u05EA",
+      advice: '"\u05DE\u05E7\u05D5\u05DD \u05D4\u05E8\u05D0\u05D5\u05D9 \u05DC\u05D1\u05D2\u05D3\u05D9\u05DD \u05DC\u05E4\u05E0\u05D9 \u05EA\u05DC\u05D9\u05D9\u05D4, \u05D0\u05D5 \u05DC\u05EA\u05D9\u05E0\u05D5\u05E7\u05D5\u05EA \u05DC\u05E4\u05E0\u05D9 \u05D4\u05DE\u05E6\u05D0\u05EA \u05D4\u05D0\u05DE\u05D1\u05D8. \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05EA\u05E8\u05D7\u05E7"',
+      calcDepth: (f) => (0.5 - (f - 0.4) * 1).toFixed(2) + " \u05DE\u05D8\u05E8"
+    },
+    {
+      maxFactor: 0.8,
+      zone: "\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05D1\u05E6\u05D3 \u05D4\u05DB\u05D1\u05D9\u05E9",
+      advice: '"\u05D0\u05DD \u05DE\u05D5\u05D7\u05DE\u05D3 \u05DC\u05D0 \u05D1\u05D0 \u05DC\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05D4\u05D0\u05D5\u05D8\u05D5\u05D1\u05D5\u05E1 \u05D9\u05D1\u05D9\u05D0 \u05D0\u05EA \u05D4\u05E9\u05DC\u05D5\u05DC\u05D9\u05EA \u05DC\u05DE\u05D5\u05D7\u05DE\u05D3. \u05EA\u05DE\u05D9\u05D3 \u05E2\u05DE\u05D5\u05E7 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05DE\u05D4 \u05E9\u05E0\u05E8\u05D0\u05D4 \u05D5\u05E8\u05D8\u05D5\u05D1 \u05D1\u05D2\u05E8\u05D1\u05D9\u05D9\u05DD \u05DC\u05DE\u05E9\u05DA \u05D9\u05D5\u05DD \u05E9\u05DC\u05DD."',
+      calcDepth: (f) => (0.2 - (f - 0.6) * 0.5).toFixed(2) + " \u05DE\u05D8\u05E8"
+    },
+    {
+      maxFactor: 1.01,
+      zone: "\u05E1\u05E4\u05D5\u05E0\u05D2'\u05EA \u05E8\u05D9\u05E6\u05E4\u05D4",
+      advice: '"\u05D6\u05D4\u05D9\u05E8\u05D5\u05EA \u05DC\u05D0 \u05DC\u05D4\u05D7\u05DC\u05D9\u05E7! \u05DE\u05D5\u05DE\u05DC\u05E5 \u05DC\u05D4\u05E6\u05D8\u05D9\u05D9\u05D3 \u05D1\u05DB\u05E4\u05DB\u05E4\u05D9\u05DD \u05D5\u05D1\u05D1\u05DF \u05D6\u05D5\u05D2 \u05E9\u05D9\u05E2\u05E9\u05D4 \u05D0\u05EA \u05D6\u05D4 \u05D1\u05DE\u05E7\u05D5\u05DE\u05DA"',
+      calcDepth: (f) => {
+        const val = (0.05 - (f - 0.8) * 0.2).toFixed(2);
+        return (val < 0.01 ? "0.01" : val) + " \u05DE\u05D8\u05E8";
+      }
+    }
+  ];
   function renderCalculatorSliders(appState2, isEditMode2) {
     const container = document.getElementById("calc-sliders-container");
     if (!container) return;
@@ -593,24 +655,24 @@
       totalWeight += weight;
     });
     const factor = totalWeight > 0 ? weightedSum / (100 * totalWeight) : 0.5;
-    let maxDepth = (2 - factor * 1.8).toFixed(1);
-    if (maxDepth < 0.2) maxDepth = "0.2";
+    const customLevels = appState2.calcLevels && appState2.calcLevels.length === 5 ? appState2.calcLevels : null;
+    let chosenIdx = 4;
+    for (let i = 0; i < DEFAULT_CALC_LEVELS.length; i++) {
+      if (factor <= DEFAULT_CALC_LEVELS[i].maxFactor) {
+        chosenIdx = i;
+        break;
+      }
+    }
+    const defaultLevel = DEFAULT_CALC_LEVELS[chosenIdx];
+    const zoneName = customLevels && customLevels[chosenIdx] && customLevels[chosenIdx].zone ? customLevels[chosenIdx].zone : defaultLevel.zone;
+    const adviceText = customLevels && customLevels[chosenIdx] && customLevels[chosenIdx].advice ? customLevels[chosenIdx].advice : defaultLevel.advice;
+    const depthText = defaultLevel.calcDepth(factor);
     const calcDepth = document.getElementById("calc-depth");
     const calcZone = document.getElementById("calc-zone");
     const calcAdvice = document.getElementById("calc-advice");
-    if (calcDepth) calcDepth.innerText = maxDepth + " \u05DE\u05D8\u05E8";
-    if (calcZone && calcAdvice) {
-      if (maxDepth >= 1.5) {
-        calcZone.innerText = appState2.calcZoneHigh || DEFAULT_DATA.calcZoneHigh;
-        calcAdvice.innerText = appState2.calcAdviceHigh || DEFAULT_DATA.calcAdviceHigh;
-      } else if (maxDepth >= 0.8) {
-        calcZone.innerText = appState2.calcZoneMid || DEFAULT_DATA.calcZoneMid;
-        calcAdvice.innerText = appState2.calcAdviceMid || DEFAULT_DATA.calcAdviceMid;
-      } else {
-        calcZone.innerText = appState2.calcZoneLow || DEFAULT_DATA.calcZoneLow;
-        calcAdvice.innerText = appState2.calcAdviceLow || DEFAULT_DATA.calcAdviceLow;
-      }
-    }
+    if (calcDepth) calcDepth.innerText = depthText;
+    if (calcZone) calcZone.innerText = zoneName;
+    if (calcAdvice) calcAdvice.innerText = adviceText;
   }
   function initCalculator() {
     renderCalculatorSliders(getState(), getEditMode());
@@ -1091,6 +1153,38 @@
                 <input type="text" id="m-reg-btn-text" class="form-control" value="${escapeHtml(appState2.registerBtnText || "\u05E9\u05D2\u05E8\u05D5 \u05D1\u05E7\u05E9\u05D4 (\u05D1\u05DC\u05D9 \u05DC\u05D7\u05E5)")}">
             </div>
         `;
+    } else if (type === "calcLevels") {
+      modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA 5 \u05E8\u05DE\u05D5\u05EA \u05D4\u05E2\u05D5\u05DE\u05E7 \u05D5\u05D4\u05E2\u05E6\u05D5\u05EA \u05D1\u05DE\u05D7\u05E9\u05D1\u05D5\u05DF";
+      const levels = appState2.calcLevels && appState2.calcLevels.length === 5 ? appState2.calcLevels : DEFAULT_CALC_LEVELS;
+      const descriptions = [
+        "\u05E8\u05DE\u05D4 1: \u05D0\u05E4\u05E1 \u05D7\u05E8\u05D3\u05D4 (\u05E2\u05D5\u05DE\u05E7 1.5 \u2013 2.0 \u05DE\u05D8\u05E8)",
+        "\u05E8\u05DE\u05D4 2: \u05D7\u05E8\u05D3\u05D4 \u05E7\u05DC\u05D4 (\u05E2\u05D5\u05DE\u05E7 0.8 \u2013 1.4 \u05DE\u05D8\u05E8)",
+        "\u05E8\u05DE\u05D4 3: \u05D7\u05E8\u05D3\u05D4 \u05D1\u05D9\u05E0\u05D5\u05E0\u05D9\u05EA (\u05E2\u05D5\u05DE\u05E7 0.3 \u2013 0.5 \u05DE\u05D8\u05E8)",
+        "\u05E8\u05DE\u05D4 4: \u05D7\u05E8\u05D3\u05D4 \u05D2\u05D1\u05D5\u05D4\u05D4 (\u05E2\u05D5\u05DE\u05E7 0.1 \u2013 0.2 \u05DE\u05D8\u05E8)",
+        "\u05E8\u05DE\u05D4 5: \u05D7\u05E8\u05D3\u05D4 \u05DE\u05D5\u05D7\u05DC\u05D8\u05EA (\u05E2\u05D5\u05DE\u05E7 0.01 \u2013 0.05 \u05DE\u05D8\u05E8)"
+      ];
+      modalBody.innerHTML = `
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">
+                \u05E2\u05E8\u05DB\u05D5 \u05D0\u05EA \u05E9\u05DE\u05D5\u05EA \u05D4\u05D0\u05D6\u05D5\u05E8\u05D9\u05DD \u05D5\u05D4\u05E2\u05E6\u05D5\u05EA \u05D4\u05E1\u05D0\u05D8\u05D9\u05E8\u05D9\u05D5\u05EA \u05E2\u05D1\u05D5\u05E8 \u05DB\u05DC \u05D0\u05D7\u05EA \u05DE-5 \u05D3\u05E8\u05D2\u05D5\u05EA \u05D4\u05D7\u05E8\u05D3\u05D4 \u05D1\u05DE\u05D7\u05E9\u05D1\u05D5\u05DF:
+            </p>
+            <div id="m-calc-levels-list">
+                ${levels.map((lvl, idx) => `
+                    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.75rem; margin-bottom:0.75rem;">
+                        <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem; color:var(--accent-gold);">
+                            ${descriptions[idx]}
+                        </h4>
+                        <div class="form-group" style="margin-bottom:0.5rem;">
+                            <label style="font-size:0.8rem;">\u05E9\u05DD \u05D4\u05D0\u05D6\u05D5\u05E8 / \u05DB\u05D5\u05EA\u05E8\u05EA:</label>
+                            <input type="text" class="form-control m-calc-lvl-zone" data-idx="${idx}" value="${escapeHtml(lvl.zone)}">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label style="font-size:0.8rem;">\u05D4\u05E2\u05E6\u05D4 / \u05EA\u05D9\u05D0\u05D5\u05E8:</label>
+                            <textarea class="form-control m-calc-lvl-advice" data-idx="${idx}" rows="2">${escapeHtml(lvl.advice)}</textarea>
+                        </div>
+                    </div>
+                `).join("")}
+            </div>
+        `;
     }
     modal.classList.remove("hidden");
   }
@@ -1196,6 +1290,18 @@
       if (reasonDef) appState2.regReasonDefault = reasonDef.value;
       if (motDef) appState2.regMotivationDefault = motDef.value;
       if (btnText) appState2.registerBtnText = btnText.value;
+    } else if (type === "calcLevels") {
+      const zoneInputs = document.querySelectorAll(".m-calc-lvl-zone");
+      const adviceInputs = document.querySelectorAll(".m-calc-lvl-advice");
+      appState2.calcLevels = [];
+      zoneInputs.forEach((inp, idx) => {
+        const adviceInp = adviceInputs[idx];
+        appState2.calcLevels.push({
+          zone: inp.value.trim(),
+          advice: adviceInp ? adviceInp.value.trim() : ""
+        });
+      });
+      updateCalculatorResult();
     } else if (type === "stat") {
       const newItem = {
         id,

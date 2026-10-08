@@ -213,7 +213,10 @@
                 <div class="calculator-card glass-card">
                     <div class="calc-header">
                         <span class="calc-badge editable" data-key="calcBadge">🧮 מחשבון חציכו בלעדי</span>
-                        <h2 class="editable" data-key="calcTitle">מחשבון עומק, אוזניים וחרדה</h2>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                            <h2 class="editable" data-key="calcTitle" style="margin:0;">מחשבון עומק, אוזניים וחרדה</h2>
+                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('calcLevels')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך 5 רמות עומק ותיאורים</button>
+                        </div>
                         <p class="editable" data-key="calcDesc">הזינו את המדדים שלכם וגלו מה העומק המקסימלי הבטוח עבורכם היום:</p>
                     </div>
 
@@ -225,10 +228,10 @@
                         <div class="calc-result">
                             <div class="result-box">
                                 <span class="result-title editable" data-key="calcResultHeader">העומק המומלץ עבורך:</span>
-                                <div class="result-depth" id="calc-depth">1.1 מטר</div>
-                                <div class="result-zone editable" data-key="calcZoneMid" id="calc-zone">בריכת פעוטות רדודה</div>
-                                <p class="result-advice editable" data-key="calcAdviceMid" id="calc-advice">
-                                    "מעולה! בגובה הזה הראש שלך כמעט מחוץ למים. אפשר לשים שנורקל ועדיין לשמוע את המוזיקה מהבר."
+                                <div class="result-depth" id="calc-depth">0.35 מטר</div>
+                                <div class="result-zone" id="calc-zone">גיגית במרפסת</div>
+                                <p class="result-advice" id="calc-advice">
+                                    "מקום הראוי לבגדים לפני תלייה, או לתינוקות לפני המצאת האמבט. מומלץ להתרחק"
                                 </p>
                             </div>
                         </div>

@@ -6,6 +6,7 @@ import { escapeHtml, getStarCount, updateCharCounter } from '../core/utils.js';
 import { getState, setState, getEditMode, setEditMode, saveData, resetData } from '../core/store.js';
 import { updateCertReasonDisplay, isCustomReason } from './certificate.js';
 import { setSyllabusTab } from '../components/syllabus.js';
+import { updateCalculatorResult, DEFAULT_CALC_LEVELS } from './calculator.js';
 
 let editingModalItemType = null;
 let editingModalItemId = null;
@@ -433,6 +434,42 @@ export function openEditModal(type, id = null) {
                 <input type="text" id="m-reg-btn-text" class="form-control" value="${escapeHtml(appState.registerBtnText || 'שגרו בקשה (בלי לחץ)')}">
             </div>
         `;
+    } else if (type === 'calcLevels') {
+        modalTitle.innerText = "עריכת 5 רמות העומק והעצות במחשבון";
+        const levels = (appState.calcLevels && appState.calcLevels.length === 5)
+            ? appState.calcLevels
+            : DEFAULT_CALC_LEVELS;
+
+        const descriptions = [
+            "רמה 1: אפס חרדה (עומק 1.5 – 2.0 מטר)",
+            "רמה 2: חרדה קלה (עומק 0.8 – 1.4 מטר)",
+            "רמה 3: חרדה בינונית (עומק 0.3 – 0.5 מטר)",
+            "רמה 4: חרדה גבוהה (עומק 0.1 – 0.2 מטר)",
+            "רמה 5: חרדה מוחלטת (עומק 0.01 – 0.05 מטר)"
+        ];
+
+        modalBody.innerHTML = `
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">
+                ערכו את שמות האזורים והעצות הסאטיריות עבור כל אחת מ-5 דרגות החרדה במחשבון:
+            </p>
+            <div id="m-calc-levels-list">
+                ${levels.map((lvl, idx) => `
+                    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.75rem; margin-bottom:0.75rem;">
+                        <h4 style="margin:0 0 0.5rem 0; font-size:0.9rem; color:var(--accent-gold);">
+                            ${descriptions[idx]}
+                        </h4>
+                        <div class="form-group" style="margin-bottom:0.5rem;">
+                            <label style="font-size:0.8rem;">שם האזור / כותרת:</label>
+                            <input type="text" class="form-control m-calc-lvl-zone" data-idx="${idx}" value="${escapeHtml(lvl.zone)}">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label style="font-size:0.8rem;">העצה / תיאור:</label>
+                            <textarea class="form-control m-calc-lvl-advice" data-idx="${idx}" rows="2">${escapeHtml(lvl.advice)}</textarea>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
     }
 
     modal.classList.remove('hidden');
@@ -549,6 +586,18 @@ export function saveModalItem() {
         if (reasonDef) appState.regReasonDefault = reasonDef.value;
         if (motDef) appState.regMotivationDefault = motDef.value;
         if (btnText) appState.registerBtnText = btnText.value;
+    } else if (type === 'calcLevels') {
+        const zoneInputs = document.querySelectorAll('.m-calc-lvl-zone');
+        const adviceInputs = document.querySelectorAll('.m-calc-lvl-advice');
+        appState.calcLevels = [];
+        zoneInputs.forEach((inp, idx) => {
+            const adviceInp = adviceInputs[idx];
+            appState.calcLevels.push({
+                zone: inp.value.trim(),
+                advice: adviceInp ? adviceInp.value.trim() : ''
+            });
+        });
+        updateCalculatorResult();
     } else if (type === 'stat') {
         const newItem = {
             id,
