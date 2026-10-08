@@ -1,16 +1,16 @@
 /* ==========================================================================
    Hatziko Diving School - Default State Data
-   Saved from live user edits & permanently backed up in Git
+   Synced from assets/site-data.json
    ========================================================================== */
 
 export const DEFAULT_DATA = {
     "brandTitle": "חציכו",
-    "brandSubtitle": "בית ספר לצלילה",
+    "brandSubtitle": "בית ספר לצלי",
     "navCta": "הרשמה לחצי כוכב",
     "logoSrc": "assets/new-logo.png",
     "heroSrc": "assets/hero-new.jfif",
     "heroBadge": "<img src=\"assets/half-star.png\" class=\"half-star-img\" alt=\"חצי כוכב\"> מסלול חצי כוכב יוקרתי",
-    "heroTitle": "חציכו בית ספר לצלילה",
+    "heroTitle": "חציכו - בית ספר לצלי",
     "heroMotto": "חצי כוכב. חצי כוח.",
     "heroDescription": "החברים שלך יורדים לשבוע לאילת בשביל שני כוכבים? פראיירים. אצלנו באותו המחיר תוכל לקבל תכנית של חמישה חודשים, בסיומה תקבל חצי כוכב ושלל מבטים מרחמים",
     "stats": [
