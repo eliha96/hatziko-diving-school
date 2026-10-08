@@ -510,6 +510,39 @@
         </div>
     </div>
 
+    <!-- Registration Rat Dispatch Success Modal -->
+    <div id="registration-success-modal" class="modal hidden">
+        <div class="rat-success-card">
+            <button class="modal-close" id="rat-success-close-btn" aria-label="סגירה">&times;</button>
+            
+            <div class="rat-avatar-container">
+                <div class="rat-avatar-circle">
+                    <img src="assets/matrix_rat_catch_me_if_you_can.jpg" alt="חולדה מפצחת" class="rat-avatar-img">
+                </div>
+            </div>
+
+            <h3 class="rat-success-title">פנייתך נרשמה בהצלחה!</h3>
+
+            <p class="rat-success-message">
+                פנייתך נרשמה בהצלחה, ותעובד על ידי חולדה מפצחת תוך שבעה ימי עסקים (או חולדה נאיבית עד שתמות מרעב)
+            </p>
+
+            <div id="rat-submission-summary" class="rat-submission-summary">
+                <!-- Summary of submitted data injected dynamically -->
+            </div>
+
+            <div class="rat-actions">
+                <a href="#" id="btn-rat-whatsapp" class="btn-whatsapp" target="_blank" rel="noopener noreferrer">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c4.54 0 8.24 3.7 8.24 8.24 0 2.2-.86 4.28-2.42 5.84-1.56 1.56-3.64 2.42-5.83 2.42-1.47 0-2.92-.39-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.39c0-4.54 3.7-8.24 8.24-8.24zm-4.7 4.27c-.24 0-.64.09-.97.45-.33.36-1.27 1.24-1.27 3.03s1.3 3.52 1.48 3.76c.18.24 2.5 3.99 6.2 5.43 3.07 1.2 3.69.96 4.36.9 1-.09 2.27-.93 2.59-1.82.32-.89.32-1.65.23-1.82-.09-.17-.35-.27-.74-.47-.39-.19-2.31-1.14-2.67-1.27-.36-.13-.62-.19-.88.2-.26.39-1.01 1.27-1.24 1.53-.23.26-.46.29-.85.1-.39-.19-1.66-.61-3.16-1.95-1.17-1.04-1.96-2.33-2.19-2.72-.23-.39-.02-.6.17-.79.17-.18.39-.46.59-.69.19-.23.26-.39.39-.65.13-.26.07-.49-.03-.68-.1-.19-.88-2.17-1.24-2.96-.33-.79-.68-.68-.93-.69z"/>
+                    </svg>
+                    <span>לשליחת הבחירה למפיק הצלילה החתיך</span>
+                </a>
+                <button type="button" id="btn-rat-close" class="btn-outline-pine">הבנתי, אחכה לחולדה בחוף 🏖️</button>
+            </div>
+        </div>
+    </div>
+
     <script src="app.js?v=20261008"></script>
 </body>
 </html>

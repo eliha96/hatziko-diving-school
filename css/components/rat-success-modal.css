@@ -1,0 +1,199 @@
+/* ==========================================================================
+   Hatziko Diving School - Rat Dispatch Success Modal (Green & Brown Theme)
+   ========================================================================== */
+
+.rat-success-card {
+    background: linear-gradient(150deg, #0d2818 0%, #1a120c 50%, #2e1a0f 100%);
+    border: 2px solid #52b788;
+    border-radius: 20px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 35px rgba(82, 183, 136, 0.35);
+    color: #f1f5f9;
+    position: relative;
+    text-align: center;
+    max-width: 540px;
+    padding: 2.25rem 2rem;
+    animation: ratModalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes ratModalPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.rat-success-card .modal-close {
+    position: absolute;
+    top: 1rem;
+    left: 1.25rem;
+    color: #a7f3d0;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.rat-success-card .modal-close:hover {
+    color: #f87171;
+    transform: rotate(90deg);
+}
+
+.rat-avatar-container {
+    position: relative;
+    margin-bottom: 1.25rem;
+}
+
+.rat-avatar-circle {
+    width: 165px;
+    height: 165px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 4px solid #84cc16;
+    box-shadow: 0 0 35px rgba(132, 204, 22, 0.55), inset 0 0 20px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+    position: relative;
+    background: #022c22;
+}
+
+.rat-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 10%;
+    transform-origin: 50% 14%;
+    transform: scale(2.85);
+    transition: transform 0.3s ease;
+}
+
+.rat-avatar-circle:hover .rat-avatar-img {
+    transform: scale(3.05);
+}
+
+.rat-success-title {
+    font-family: var(--font-heading);
+    color: #a3e635;
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin: 0.5rem 0 0.75rem;
+    text-shadow: 0 2px 10px rgba(163, 230, 53, 0.25);
+}
+
+.rat-success-message {
+    color: #f1f5f9;
+    font-size: 1.15rem;
+    line-height: 1.65;
+    margin: 0 auto 1.5rem;
+    max-width: 460px;
+}
+
+.rat-success-message strong {
+    color: #86efac;
+    text-decoration: underline;
+    text-decoration-color: #22c55e;
+}
+
+.rat-sub-message {
+    display: block;
+    color: #f59e0b;
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0.35rem;
+}
+
+.rat-submission-summary {
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px dashed rgba(132, 204, 22, 0.35);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    text-align: right;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+.rat-summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.rat-summary-row:last-child {
+    border-bottom: none;
+}
+
+.rat-summary-label {
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.rat-summary-val {
+    color: #f8fafc;
+    font-weight: 700;
+    max-width: 65%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rat-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.btn-whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: #ffffff !important;
+    font-weight: 800;
+    font-size: 1.1rem;
+    padding: 0.9rem 1.75rem;
+    border-radius: 50px;
+    box-shadow: 0 6px 25px rgba(37, 211, 102, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.6);
+}
+
+.btn-whatsapp svg {
+    flex-shrink: 0;
+}
+
+.btn-outline-pine {
+    background: transparent;
+    border: 1px solid #78350f;
+    color: #f59e0b;
+    padding: 0.65rem 1.25rem;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-outline-pine:hover {
+    background: rgba(120, 53, 15, 0.25);
+    color: #fbbf24;
+}
+
+/* Fullscreen Confetti & Pinecone Canvas */
+#pinecone-confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 2500;
+}

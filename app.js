@@ -756,6 +756,147 @@
     }
   }
 
+  // js/features/rat-dispatch.js
+  function triggerPineconeConfetti() {
+    let canvas = document.getElementById("pinecone-confetti-canvas");
+    if (!canvas) {
+      canvas = document.createElement("canvas");
+      canvas.id = "pinecone-confetti-canvas";
+      document.body.appendChild(canvas);
+    }
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const emojis = ["\u{1F332}", "\u{1F330}", "\u{1F400}", "\u2615", "\u2B50", "\u{1F93F}"];
+    const colors = ["#22c55e", "#84cc16", "#15803d", "#b45309", "#d97706", "#fbbf24", "#a16207"];
+    const particles = [];
+    const totalCount = 85;
+    for (let i = 0; i < totalCount; i++) {
+      const isEmoji = i % 2 === 0;
+      particles.push({
+        isEmoji,
+        char: isEmoji ? emojis[Math.floor(Math.random() * emojis.length)] : null,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        x: canvas.width / 2 + (Math.random() - 0.5) * 160,
+        y: canvas.height * 0.5 + (Math.random() - 0.5) * 40,
+        vx: (Math.random() - 0.5) * 34,
+        vy: -Math.random() * 25 - 14,
+        size: isEmoji ? Math.floor(Math.random() * 18 + 24) : Math.floor(Math.random() * 9 + 8),
+        rotation: Math.random() * 360,
+        vRot: (Math.random() - 0.5) * 24,
+        alpha: 1,
+        decay: Math.random() * 0.013 + 7e-3,
+        gravity: 0.72
+      });
+    }
+    let animationId = null;
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let activeCount = 0;
+      for (let p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.rotation += p.vRot;
+        p.alpha -= p.decay;
+        if (p.alpha > 0 && p.y < canvas.height + 60) {
+          activeCount++;
+          ctx.save();
+          ctx.globalAlpha = Math.max(0, p.alpha);
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rotation * Math.PI / 180);
+          if (p.isEmoji) {
+            ctx.font = `${p.size}px sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText(p.char, 0, 0);
+          } else {
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 1.5);
+          }
+          ctx.restore();
+        }
+      }
+      if (activeCount > 0) {
+        animationId = requestAnimationFrame(render);
+      } else {
+        cancelAnimationFrame(animationId);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (canvas.parentNode) {
+          canvas.parentNode.removeChild(canvas);
+        }
+      }
+    }
+    render();
+  }
+  function openRatSuccessModal(formData) {
+    const modal = document.getElementById("registration-success-modal");
+    if (!modal) return;
+    const summaryEl = document.getElementById("rat-submission-summary");
+    if (summaryEl) {
+      summaryEl.innerHTML = `
+            <div class="rat-summary-row">
+                <span class="rat-summary-label">\u{1F464} \u05E9\u05DD:</span>
+                <span class="rat-summary-val">${formData.name || "\u05DC\u05D0 \u05E6\u05D5\u05D9\u05DF"}</span>
+            </div>
+            <div class="rat-summary-row">
+                <span class="rat-summary-label">\u{1F4DE} \u05D8\u05DC\u05E4\u05D5\u05DF:</span>
+                <span class="rat-summary-val">${formData.phone || "\u05DC\u05D0 \u05E6\u05D5\u05D9\u05DF"}</span>
+            </div>
+            <div class="rat-summary-row">
+                <span class="rat-summary-label">\u{1F6D1} \u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4:</span>
+                <span class="rat-summary-val" title="${formData.reason}">${formData.reason || "\u05DC\u05DC\u05D0"}</span>
+            </div>
+            <div class="rat-summary-row">
+                <span class="rat-summary-label">\u26A1 \u05E8\u05DE\u05EA \u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4:</span>
+                <span class="rat-summary-val">${formData.motivation || "50%"}</span>
+            </div>
+            ${formData.notes ? `
+                <div class="rat-summary-row">
+                    <span class="rat-summary-label">\u{1F366} \u05D4\u05E2\u05E8\u05D5\u05EA/\u05D0\u05E8\u05D8\u05D9\u05E7:</span>
+                    <span class="rat-summary-val" title="${formData.notes}">${formData.notes}</span>
+                </div>
+            ` : ""}
+        `;
+    }
+    const waNumber = "972628618645";
+    const waText = [
+      "\u05D4\u05D9\u05D9 \u05D7\u05D6\u05D9\u05DB\u05D5! \u{1F93F}",
+      "\u05E9\u05D9\u05E8\u05D9\u05D9\u05E0\u05EA\u05D9 \u05DE\u05E7\u05D5\u05DD \u05D1\u05E7\u05D5\u05E8\u05E1 \u05D4\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05D4\u05E7\u05E8\u05D5\u05D1:",
+      `\u{1F464} \u05E9\u05DD \u05DE\u05DC\u05D0: ${formData.name || "\u05D9\u05E9\u05E8\u05D0\u05DC \u05D9\u05E9\u05E8\u05D0\u05DC\u05D9"}`,
+      `\u{1F4DE} \u05D8\u05DC\u05E4\u05D5\u05DF: ${formData.phone || "\u05DC\u05D0 \u05E6\u05D5\u05D9\u05DF"}`,
+      `\u{1F6D1} \u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05DE\u05E9\u05D5\u05E2\u05E8\u05EA: ${formData.reason || "\u05D0\u05D9\u05DF \u05DB\u05D5\u05D7"}`,
+      `\u26A1 \u05E8\u05DE\u05EA \u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4: ${formData.motivation || "50%"}`,
+      formData.notes ? `\u{1F366} \u05D4\u05E2\u05E8\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05D5\u05EA: ${formData.notes}` : "",
+      "",
+      "\u{1F332} \u05DE\u05D7\u05DB\u05D4 \u05E9\u05D4\u05D7\u05D5\u05DC\u05D3\u05D4 \u05D4\u05DE\u05E4\u05E6\u05D7\u05EA \u05EA\u05D0\u05E9\u05E8 \u05DC\u05D9 \u05D0\u05EA \u05D4\u05E8\u05D9\u05E9\u05D5\u05DD! \u{1F400}"
+    ].filter(Boolean).join("\n");
+    const waBtn = document.getElementById("btn-rat-whatsapp");
+    if (waBtn) {
+      waBtn.href = `https://wa.me/${waNumber}?text=${encodeURIComponent(waText)}`;
+    }
+    modal.classList.remove("hidden");
+    triggerPineconeConfetti();
+  }
+  function closeRatSuccessModal() {
+    const modal = document.getElementById("registration-success-modal");
+    if (modal) modal.classList.add("hidden");
+  }
+  function initRatModalHandlers() {
+    const modal = document.getElementById("registration-success-modal");
+    const closeBtn = document.getElementById("rat-success-close-btn");
+    const bottomCloseBtn = document.getElementById("btn-rat-close");
+    if (closeBtn) closeBtn.addEventListener("click", closeRatSuccessModal);
+    if (bottomCloseBtn) bottomCloseBtn.addEventListener("click", closeRatSuccessModal);
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          closeRatSuccessModal();
+        }
+      });
+    }
+  }
+
   // js/features/edit-engine.js
   var editingModalItemType = null;
   var editingModalItemId = null;
@@ -1522,13 +1663,19 @@
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const nameEl = document.getElementById("reg-name");
-        const name = nameEl ? nameEl.value : "";
+        const name = nameEl ? nameEl.value.trim() : "";
+        const phoneEl = document.getElementById("reg-phone");
+        const phone = phoneEl ? phoneEl.value.trim() : "";
         const reasonEl = document.getElementById("reg-reason");
         let reason = reasonEl ? reasonEl.value : "";
         if (isCustomReason(reason) && regCustomInput && regCustomInput.value.trim()) {
           reason = regCustomInput.value.trim();
         }
-        alert(`\u05EA\u05D5\u05D3\u05D4 ${name}! \u05D4\u05D1\u05E7\u05E9\u05D4 \u05E9\u05DC\u05DA \u05DC\u05E9\u05DE\u05D5\u05E8 \u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05E0\u05E7\u05DC\u05D8\u05D4 (\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4: ${reason}). \u05EA\u05E4\u05D5\u05E1/\u05E4\u05D9 \u05E4\u05D9\u05E0\u05D4 \u05D1\u05E6\u05DC, \u05D0\u05E0\u05D7\u05E0\u05D5 \u05D1\u05D3\u05E8\u05DA \u05E2\u05DD \u05D4\u05E7\u05E4\u05D4! \u2615`);
+        const motEl = document.getElementById("reg-motivation");
+        const motivation = motEl ? motEl.value : "";
+        const notesEl = document.getElementById("reg-notes");
+        const notes = notesEl ? notesEl.value.trim() : "";
+        openRatSuccessModal({ name, phone, reason, motivation, notes });
       });
     }
   }
@@ -1566,5 +1713,6 @@
     initCalculator();
     initCertificate();
     initImageModal();
+    initRatModalHandlers();
   });
 })();

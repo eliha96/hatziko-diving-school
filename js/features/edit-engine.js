@@ -7,6 +7,7 @@ import { getState, setState, getEditMode, setEditMode, saveData, resetData } fro
 import { updateCertReasonDisplay, isCustomReason } from './certificate.js';
 import { setSyllabusTab } from '../components/syllabus.js';
 import { updateCalculatorResult, DEFAULT_CALC_LEVELS } from './calculator.js';
+import { openRatSuccessModal } from './rat-dispatch.js';
 
 let editingModalItemType = null;
 let editingModalItemId = null;
@@ -848,13 +849,20 @@ export function setupEditEventListeners(renderAll) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const nameEl = document.getElementById('reg-name');
-            const name = nameEl ? nameEl.value : '';
+            const name = nameEl ? nameEl.value.trim() : '';
+            const phoneEl = document.getElementById('reg-phone');
+            const phone = phoneEl ? phoneEl.value.trim() : '';
             const reasonEl = document.getElementById('reg-reason');
             let reason = reasonEl ? reasonEl.value : '';
             if (isCustomReason(reason) && regCustomInput && regCustomInput.value.trim()) {
                 reason = regCustomInput.value.trim();
             }
-            alert(`תודה ${name}! הבקשה שלך לשמור חצי כוכב נקלטה (סיבת פרישה: ${reason}). תפוס/פי פינה בצל, אנחנו בדרך עם הקפה! ☕`);
+            const motEl = document.getElementById('reg-motivation');
+            const motivation = motEl ? motEl.value : '';
+            const notesEl = document.getElementById('reg-notes');
+            const notes = notesEl ? notesEl.value.trim() : '';
+
+            openRatSuccessModal({ name, phone, reason, motivation, notes });
         });
     }
 }

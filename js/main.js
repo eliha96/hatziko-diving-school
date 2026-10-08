@@ -11,6 +11,7 @@ import { renderTestimonials } from './components/testimonials.js';
 import { renderFAQs } from './components/faq.js';
 import { renderCalculatorSliders, updateCalculatorResult, initCalculator } from './features/calculator.js';
 import { initCertificate } from './features/certificate.js';
+import { initRatModalHandlers } from './features/rat-dispatch.js';
 import {
     renderImages,
     renderStaticText,
@@ -68,4 +69,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initCalculator();
     initCertificate();
     initImageModal();
+    initRatModalHandlers();
 });
