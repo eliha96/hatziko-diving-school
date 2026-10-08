@@ -1,3 +1,9 @@
+# Dependencies
+node_modules/
+
+# Vercel & Build
+.vercel/
+
 # OS generated files
 .DS_Store
 Thumbs.db

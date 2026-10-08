@@ -506,12 +506,9 @@
                 </div>
                 <div>
                     <div class="syllabus-difficulty">${escapeHtml(item.difficulty)}</div>
-                    <button type="button" class="btn-syllabus-detail" onclick="openSyllabusDetailModal('${item.id}')">
-                        <span>\u{1F50D} \u05E4\u05E8\u05D8\u05D9\u05DD \u05D5\u05D8\u05D9\u05E4 \u05D4\u05D9\u05E9\u05E8\u05D3\u05D5\u05EA</span>
-                    </button>
                     ${isEditMode2 ? `
-                        <div class="item-actions-bar" style="margin-top:0.75rem;">
-                            <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">\u270F\uFE0F \u05E2\u05E8\u05D5\u05DA</button>
+                        <div class="item-actions-bar" style="margin-top:1rem;">
+                            <button class="btn btn-sm btn-outline" onclick="openEditModal('syllabus', '${item.id}')">\u270F\uFE0F \u05E2\u05E8\u05D5\u05DA \u05E9\u05D9\u05E2\u05D5\u05E8</button>
                             <button class="btn btn-sm btn-outline" onclick="deleteItem('syllabus', '${item.id}')">\u{1F5D1}\uFE0F \u05DE\u05D7\u05E7</button>
                         </div>
                     ` : ""}
@@ -519,58 +516,6 @@
             </div>
         `;
     }).join("");
-  }
-  function openSyllabusDetailModal(id) {
-    const modal = document.getElementById("syllabus-detail-modal");
-    if (!modal) return;
-    const state = getState();
-    const item = (state.syllabus || []).find((s) => s.id === id);
-    if (!item) return;
-    const badgeEl = document.getElementById("syl-modal-badge");
-    const titleEl = document.getElementById("syl-modal-title");
-    const durationEl = document.getElementById("syl-modal-duration");
-    const descEl = document.getElementById("syl-modal-desc");
-    const diffEl = document.getElementById("syl-modal-difficulty");
-    const gearEl = document.getElementById("syl-modal-gear");
-    const tipEl = document.getElementById("syl-modal-tip");
-    const partLabels = { pool: "\u05D7\u05DC\u05E7 \u05D0' - \u05D1\u05E8\u05D9\u05DB\u05D4 \u{1F3CA}\u200D\u2642\uFE0F", sea: "\u05D7\u05DC\u05E7 \u05D1' - \u05D9\u05DD \u05E4\u05EA\u05D5\u05D7 \u{1F30A}", final: "\u05D7\u05DC\u05E7 \u05D2' - \u05E1\u05D9\u05D5\u05DD \u05D5\u05EA\u05E2\u05D5\u05D3\u05D4 \u{1F3C5}" };
-    if (badgeEl) badgeEl.innerText = `${partLabels[item.part] || "\u05E9\u05D9\u05E2\u05D5\u05E8"} | ${item.number || ""}`;
-    if (titleEl) titleEl.innerText = item.title || "";
-    if (durationEl) durationEl.innerText = item.duration ? `\u23F1\uFE0F \u05DE\u05E9\u05DA \u05D4\u05D6\u05DE\u05DF: ${item.duration}` : "\u23F1\uFE0F \u05E2\u05D3 \u05E9\u05DE\u05D9\u05E9\u05D4\u05D5 \u05D9\u05EA\u05D7\u05E8\u05D8";
-    if (descEl) descEl.innerText = item.desc || "";
-    if (diffEl) diffEl.innerText = item.difficulty || "\u05DE\u05D5\u05EA\u05D0\u05DD \u05DC\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1";
-    const gearList = [
-      "\u05DE\u05E6\u05D5\u05E4\u05D9 \u05E4\u05DC\u05E1\u05D8\u05D9\u05E7 \u05D6\u05D5\u05D4\u05E8\u05D9\u05DD, \u05E7\u05E4\u05D4 \u05E9\u05D7\u05D5\u05E8 \u05E8\u05D5\u05EA\u05D7, \u05D5\u05DE\u05D2\u05D1\u05EA \u05D9\u05D1\u05E9\u05D4 \u05E9\u05E9\u05DE\u05D5\u05E8\u05D4 \u05D1\u05DE\u05E8\u05D7\u05E7 \u05D1\u05D8\u05D5\u05D7 \u05DE\u05D4\u05DE\u05D9\u05DD.",
-      "\u05E9\u05E0\u05D5\u05E8\u05E7\u05DC \u05E2\u05DD \u05D7\u05D5\u05E8 \u05D7\u05E1\u05D5\u05DD (\u05DC\u05EA\u05E8\u05D2\u05D5\u05DC \u05DE\u05E6\u05D1\u05D9 \u05D7\u05D9\u05E8\u05D5\u05DD), \u05DB\u05E4\u05DB\u05E4\u05D9 \u05D0\u05E6\u05D1\u05E2, \u05D5\u05E7\u05E8\u05DD \u05D4\u05D2\u05E0\u05D4 100+.",
-      "\u05D1\u05E7\u05D1\u05D5\u05E7 \u05DE\u05D9\u05DD \u05DE\u05D9\u05E0\u05E8\u05DC\u05D9\u05D9\u05DD (\u05DC\u05E9\u05EA\u05D9\u05D9\u05D4 \u05D1\u05DC\u05D1\u05D3, \u05DC\u05D0 \u05DC\u05D4\u05D9\u05DB\u05E0\u05E1 \u05D0\u05DC\u05D9\u05D4\u05DD), \u05D5\u05D0\u05D9\u05E9\u05D5\u05E8 \u05D5\u05D9\u05EA\u05D5\u05E8 \u05EA\u05D1\u05D9\u05E2\u05D5\u05EA \u05D7\u05EA\u05D5\u05DD.",
-      "\u05DE\u05E9\u05E7\u05E4\u05EA \u05E2\u05DD \u05D0\u05D3\u05D9\u05DD \u05D1\u05DC\u05EA\u05D9 \u05E0\u05D9\u05EA\u05E0\u05D9\u05DD \u05DC\u05D4\u05E1\u05E8\u05D4, \u05D7\u05D8\u05D9\u05E3 \u05D0\u05E0\u05E8\u05D2\u05D9\u05D4 \u05D7\u05E6\u05D9 \u05D0\u05DB\u05D5\u05DC, \u05D5\u05D7\u05D1\u05E8 \u05E9\u05D9\u05D5\u05E9\u05D1 \u05D1\u05E6\u05DC \u05D5\u05E6\u05D5\u05D7\u05E7."
-    ];
-    const tipList = [
-      "\u05D0\u05DD \u05D4\u05DE\u05D9\u05DD \u05DE\u05D2\u05D9\u05E2\u05D9\u05DD \u05DE\u05E2\u05DC \u05D4\u05D1\u05E8\u05DA - \u05D9\u05E9 \u05DC\u05E4\u05E8\u05D5\u05E9 \u05DE\u05D9\u05D3, \u05DC\u05E6\u05E2\u05D5\u05E7 '\u05E1\u05D9\u05D9\u05DE\u05EA\u05D9 \u05D0\u05EA \u05D4\u05DE\u05DB\u05E1\u05D4 \u05DC\u05D4\u05D9\u05D5\u05DD' \u05D5\u05DC\u05E9\u05D5\u05D1 \u05DC\u05DE\u05D2\u05D1\u05EA.",
-      "\u05D0\u05D9\u05DF \u05DC\u05E0\u05E1\u05D5\u05EA \u05DC\u05E4\u05DE\u05E4\u05DD \u05D1\u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD \u05D0\u05DD \u05D4\u05E8\u05D0\u05E9 \u05DE\u05D7\u05D5\u05E5 \u05DC\u05DE\u05D9\u05DD; \u05D6\u05D4 \u05E8\u05E7 \u05D2\u05D5\u05E8\u05DD \u05DC\u05E2\u05D9\u05D5\u05D5\u05EA\u05D9 \u05E4\u05E0\u05D9\u05DD \u05DE\u05E9\u05D5\u05E0\u05D9\u05DD.",
-      "\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05D6\u05D4 \u05E2\u05D3\u05D9\u05D9\u05DF \u05D7\u05E6\u05D9 \u05D9\u05D5\u05EA\u05E8 \u05DE\u05D0\u05E4\u05E1. \u05D0\u05DC \u05EA\u05EA\u05E0\u05D5 \u05DC\u05DE\u05D1\u05D8\u05D9\u05DD \u05D4\u05DE\u05E8\u05D7\u05DE\u05D9\u05DD \u05E9\u05DC \u05D4\u05DE\u05E6\u05D9\u05DC \u05DC\u05E2\u05E8\u05E2\u05E8 \u05D0\u05EA\u05DB\u05DD.",
-      "\u05D6\u05DB\u05E8\u05D5: \u05DB\u05D5\u05DB\u05D1 \u05D4\u05D9\u05DD \u05D0\u05D9\u05E0\u05D5 \u05DE\u05E2\u05E0\u05D9\u05E7 \u05DB\u05D5\u05DB\u05D1\u05D9 \u05E6\u05DC\u05D9\u05DC\u05D4, \u05D4\u05D5\u05D0 \u05E1\u05EA\u05DD \u05E0\u05D7 \u05E2\u05DC \u05D4\u05D7\u05D5\u05DC \u05D5\u05DE\u05E7\u05D5\u05D5\u05D4 \u05E9\u05DC\u05D0 \u05D9\u05D3\u05E8\u05DB\u05D5 \u05E2\u05DC\u05D9\u05D5."
-    ];
-    const hash = (item.title || "").length % gearList.length;
-    if (gearEl) gearEl.innerText = gearList[hash];
-    if (tipEl) tipEl.innerText = tipList[hash];
-    modal.classList.remove("hidden");
-  }
-  function closeSyllabusDetailModal() {
-    const modal = document.getElementById("syllabus-detail-modal");
-    if (modal) modal.classList.add("hidden");
-  }
-  function initSyllabusDetailModal() {
-    const closeBtn1 = document.getElementById("syllabus-detail-modal-close-btn");
-    const closeBtn2 = document.getElementById("syllabus-detail-modal-close-btn2");
-    if (closeBtn1) closeBtn1.addEventListener("click", closeSyllabusDetailModal);
-    if (closeBtn2) closeBtn2.addEventListener("click", closeSyllabusDetailModal);
-    const modal = document.getElementById("syllabus-detail-modal");
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeSyllabusDetailModal();
-      });
-    }
   }
 
   // js/components/testimonials.js
@@ -729,46 +674,8 @@
     if (calcZone) calcZone.innerText = zoneName;
     if (calcAdvice) calcAdvice.innerText = adviceText;
   }
-  function openDepthLevelsModal() {
-    const modal = document.getElementById("depth-levels-modal");
-    const listEl = document.getElementById("depth-zones-modal-list");
-    if (!modal || !listEl) return;
-    const state = getState();
-    const customLevels = state.calcLevels && state.calcLevels.length === 5 ? state.calcLevels : null;
-    listEl.innerHTML = DEFAULT_CALC_LEVELS.map((level, idx) => {
-      const zone = customLevels && customLevels[idx] && customLevels[idx].zone || level.zone;
-      const advice = customLevels && customLevels[idx] && customLevels[idx].advice || level.advice;
-      const sampleDepth = level.calcDepth(Math.max(0.01, level.maxFactor - 0.08));
-      return `
-            <div class="depth-zone-item">
-                <div class="depth-zone-head">
-                    <span class="depth-zone-name">#${idx + 1} ${escapeHtml(zone)}</span>
-                    <span class="depth-zone-meter">\u{1F4CF} \u05E2\u05D3 ${sampleDepth}</span>
-                </div>
-                <div class="depth-zone-advice">${escapeHtml(advice)}</div>
-            </div>
-        `;
-    }).join("");
-    modal.classList.remove("hidden");
-  }
-  function closeDepthLevelsModal() {
-    const modal = document.getElementById("depth-levels-modal");
-    if (modal) modal.classList.add("hidden");
-  }
   function initCalculator() {
     renderCalculatorSliders(getState(), getEditMode());
-    const btnShow = document.getElementById("btn-show-depth-zones");
-    if (btnShow) btnShow.addEventListener("click", openDepthLevelsModal);
-    const closeBtn = document.getElementById("depth-levels-modal-close-btn");
-    if (closeBtn) closeBtn.addEventListener("click", closeDepthLevelsModal);
-    const okBtn = document.getElementById("depth-levels-modal-ok-btn");
-    if (okBtn) okBtn.addEventListener("click", closeDepthLevelsModal);
-    const modal = document.getElementById("depth-levels-modal");
-    if (modal) {
-      modal.addEventListener("click", (e) => {
-        if (e.target === modal) closeDepthLevelsModal();
-      });
-    }
   }
 
   // js/features/certificate.js
@@ -1786,8 +1693,6 @@
   window.switchSyllabusTab = switchSyllabusTab;
   window.updateCalculatorResult = updateCalculatorResult;
   window.updateCharCounter = updateCharCounter;
-  window.openSyllabusDetailModal = openSyllabusDetailModal;
-  window.openDepthLevelsModal = openDepthLevelsModal;
   function initMobileNavigation() {
     const toggleBtn = document.getElementById("mobile-menu-btn");
     const navMenu = document.getElementById("nav-menu");
@@ -1831,7 +1736,6 @@
     initCertificate();
     initImageModal();
     initRatModalHandlers();
-    initSyllabusDetailModal();
     initMobileNavigation();
   });
 })();
