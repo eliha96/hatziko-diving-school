@@ -33,7 +33,7 @@ export function initCertificate() {
 
     if (reasonSelect && displayReason) {
         reasonSelect.addEventListener('change', () => {
-            displayReason.innerText = `על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, וסיבת פרישה: ${reasonSelect.value}.`;
+            updateCertReasonDisplay();
         });
     }
 

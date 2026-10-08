@@ -1,0 +1,11 @@
+{
+  "name": "haziko-diving-school",
+  "version": "1.0.0",
+  "description": "חציכו - בית ספר לצלילה | חצי כוכב. חצי כוח.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}

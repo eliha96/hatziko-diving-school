@@ -130,11 +130,11 @@ export function openEditModal(type, id = null) {
         modalBody.innerHTML = `
             <div class="form-group">
                 <label>ערך/מספר (למשל: 0.5, 100%, 0):</label>
-                <input type="text" id="m-stat-number" class="form-control" value="${item ? item.number : '100%'}">
+                <input type="text" id="m-stat-number" class="form-control" value="${item ? escapeHtml(item.number) : '100%'}">
             </div>
             <div class="form-group">
                 <label>תיאור/תווית (למשל: הפסקות קפה):</label>
-                <input type="text" id="m-stat-label" class="form-control" value="${item ? item.label : 'מדד חדש'}">
+                <input type="text" id="m-stat-label" class="form-control" value="${item ? escapeHtml(item.label) : 'מדד חדש'}">
             </div>
         `;
     } else if (type === 'calcSlider') {
@@ -142,7 +142,7 @@ export function openEditModal(type, id = null) {
         modalBody.innerHTML = `
             <div class="form-group">
                 <label>תווית/שם המדד (כולל אימוג'י):</label>
-                <input type="text" id="m-calc-label" class="form-control" value="${item ? item.label : '🦈 פחד מכרישים דמיוניים:'}">
+                <input type="text" id="m-calc-label" class="form-control" value="${item ? escapeHtml(item.label) : '🦈 פחד מכרישים דמיוניים:'}">
             </div>
             <div class="form-group">
                 <label>ערך ברירת מחדל (0-100%):</label>
