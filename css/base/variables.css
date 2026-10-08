@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Hatziko Diving School - Design System & Stylesheet
+   Theme: Oceanic Deep Aqua, Cyan Glassmorphism, Satirical High-End Aesthetics
+   ========================================================================== */
+
+:root {
+    --bg-dark: #071322;
+    --bg-navy: #0d1f36;
+    --bg-surface: #142a47;
+    --bg-surface-glass: rgba(20, 42, 71, 0.65);
+    
+    --primary-cyan: #00d2ff;
+    --primary-teal: #00f2fe;
+    --primary-blue: #0066ff;
+    --accent-gold: #ffb703;
+    --accent-gold-hover: #ffa200;
+    --accent-coral: #ff5e7e;
+    
+    --text-primary: #f0f7ff;
+    --text-secondary: #a0aec0;
+    --text-muted: #64748b;
+    
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --border-gold: rgba(255, 183, 3, 0.4);
+    
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.35);
+    --shadow-glow: 0 0 25px rgba(0, 210, 255, 0.25);
+    
+    --font-heading: 'Rubik', sans-serif;
+    --font-body: 'Heebo', sans-serif;
+
+    --radius-sm: 8px;
+    --radius-md: 16px;
+    --radius-lg: 24px;
+    --radius-full: 9999px;
+}
+
+.hidden {
+    display: none !important;
+}

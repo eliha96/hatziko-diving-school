@@ -1,0 +1,201 @@
+/* Animated Top Ocean Surface & Rubber Duck */
+.ocean-surface-header {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(180deg, #38bdf8 0%, #0284c7 60%, var(--bg-dark) 100%);
+    padding-top: 1rem;
+    overflow: hidden;
+}
+
+.duck-wrapper {
+    position: absolute;
+    top: 5px;
+    right: 18%;
+    z-index: 10;
+    animation: duck-bob 4s ease-in-out infinite alternate;
+}
+
+.rubber-duck {
+    font-size: 2.8rem;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.rubber-duck:hover {
+    transform: scale(1.2) rotate(15deg);
+}
+
+@keyframes duck-bob {
+    0% { transform: translateY(0px) rotate(-5deg); }
+    50% { transform: translateY(12px) rotate(5deg); }
+    100% { transform: translateY(-4px) rotate(-3deg); }
+}
+
+.waves {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    margin-bottom: -7px;
+    min-height: 70px;
+    max-height: 120px;
+}
+
+.parallax-waves > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax-waves > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 7s;
+}
+.parallax-waves > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 10s;
+}
+.parallax-waves > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+.parallax-waves > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 20s;
+}
+
+@keyframes move-forever {
+    0% { transform: translate3d(-90px, 0, 0); }
+    100% { transform: translate3d(85px, 0, 0); }
+}
+
+/* Sea Creatures & School of Upside-Down Fish Layer */
+.sea-creatures-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Fish School Formations (Right to Left, Upside-Down) */
+.fish-school {
+    position: absolute;
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    animation: swim-school-right-to-left 22s linear infinite;
+    filter: drop-shadow(0 4px 10px rgba(0, 210, 255, 0.4));
+}
+
+.school-top {
+    top: 1400px;
+}
+
+.school-mid {
+    top: 2500px;
+    animation-duration: 26s;
+    animation-delay: -8s;
+}
+
+.school-fish {
+    display: inline-block;
+    font-size: 2.4rem;
+    transform: rotate(180deg);
+}
+
+.sf-1 { transform: rotate(180deg) translateY(0px) scale(1); }
+.sf-2 { transform: rotate(180deg) translateY(-22px) scale(0.9); }
+.sf-3 { transform: rotate(180deg) translateY(18px) scale(1.1); }
+.sf-4 { transform: rotate(180deg) translateY(-10px) scale(0.85); }
+.sf-5 { transform: rotate(180deg) translateY(25px) scale(1.05); }
+.sf-6 { transform: rotate(180deg) translateY(-30px) scale(0.95); }
+
+@keyframes swim-school-right-to-left {
+    0% { right: -350px; transform: translateY(0px); }
+    50% { transform: translateY(-35px); }
+    100% { right: 110vw; transform: translateY(0px); }
+}
+
+.swimming-shark {
+    position: absolute;
+    top: 3600px;
+    font-size: 4.2rem;
+    opacity: 0.75;
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.6));
+    animation: swim-shark-right-to-left 28s linear infinite;
+}
+
+@keyframes swim-shark-right-to-left {
+    0% { right: -150px; transform: rotate(180deg) translateY(0); }
+    50% { transform: rotate(180deg) translateY(25px); }
+    100% { right: 110vw; transform: rotate(180deg) translateY(0); }
+}
+
+/* Seabed Bottom Section Decoration */
+.seabed-decoration {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(180deg, transparent 0%, #1e1b4b 60%, #451a03 100%);
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    margin-top: -2rem;
+    border-bottom: 2px solid var(--accent-gold);
+}
+
+.seabed-sand {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, #d97706 0%, #b45309 50%, #92400e 100%);
+    border-radius: 50% 50% 0 0 / 20px 20px 0 0;
+    opacity: 0.6;
+}
+
+.seabed-elements {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    position: relative;
+    z-index: 5;
+    padding-bottom: 1rem;
+}
+
+.seabed-shipwreck {
+    font-size: 4.5rem;
+    transform: rotate(-10deg);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.7));
+    transition: transform 0.3s ease;
+}
+
+.seabed-shipwreck:hover {
+    transform: rotate(0deg) scale(1.1);
+}
+
+.seabed-seaweed {
+    font-size: 3.5rem;
+    animation: sway 3s ease-in-out infinite alternate;
+}
+
+.seaweed-2 {
+    animation-delay: -1.5s;
+}
+
+@keyframes sway {
+    0% { transform: rotate(-8deg); }
+    100% { transform: rotate(8deg); }
+}
+
+.seabed-starfish {
+    font-size: 3rem;
+    color: var(--accent-gold);
+    filter: drop-shadow(0 0 10px var(--accent-gold));
+    animation: pulse 2s infinite alternate;
+}
+
+.seabed-chest {
+    font-size: 3rem;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+}

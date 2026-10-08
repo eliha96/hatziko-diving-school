@@ -1,0 +1,41 @@
+/* Responsive */
+@media (max-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    .hero-stats {
+        justify-content: center;
+    }
+    .hero-ctas {
+        justify-content: center;
+    }
+    .calc-body {
+        grid-template-columns: 1fr;
+    }
+    .cert-wrapper {
+        grid-template-columns: 1fr;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.4rem;
+    }
+    .hero-motto {
+        font-size: 1.4rem;
+    }
+    .nav-menu {
+        display: none;
+    }
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .duck-wrapper {
+        right: 5%;
+    }
+}

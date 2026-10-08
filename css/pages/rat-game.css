@@ -1,0 +1,110 @@
+/* Random Rat Runner */
+.rat-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.rat-element {
+    position: absolute;
+    font-size: 2.4rem;
+    cursor: pointer;
+    pointer-events: auto;
+    user-select: none;
+    transition: transform 0.2s ease;
+}
+
+.rat-element:hover {
+    transform: scale(1.3);
+}
+
+.rat-move-right {
+    animation: ratRunRight linear forwards;
+}
+
+.rat-move-left {
+    animation: ratRunLeft linear forwards;
+}
+
+.rat-move-left .rat-emoji {
+    display: inline-block;
+    transform: scaleX(-1);
+}
+
+@keyframes ratRunRight {
+    0% { left: -60px; }
+    100% { left: 105%; }
+}
+
+@keyframes ratRunLeft {
+    0% { right: -60px; }
+    100% { right: 105%; }
+}
+
+.rat-speech-bubble {
+    position: absolute;
+    bottom: 110%;
+    right: 0;
+    background: #ffffff;
+    color: #0d1f36;
+    padding: 0.4rem 0.8rem;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    border: 2px solid var(--accent-gold);
+    animation: popIn 0.3s ease;
+    direction: rtl !important;
+    text-align: right !important;
+    transform: none !important;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+
+/* Rat Counter Badge Mini-Game Styles */
+.rat-counter-badge {
+    background: rgba(7, 19, 34, 0.75);
+    border: 1px solid var(--border-gold);
+    color: var(--accent-gold);
+    padding: 0.45rem 1.1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.rat-counter-badge span {
+    font-family: var(--font-heading);
+    color: #ffffff;
+    font-weight: 800;
+}
+
+.rat-counter-badge.new-record-flash {
+    animation: goldRecordFlash 0.5s 2 alternate ease-in-out;
+    border-color: #00ff66;
+    color: #00ff66;
+}
+
+.rat-counter-badge.new-record-flash span {
+    color: #00ff66;
+}
+
+@keyframes goldRecordFlash {
+    0% { transform: scale(1); box-shadow: 0 0 10px rgba(0, 255, 102, 0.4); }
+    100% { transform: scale(1.15); box-shadow: 0 0 25px rgba(0, 255, 102, 0.9); }
+}
