@@ -547,6 +547,23 @@ export function setupEditEventListeners(renderAll) {
         });
     }
 
+    const exportBtn = document.getElementById('btn-export-data');
+    if (exportBtn) {
+        exportBtn.addEventListener('click', () => {
+            const dataStr = JSON.stringify(getState(), null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'site-data.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert("קובץ site-data.json ירד לתיקיית ההורדות שלך! 📥\nעכשיו רק תכתוב לי בצ'אט: 'תטמיע את site-data.json' ואני אעדכן את הפרויקט ואדחוף לגיט מיד!");
+        });
+    }
+
     const resetBtn = document.getElementById('btn-reset-data');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {

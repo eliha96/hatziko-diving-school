@@ -1138,6 +1138,22 @@
         alert("\u05DB\u05DC \u05D4\u05E9\u05D9\u05E0\u05D5\u05D9\u05D9\u05DD \u05E0\u05E9\u05DE\u05E8\u05D5 \u05D1\u05D4\u05E6\u05DC\u05D7\u05D4 \u05D1\u05D3\u05E4\u05D3\u05E4\u05DF! \u{1F389}");
       });
     }
+    const exportBtn = document.getElementById("btn-export-data");
+    if (exportBtn) {
+      exportBtn.addEventListener("click", () => {
+        const dataStr = JSON.stringify(getState(), null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "site-data.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        alert("\u05E7\u05D5\u05D1\u05E5 site-data.json \u05D9\u05E8\u05D3 \u05DC\u05EA\u05D9\u05E7\u05D9\u05D9\u05EA \u05D4\u05D4\u05D5\u05E8\u05D3\u05D5\u05EA \u05E9\u05DC\u05DA! \u{1F4E5}\n\u05E2\u05DB\u05E9\u05D9\u05D5 \u05E8\u05E7 \u05EA\u05DB\u05EA\u05D5\u05D1 \u05DC\u05D9 \u05D1\u05E6'\u05D0\u05D8: '\u05EA\u05D8\u05DE\u05D9\u05E2 \u05D0\u05EA site-data.json' \u05D5\u05D0\u05E0\u05D9 \u05D0\u05E2\u05D3\u05DB\u05DF \u05D0\u05EA \u05D4\u05E4\u05E8\u05D5\u05D9\u05E7\u05D8 \u05D5\u05D0\u05D3\u05D7\u05D5\u05E3 \u05DC\u05D2\u05D9\u05D8 \u05DE\u05D9\u05D3!");
+      });
+    }
     const resetBtn = document.getElementById("btn-reset-data");
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
