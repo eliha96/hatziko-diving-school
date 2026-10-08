@@ -507,9 +507,11 @@
                 <p class="testimonial-text">"${escapeHtml(item.text)}"</p>
             </div>
             ${isEditMode2 ? `
-                <div class="item-actions-bar">
-                    <button class="btn btn-sm btn-outline" onclick="openEditModal('testimonial', '${item.id}')">\u270F\uFE0F \u05E2\u05E8\u05D5\u05DA \u05D4\u05DE\u05DC\u05E6\u05D4</button>
-                    <button class="btn btn-sm btn-outline" onclick="deleteItem('testimonial', '${item.id}')">\u{1F5D1}\uFE0F \u05DE\u05D7\u05E7</button>
+                <div class="item-actions-bar" style="display:flex; gap:0.3rem; align-items:center; flex-wrap:wrap; justify-content:center;">
+                    <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05E7\u05D3\u05D9\u05DE\u05D4 (\u05D9\u05DE\u05D9\u05E0\u05D4)" onclick="moveItem('testimonial', '${item.id}', -1)" style="padding:0.2rem 0.5rem; font-size:0.8rem;">\u27A1\uFE0F \u05E7\u05D3\u05D9\u05DE\u05D4</button>
+                    <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05D0\u05D7\u05D5\u05E8\u05D4 (\u05E9\u05DE\u05D0\u05DC\u05D4)" onclick="moveItem('testimonial', '${item.id}', 1)" style="padding:0.2rem 0.5rem; font-size:0.8rem;">\u05D0\u05D7\u05D5\u05E8\u05D4 \u2B05\uFE0F</button>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="openEditModal('testimonial', '${item.id}')" style="padding:0.2rem 0.5rem; font-size:0.8rem;">\u270F\uFE0F \u05E2\u05E8\u05D5\u05DA</button>
+                    <button type="button" class="btn btn-sm btn-outline" onclick="deleteItem('testimonial', '${item.id}')" style="padding:0.2rem 0.5rem; font-size:0.8rem; color:#ef4444; border-color:#ef4444;">\u{1F5D1}\uFE0F \u05DE\u05D7\u05E7</button>
                 </div>
             ` : ""}
         </div>
@@ -612,31 +614,68 @@
   }
 
   // js/features/certificate.js
+  function isCustomReason(val) {
+    if (!val) return false;
+    const s = String(val).toLowerCase();
+    return s.includes("\u05DE\u05D5\u05EA\u05D0\u05DE\u05EA \u05D0\u05D9\u05E9\u05D9\u05EA") || s.includes("\u05D1\u05D4\u05EA\u05D0\u05DE\u05D4 \u05D0\u05D9\u05E9\u05D9\u05EA") || s.includes("\u05D0\u05D9\u05E9\u05D9\u05EA");
+  }
   function updateCertReasonDisplay() {
     const displayReason = document.getElementById("cert-display-reason");
     const reasonSelect = document.getElementById("cert-reason-select");
-    if (displayReason && reasonSelect) {
-      displayReason.innerText = reasonSelect.value || "";
+    const customGroup = document.getElementById("cert-custom-reason-group");
+    const customInput = document.getElementById("cert-custom-reason-input");
+    if (!displayReason || !reasonSelect) return;
+    const val = reasonSelect.value || "";
+    if (isCustomReason(val)) {
+      if (customGroup) customGroup.classList.remove("hidden");
+      const customVal = customInput ? customInput.value.trim() : "";
+      displayReason.innerText = customVal || "\u05E1\u05D9\u05D1\u05D4 \u05DE\u05D5\u05EA\u05D0\u05DE\u05EA \u05D0\u05D9\u05E9\u05D9\u05EA...";
+    } else {
+      if (customGroup) customGroup.classList.add("hidden");
+      displayReason.innerText = val;
     }
   }
   function initCertificate() {
+    const appState2 = getState();
     const nameInput = document.getElementById("cert-name-input");
     const reasonSelect = document.getElementById("cert-reason-select");
+    const customInput = document.getElementById("cert-custom-reason-input");
     const dateInput = document.getElementById("cert-date-input");
     const displayName = document.getElementById("cert-display-name");
     const displayReason = document.getElementById("cert-display-reason");
     const displayDate = document.getElementById("cert-display-date");
+    const defaultName = appState2.certNameDefault || "\u05D0\u05DC\u05D5\u05E4\u05D4 \u05E2\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD";
+    if (nameInput) {
+      nameInput.value = defaultName;
+    }
+    if (displayName) {
+      displayName.innerText = defaultName;
+    }
     const today = (/* @__PURE__ */ new Date()).toISOString().split("T")[0];
     if (dateInput) dateInput.value = today;
     if (displayDate) displayDate.innerText = formatDate(today);
     if (nameInput && displayName) {
       nameInput.addEventListener("input", () => {
-        displayName.innerText = nameInput.value || "\u05D0\u05DC\u05D5\u05E4\u05D4 \u05E2\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD";
+        const currentVal = nameInput.value.trim();
+        const fallback = appState2.certNameDefault || "\u05D0\u05DC\u05D5\u05E4\u05D4 \u05E2\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD";
+        displayName.innerText = currentVal || fallback;
+        if (getEditMode()) {
+          appState2.certNameDefault = currentVal || fallback;
+          saveData();
+        }
       });
     }
     if (reasonSelect && displayReason) {
       reasonSelect.addEventListener("change", () => {
         updateCertReasonDisplay();
+        if (isCustomReason(reasonSelect.value) && customInput) {
+          customInput.focus();
+        }
+      });
+    }
+    if (customInput && displayReason) {
+      customInput.addEventListener("input", () => {
+        displayReason.innerText = customInput.value.trim() || "\u05E1\u05D9\u05D1\u05D4 \u05DE\u05D5\u05EA\u05D0\u05DE\u05EA \u05D0\u05D9\u05E9\u05D9\u05EA...";
       });
     }
     if (dateInput && displayDate) {
@@ -664,6 +703,41 @@
       globalRenderAllCallback();
     }
   }
+  function moveItem(type, id, direction) {
+    const appState2 = getState();
+    let list = null;
+    if (type === "testimonial" || type === "testimonials") list = appState2.testimonials;
+    else if (type === "stat" || type === "stats") list = appState2.stats;
+    else if (type === "calcSlider" || type === "calcSliders") list = appState2.calcSliders;
+    else if (type === "syllabus") list = appState2.syllabus;
+    else if (type === "faq" || type === "faqs") list = appState2.faqs;
+    if (!list) return;
+    const idx = list.findIndex((x) => x.id === id);
+    if (idx === -1) return;
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= list.length) return;
+    const [item] = list.splice(idx, 1);
+    list.splice(targetIdx, 0, item);
+    saveData();
+    triggerRenderAll();
+  }
+  function moveModalRow(btn, direction) {
+    const row = btn.closest(".modal-reorder-row") || btn.closest(".form-group");
+    if (!row) return;
+    if (direction === -1) {
+      const prev = row.previousElementSibling;
+      if (prev) {
+        row.parentNode.insertBefore(row, prev);
+      }
+    } else if (direction === 1) {
+      const next = row.nextElementSibling;
+      if (next) {
+        row.parentNode.insertBefore(next, row);
+      }
+    }
+  }
+  window.moveItem = moveItem;
+  window.moveModalRow = moveModalRow;
   function renderImages(appState2) {
     const mainLogo = document.getElementById("main-logo-img");
     const heroLogo = document.getElementById("hero-logo-img");
@@ -697,6 +771,10 @@
           if (key === "certDocBodyPrefix") {
             updateCertReasonDisplay();
           }
+          if (key === "certNameDefault") {
+            const certNameInput2 = document.getElementById("cert-name-input");
+            if (certNameInput2) certNameInput2.value = appState2.certNameDefault;
+          }
         };
       } else {
         el.contentEditable = "false";
@@ -710,6 +788,13 @@
         el.placeholder = appState2[key];
       }
     });
+    const certNameInput = document.getElementById("cert-name-input");
+    if (certNameInput && appState2.certNameDefault) {
+      if (!certNameInput.value || certNameInput.value === "\u05D0\u05DC\u05D5\u05E4\u05D4 \u05E2\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD") {
+        certNameInput.value = appState2.certNameDefault;
+      }
+      certNameInput.placeholder = appState2.certNameDefault;
+    }
   }
   function renderDropdownOptions(appState2) {
     const certReasonSelect = document.getElementById("cert-reason-select");
@@ -720,22 +805,44 @@
       ).join("");
       if (currentVal && appState2.certReasons.includes(currentVal)) {
         certReasonSelect.value = currentVal;
+      } else if (appState2.certReasonDefault && appState2.certReasons.includes(appState2.certReasonDefault)) {
+        certReasonSelect.value = appState2.certReasonDefault;
       }
       updateCertReasonDisplay();
     }
     const regReasonSelect = document.getElementById("reg-reason");
     if (regReasonSelect && appState2.regReasons) {
+      const currentVal = regReasonSelect.value;
       regReasonSelect.innerHTML = appState2.regReasons.map((item) => {
         const label = typeof item === "object" ? item.label : item;
         return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
       }).join("");
+      if (currentVal && appState2.regReasons.some((x) => (typeof x === "object" ? x.label : x) === currentVal)) {
+        regReasonSelect.value = currentVal;
+      } else if (appState2.regReasonDefault) {
+        regReasonSelect.value = appState2.regReasonDefault;
+      }
+      const regCustomGroup = document.getElementById("reg-custom-reason-group");
+      if (regCustomGroup) {
+        if (isCustomReason(regReasonSelect.value)) {
+          regCustomGroup.classList.remove("hidden");
+        } else {
+          regCustomGroup.classList.add("hidden");
+        }
+      }
     }
     const regMotSelect = document.getElementById("reg-motivation");
     if (regMotSelect && appState2.regMotivations) {
+      const currentVal = regMotSelect.value;
       regMotSelect.innerHTML = appState2.regMotivations.map((item) => {
         const label = typeof item === "object" ? item.label : item;
         return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
       }).join("");
+      if (currentVal && appState2.regMotivations.some((x) => (typeof x === "object" ? x.label : x) === currentVal)) {
+        regMotSelect.value = currentVal;
+      } else if (appState2.regMotivationDefault) {
+        regMotSelect.value = appState2.regMotivationDefault;
+      }
     }
   }
   function openEditModal(type, id = null) {
@@ -856,12 +963,14 @@
       modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA \u05E1\u05D9\u05D1\u05D5\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 (\u05EA\u05E2\u05D5\u05D3\u05D4)";
       const optionsList = appState2.certReasons || [];
       modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3 \u05D0\u05D5 \u05DE\u05D7\u05E7 \u05E1\u05D9\u05D1\u05D5\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05E9\u05D9\u05D5\u05E4\u05D9\u05E2\u05D5 \u05D1\u05EA\u05D9\u05D1\u05EA \u05D4\u05D1\u05D7\u05D9\u05E8\u05D4 \u05E9\u05DC \u05DE\u05D7\u05D5\u05DC\u05DC \u05D4\u05EA\u05E2\u05D5\u05D3\u05D5\u05EA:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3, \u05DE\u05D7\u05E7 \u05D0\u05D5 \u05E9\u05E0\u05D4 \u05D0\u05EA \u05D4\u05E1\u05D3\u05E8 (\u05D1\u05D0\u05DE\u05E6\u05E2\u05D5\u05EA \u05D4\u05D7\u05E6\u05D9\u05DD \u2B06\uFE0F \u2B07\uFE0F) \u05E9\u05DC \u05E1\u05D9\u05D1\u05D5\u05EA \u05D4\u05E4\u05E8\u05D9\u05E9\u05D4 \u05E9\u05D9\u05D5\u05E4\u05D9\u05E2\u05D5 \u05D1\u05EA\u05D9\u05D1\u05EA \u05D4\u05D1\u05D7\u05D9\u05E8\u05D4 \u05E9\u05DC \u05DE\u05D7\u05D5\u05DC\u05DC \u05D4\u05EA\u05E2\u05D5\u05D3\u05D5\u05EA:</p>
             <div id="m-cert-reasons-list">
                 ${optionsList.map((opt) => `
-                    <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                        <input type="text" class="form-control m-cert-opt-input" value="${escapeHtml(opt)}">
-                        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+                    <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+                        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+                        <input type="text" class="form-control m-cert-opt-input" value="${escapeHtml(opt)}" style="flex:1;">
+                        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
                     </div>
                 `).join("")}
             </div>
@@ -871,14 +980,16 @@
       modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA \u05E1\u05D9\u05D1\u05D5\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05DE\u05E9\u05D5\u05E2\u05E8\u05D5\u05EA (\u05D8\u05D5\u05E4\u05E1 \u05D4\u05E8\u05E9\u05DE\u05D4)";
       const optionsList = appState2.regReasons || [];
       modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3 \u05D0\u05D5 \u05DE\u05D7\u05E7 \u05E1\u05D9\u05D1\u05D5\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05D1\u05D8\u05D5\u05E4\u05E1 \u05D4\u05E7\u05D1\u05DC\u05D4/\u05D4\u05E8\u05E9\u05DE\u05D4:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3, \u05DE\u05D7\u05E7 \u05D0\u05D5 \u05E9\u05E0\u05D4 \u05D0\u05EA \u05D4\u05E1\u05D3\u05E8 (\u05D1\u05D0\u05DE\u05E6\u05E2\u05D5\u05EA \u05D4\u05D7\u05E6\u05D9\u05DD \u2B06\uFE0F \u2B07\uFE0F) \u05E9\u05DC \u05E1\u05D9\u05D1\u05D5\u05EA \u05D4\u05E4\u05E8\u05D9\u05E9\u05D4 \u05D1\u05D8\u05D5\u05E4\u05E1 \u05D4\u05D4\u05E8\u05E9\u05DE\u05D4:</p>
             <div id="m-reg-reasons-list">
                 ${optionsList.map((item2) => {
         const val = typeof item2 === "object" ? item2.label : item2;
         return `
-                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                            <input type="text" class="form-control m-reg-opt-input" value="${escapeHtml(val)}">
-                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+                        <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                            <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+                            <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+                            <input type="text" class="form-control m-reg-opt-input" value="${escapeHtml(val)}" style="flex:1;">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
                         </div>
                     `;
       }).join("")}
@@ -889,19 +1000,93 @@
       modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA \u05E8\u05DE\u05D5\u05EA \u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4 (\u05D8\u05D5\u05E4\u05E1 \u05D4\u05E8\u05E9\u05DE\u05D4)";
       const optionsList = appState2.regMotivations || [];
       modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3 \u05D0\u05D5 \u05DE\u05D7\u05E7 \u05E8\u05DE\u05D5\u05EA \u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4 \u05D1\u05D8\u05D5\u05E4\u05E1 \u05D4\u05E7\u05D1\u05DC\u05D4/\u05D4\u05E8\u05E9\u05DE\u05D4:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">\u05E2\u05E8\u05D5\u05DA, \u05D4\u05D5\u05E1\u05E3, \u05DE\u05D7\u05E7 \u05D0\u05D5 \u05E9\u05E0\u05D4 \u05D0\u05EA \u05D4\u05E1\u05D3\u05E8 (\u05D1\u05D0\u05DE\u05E6\u05E2\u05D5\u05EA \u05D4\u05D7\u05E6\u05D9\u05DD \u2B06\uFE0F \u2B07\uFE0F) \u05E9\u05DC \u05E8\u05DE\u05D5\u05EA \u05D4\u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4 \u05D1\u05D8\u05D5\u05E4\u05E1 \u05D4\u05D4\u05E8\u05E9\u05DE\u05D4:</p>
             <div id="m-reg-mot-list">
                 ${optionsList.map((item2) => {
         const val = typeof item2 === "object" ? item2.label : item2;
         return `
-                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                            <input type="text" class="form-control m-mot-opt-input" value="${escapeHtml(val)}">
-                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+                        <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                            <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+                            <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+                            <input type="text" class="form-control m-mot-opt-input" value="${escapeHtml(val)}" style="flex:1;">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
                         </div>
                     `;
       }).join("")}
             </div>
             <button type="button" class="btn btn-sm btn-outline" style="margin-top:0.5rem;" onclick="addRegMotRow()">\u2795 \u05D4\u05D5\u05E1\u05E3 \u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4</button>
+        `;
+    } else if (type === "certDefaults") {
+      modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA \u05E2\u05E8\u05DB\u05D9 \u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC \u05E9\u05DC \u05D4\u05EA\u05E2\u05D5\u05D3\u05D4";
+      const reasons = appState2.certReasons || [];
+      const curDefReason = appState2.certReasonDefault || (reasons[0] || "");
+      modalBody.innerHTML = `
+            <div class="form-group">
+                <label>\u05E9\u05DD \u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC \u05DC\u05DE\u05E7\u05D1\u05DC/\u05EA \u05D4\u05EA\u05E2\u05D5\u05D3\u05D4:</label>
+                <input type="text" id="m-cert-name-default" class="form-control" value="${escapeHtml(appState2.certNameDefault || "\u05D0\u05DC\u05D5\u05E4\u05D4 \u05E2\u05DD \u05D1\u05E2\u05D9\u05D5\u05EA \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD")}">
+            </div>
+            <div class="form-group">
+                <label>\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05E0\u05D1\u05D7\u05E8\u05EA \u05DB\u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC:</label>
+                <select id="m-cert-reason-default" class="form-control">
+                    ${reasons.map((r) => `<option value="${escapeHtml(r)}" ${r === curDefReason ? "selected" : ""}>${escapeHtml(r)}</option>`).join("")}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>\u05DB\u05D5\u05EA\u05E8\u05EA \u05D4\u05EA\u05E2\u05D5\u05D3\u05D4 (\u05DE\u05E1\u05DE\u05DA):</label>
+                <input type="text" id="m-cert-doc-title" class="form-control" value="${escapeHtml(appState2.certDocTitle || "\u05EA\u05E2\u05D5\u05D3\u05EA \u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05E8\u05E9\u05DE\u05D9\u05EA")}">
+            </div>
+            <div class="form-group">
+                <label>\u05E4\u05E1\u05E7\u05EA \u05E4\u05EA\u05D9\u05D7\u05D4 ("\u05DE\u05D5\u05E2\u05E0\u05E7\u05EA \u05D1\u05D6\u05D0\u05EA..."):</label>
+                <input type="text" id="m-cert-doc-to-text" class="form-control" value="${escapeHtml(appState2.certDocToText || "\u05EA\u05E2\u05D5\u05D3\u05D4 \u05D6\u05D5 \u05DE\u05D5\u05E2\u05E0\u05E7\u05EA \u05D1\u05D6\u05D0\u05EA \u05D1\u05D2\u05D0\u05D5\u05D5\u05D4 \u05E8\u05D1\u05D4 \u05DC:")}">
+            </div>
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05D2\u05D5\u05E3 \u05D4\u05EA\u05E2\u05D5\u05D3\u05D4 (\u05DC\u05E4\u05E0\u05D9 \u05E1\u05D9\u05D1\u05EA \u05D4\u05E4\u05E8\u05D9\u05E9\u05D4):</label>
+                <textarea id="m-cert-body-prefix" class="form-control" rows="3">${escapeHtml(appState2.certDocBodyPrefix || "")}</textarea>
+            </div>
+            <div class="form-group">
+                <label>\u05D7\u05EA\u05D9\u05DE\u05EA \u05DE\u05D3\u05E8\u05D9\u05DA:</label>
+                <input type="text" id="m-cert-sig1" class="form-control" value="${escapeHtml(appState2.certDocSig1 || "\u05D7\u05D6\u05D9\u05DB\u05D5 - \u05DE\u05D3\u05E8\u05D9\u05DA \u05E8\u05D0\u05E9\u05D9")}">
+            </div>
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05D7\u05D5\u05EA\u05DE\u05EA:</label>
+                <input type="text" id="m-cert-seal" class="form-control" value="${escapeHtml(appState2.certDocSeal || "\u05D7\u05E6\u05D9 \u05DE\u05D5\u05DB\u05E8")}">
+            </div>
+        `;
+    } else if (type === "regDefaults") {
+      modalTitle.innerText = "\u05E2\u05E8\u05D9\u05DB\u05EA \u05E2\u05E8\u05DB\u05D9 \u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC \u05E9\u05DC \u05D8\u05D5\u05E4\u05E1 \u05D4\u05D4\u05E8\u05E9\u05DE\u05D4";
+      const reasons = (appState2.regReasons || []).map((r) => typeof r === "object" ? r.label : r);
+      const mots = (appState2.regMotivations || []).map((m) => typeof m === "object" ? m.label : m);
+      const curDefReason = appState2.regReasonDefault || (reasons[0] || "");
+      const curDefMot = appState2.regMotivationDefault || (mots[0] || "");
+      modalBody.innerHTML = `
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05DE\u05E0\u05D7\u05D4 (Placeholder) \u05DC\u05E9\u05DD \u05DE\u05DC\u05D0:</label>
+                <input type="text" id="m-reg-name-ph" class="form-control" value="${escapeHtml(appState2.regNamePlaceholder || "\u05D9\u05E9\u05E8\u05D0\u05DC \u05D9\u05E9\u05E8\u05D0\u05DC\u05D9")}">
+            </div>
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05DE\u05E0\u05D7\u05D4 (Placeholder) \u05DC\u05D8\u05DC\u05E4\u05D5\u05DF:</label>
+                <input type="text" id="m-reg-phone-ph" class="form-control" value="${escapeHtml(appState2.regPhonePlaceholder || "050-0000000")}">
+            </div>
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05DE\u05E0\u05D7\u05D4 (Placeholder) \u05DC\u05D4\u05E2\u05E8\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05D5\u05EA:</label>
+                <textarea id="m-reg-notes-ph" class="form-control" rows="2">${escapeHtml(appState2.regNotesPlaceholder || "")}</textarea>
+            </div>
+            <div class="form-group">
+                <label>\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05E0\u05D1\u05D7\u05E8\u05EA \u05DB\u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC:</label>
+                <select id="m-reg-reason-default" class="form-control">
+                    ${reasons.map((r) => `<option value="${escapeHtml(r)}" ${r === curDefReason ? "selected" : ""}>${escapeHtml(r)}</option>`).join("")}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>\u05E8\u05DE\u05EA \u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4 \u05E0\u05D1\u05D7\u05E8\u05EA \u05DB\u05D1\u05E8\u05D9\u05E8\u05EA \u05DE\u05D7\u05D3\u05DC:</label>
+                <select id="m-reg-mot-default" class="form-control">
+                    ${mots.map((m) => `<option value="${escapeHtml(m)}" ${m === curDefMot ? "selected" : ""}>${escapeHtml(m)}</option>`).join("")}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>\u05D8\u05E7\u05E1\u05D8 \u05DB\u05E4\u05EA\u05D5\u05E8 \u05D4\u05E9\u05DC\u05D9\u05D7\u05D4:</label>
+                <input type="text" id="m-reg-btn-text" class="form-control" value="${escapeHtml(appState2.registerBtnText || "\u05E9\u05D2\u05E8\u05D5 \u05D1\u05E7\u05E9\u05D4 (\u05D1\u05DC\u05D9 \u05DC\u05D7\u05E5)")}">
+            </div>
         `;
     }
     modal.classList.remove("hidden");
@@ -910,11 +1095,13 @@
     const list = document.getElementById("m-cert-reasons-list");
     if (!list) return;
     const div = document.createElement("div");
-    div.className = "form-group";
-    div.style.cssText = "display:flex; gap:0.5rem; align-items:center;";
+    div.className = "form-group modal-reorder-row";
+    div.style.cssText = "display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;";
     div.innerHTML = `
-        <input type="text" class="form-control m-cert-opt-input" placeholder="\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05D7\u05D3\u05E9\u05D4..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+        <input type="text" class="form-control m-cert-opt-input" placeholder="\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4 \u05D7\u05D3\u05E9\u05D4..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
     `;
     list.appendChild(div);
   }
@@ -922,11 +1109,13 @@
     const list = document.getElementById("m-reg-reasons-list");
     if (!list) return;
     const div = document.createElement("div");
-    div.className = "form-group";
-    div.style.cssText = "display:flex; gap:0.5rem; align-items:center;";
+    div.className = "form-group modal-reorder-row";
+    div.style.cssText = "display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;";
     div.innerHTML = `
-        <input type="text" class="form-control m-reg-opt-input" placeholder="\u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+        <input type="text" class="form-control m-reg-opt-input" placeholder="\u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
     `;
     list.appendChild(div);
   }
@@ -934,11 +1123,13 @@
     const list = document.getElementById("m-reg-mot-list");
     if (!list) return;
     const div = document.createElement("div");
-    div.className = "form-group";
-    div.style.cssText = "display:flex; gap:0.5rem; align-items:center;";
+    div.className = "form-group modal-reorder-row";
+    div.style.cssText = "display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;";
     div.innerHTML = `
-        <input type="text" class="form-control m-mot-opt-input" placeholder="\u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">\u{1F5D1}\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05E2\u05DC\u05D4" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">\u2B06\uFE0F</button>
+        <button type="button" class="btn btn-sm btn-outline" title="\u05D4\u05D6\u05D6 \u05DC\u05DE\u05D8\u05D4" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">\u2B07\uFE0F</button>
+        <input type="text" class="form-control m-mot-opt-input" placeholder="\u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05D7\u05D3\u05E9\u05D4..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="\u05DE\u05D7\u05E7">\u{1F5D1}\uFE0F</button>
     `;
     list.appendChild(div);
   }
@@ -970,6 +1161,38 @@
       if (newMots.length > 0) {
         appState2.regMotivations = newMots;
       }
+    } else if (type === "certDefaults") {
+      const nameDef = document.getElementById("m-cert-name-default");
+      const reasonDef = document.getElementById("m-cert-reason-default");
+      const titleDef = document.getElementById("m-cert-doc-title");
+      const toDef = document.getElementById("m-cert-doc-to-text");
+      const bodyDef = document.getElementById("m-cert-body-prefix");
+      const sigDef = document.getElementById("m-cert-sig1");
+      const sealDef = document.getElementById("m-cert-seal");
+      if (nameDef) appState2.certNameDefault = nameDef.value.trim();
+      if (reasonDef) appState2.certReasonDefault = reasonDef.value;
+      if (titleDef) appState2.certDocTitle = titleDef.value.trim();
+      if (toDef) appState2.certDocToText = toDef.value.trim();
+      if (bodyDef) appState2.certDocBodyPrefix = bodyDef.value;
+      if (sigDef) appState2.certDocSig1 = sigDef.value.trim();
+      if (sealDef) appState2.certDocSeal = sealDef.value.trim();
+      const certNameInput = document.getElementById("cert-name-input");
+      const certDisplayName = document.getElementById("cert-display-name");
+      if (certNameInput) certNameInput.value = appState2.certNameDefault;
+      if (certDisplayName) certDisplayName.innerText = appState2.certNameDefault;
+    } else if (type === "regDefaults") {
+      const namePh = document.getElementById("m-reg-name-ph");
+      const phonePh = document.getElementById("m-reg-phone-ph");
+      const notesPh = document.getElementById("m-reg-notes-ph");
+      const reasonDef = document.getElementById("m-reg-reason-default");
+      const motDef = document.getElementById("m-reg-mot-default");
+      const btnText = document.getElementById("m-reg-btn-text");
+      if (namePh) appState2.regNamePlaceholder = namePh.value;
+      if (phonePh) appState2.regPhonePlaceholder = phonePh.value;
+      if (notesPh) appState2.regNotesPlaceholder = notesPh.value;
+      if (reasonDef) appState2.regReasonDefault = reasonDef.value;
+      if (motDef) appState2.regMotivationDefault = motDef.value;
+      if (btnText) appState2.registerBtnText = btnText.value;
     } else if (type === "stat") {
       const newItem = {
         id,
@@ -1074,44 +1297,19 @@
     const closeBtn = document.getElementById("images-modal-close-btn");
     const cancelBtn = document.getElementById("images-modal-cancel-btn");
     const saveBtn = document.getElementById("images-modal-save-btn");
-    const logoPathInput = document.getElementById("input-logo-path");
-    const heroPathInput = document.getElementById("input-hero-path");
-    const logoFileInput = document.getElementById("upload-logo-file");
-    const heroFileInput = document.getElementById("upload-hero-file");
-    if (!changeImgBtn || !modal) return;
-    changeImgBtn.addEventListener("click", () => {
-      const appState2 = getState();
-      logoPathInput.value = appState2.logoSrc || "assets/new-transparent-logo.png";
-      heroPathInput.value = appState2.heroSrc || "assets/hero-new.jfif";
-      modal.classList.remove("hidden");
-    });
-    if (closeBtn) closeBtn.onclick = () => modal.classList.add("hidden");
-    if (cancelBtn) cancelBtn.onclick = () => modal.classList.add("hidden");
-    if (logoFileInput) {
-      logoFileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            logoPathInput.value = evt.target.result;
-          };
-          reader.readAsDataURL(file);
-        }
+    const logoPathInput = document.getElementById("custom-logo-path");
+    const heroPathInput = document.getElementById("custom-hero-path");
+    if (changeImgBtn && modal) {
+      changeImgBtn.addEventListener("click", () => {
+        const appState2 = getState();
+        if (logoPathInput) logoPathInput.value = appState2.logoSrc || "assets/new-transparent-logo.png";
+        if (heroPathInput) heroPathInput.value = appState2.heroSrc || "assets/hero-new.jfif";
+        modal.classList.remove("hidden");
       });
     }
-    if (heroFileInput) {
-      heroFileInput.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            heroPathInput.value = evt.target.result;
-          };
-          reader.readAsDataURL(file);
-        }
-      });
-    }
-    if (saveBtn) {
+    if (closeBtn && modal) closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    if (cancelBtn && modal) cancelBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    if (saveBtn && modal) {
       saveBtn.addEventListener("click", () => {
         const appState2 = getState();
         appState2.logoSrc = logoPathInput.value.trim() || "assets/new-transparent-logo.png";
@@ -1197,13 +1395,31 @@
     if (modalCancelBtn) modalCancelBtn.addEventListener("click", closeModal);
     const modalSaveBtn = document.getElementById("modal-save-btn");
     if (modalSaveBtn) modalSaveBtn.addEventListener("click", saveModalItem);
+    const regReasonSelect = document.getElementById("reg-reason");
+    const regCustomGroup = document.getElementById("reg-custom-reason-group");
+    const regCustomInput = document.getElementById("reg-custom-reason-input");
+    if (regReasonSelect) {
+      regReasonSelect.addEventListener("change", () => {
+        if (isCustomReason(regReasonSelect.value)) {
+          if (regCustomGroup) regCustomGroup.classList.remove("hidden");
+          if (regCustomInput) regCustomInput.focus();
+        } else {
+          if (regCustomGroup) regCustomGroup.classList.add("hidden");
+        }
+      });
+    }
     const form = document.getElementById("satirical-form");
     if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
         const nameEl = document.getElementById("reg-name");
         const name = nameEl ? nameEl.value : "";
-        alert(`\u05EA\u05D5\u05D3\u05D4 ${name}! \u05D4\u05D1\u05E7\u05E9\u05D4 \u05E9\u05DC\u05DA \u05DC\u05E9\u05DE\u05D5\u05E8 \u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05E0\u05E7\u05DC\u05D8\u05D4. \u05EA\u05E4\u05D5\u05E1/\u05E4\u05D9 \u05E4\u05D9\u05E0\u05D4 \u05D1\u05E6\u05DC, \u05D0\u05E0\u05D7\u05E0\u05D5 \u05D1\u05D3\u05E8\u05DA \u05E2\u05DD \u05D4\u05E7\u05E4\u05D4! \u2615`);
+        const reasonEl = document.getElementById("reg-reason");
+        let reason = reasonEl ? reasonEl.value : "";
+        if (isCustomReason(reason) && regCustomInput && regCustomInput.value.trim()) {
+          reason = regCustomInput.value.trim();
+        }
+        alert(`\u05EA\u05D5\u05D3\u05D4 ${name}! \u05D4\u05D1\u05E7\u05E9\u05D4 \u05E9\u05DC\u05DA \u05DC\u05E9\u05DE\u05D5\u05E8 \u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05E0\u05E7\u05DC\u05D8\u05D4 (\u05E1\u05D9\u05D1\u05EA \u05E4\u05E8\u05D9\u05E9\u05D4: ${reason}). \u05EA\u05E4\u05D5\u05E1/\u05E4\u05D9 \u05E4\u05D9\u05E0\u05D4 \u05D1\u05E6\u05DC, \u05D0\u05E0\u05D7\u05E0\u05D5 \u05D1\u05D3\u05E8\u05DA \u05E2\u05DD \u05D4\u05E7\u05E4\u05D4! \u2615`);
       });
     }
   }
@@ -1216,6 +1432,8 @@
   window.addRegReasonRow = addRegReasonRow;
   window.addRegMotRow = addRegMotRow;
   window.deleteItem = deleteItem;
+  window.moveItem = moveItem;
+  window.moveModalRow = moveModalRow;
   window.switchSyllabusTab = switchSyllabusTab;
   window.updateCalculatorResult = updateCalculatorResult;
   window.updateCharCounter = updateCharCounter;

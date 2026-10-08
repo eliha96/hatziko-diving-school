@@ -4,7 +4,7 @@
 
 import { escapeHtml, getStarCount, updateCharCounter } from '../core/utils.js';
 import { getState, setState, getEditMode, setEditMode, saveData, resetData } from '../core/store.js';
-import { updateCertReasonDisplay } from './certificate.js';
+import { updateCertReasonDisplay, isCustomReason } from './certificate.js';
 import { setSyllabusTab } from '../components/syllabus.js';
 
 let editingModalItemType = null;
@@ -20,6 +20,49 @@ function triggerRenderAll() {
         globalRenderAllCallback();
     }
 }
+
+// Reordering functions
+export function moveItem(type, id, direction) {
+    const appState = getState();
+    let list = null;
+    if (type === 'testimonial' || type === 'testimonials') list = appState.testimonials;
+    else if (type === 'stat' || type === 'stats') list = appState.stats;
+    else if (type === 'calcSlider' || type === 'calcSliders') list = appState.calcSliders;
+    else if (type === 'syllabus') list = appState.syllabus;
+    else if (type === 'faq' || type === 'faqs') list = appState.faqs;
+
+    if (!list) return;
+    const idx = list.findIndex(x => x.id === id);
+    if (idx === -1) return;
+
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= list.length) return;
+
+    const [item] = list.splice(idx, 1);
+    list.splice(targetIdx, 0, item);
+
+    saveData();
+    triggerRenderAll();
+}
+
+export function moveModalRow(btn, direction) {
+    const row = btn.closest('.modal-reorder-row') || btn.closest('.form-group');
+    if (!row) return;
+    if (direction === -1) {
+        const prev = row.previousElementSibling;
+        if (prev) {
+            row.parentNode.insertBefore(row, prev);
+        }
+    } else if (direction === 1) {
+        const next = row.nextElementSibling;
+        if (next) {
+            row.parentNode.insertBefore(next, row);
+        }
+    }
+}
+
+window.moveItem = moveItem;
+window.moveModalRow = moveModalRow;
 
 // Update Logo and Hero Image Sources
 export function renderImages(appState) {
@@ -60,6 +103,10 @@ export function renderStaticText(appState, isEditMode) {
                 if (key === 'certDocBodyPrefix') {
                     updateCertReasonDisplay();
                 }
+                if (key === 'certNameDefault') {
+                    const certNameInput = document.getElementById('cert-name-input');
+                    if (certNameInput) certNameInput.value = appState.certNameDefault;
+                }
             };
         } else {
             el.contentEditable = "false";
@@ -74,6 +121,15 @@ export function renderStaticText(appState, isEditMode) {
             el.placeholder = appState[key];
         }
     });
+
+    // Sync certificate recipient input with default
+    const certNameInput = document.getElementById('cert-name-input');
+    if (certNameInput && appState.certNameDefault) {
+        if (!certNameInput.value || certNameInput.value === "אלופה עם בעיות אוזניים") {
+            certNameInput.value = appState.certNameDefault;
+        }
+        certNameInput.placeholder = appState.certNameDefault;
+    }
 }
 
 // Render Select Dropdown Options Dynamically
@@ -86,24 +142,47 @@ export function renderDropdownOptions(appState) {
         ).join('');
         if (currentVal && appState.certReasons.includes(currentVal)) {
             certReasonSelect.value = currentVal;
+        } else if (appState.certReasonDefault && appState.certReasons.includes(appState.certReasonDefault)) {
+            certReasonSelect.value = appState.certReasonDefault;
         }
         updateCertReasonDisplay();
     }
 
     const regReasonSelect = document.getElementById('reg-reason');
     if (regReasonSelect && appState.regReasons) {
+        const currentVal = regReasonSelect.value;
         regReasonSelect.innerHTML = appState.regReasons.map(item => {
             const label = typeof item === 'object' ? item.label : item;
             return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
         }).join('');
+        if (currentVal && appState.regReasons.some(x => (typeof x === 'object' ? x.label : x) === currentVal)) {
+            regReasonSelect.value = currentVal;
+        } else if (appState.regReasonDefault) {
+            regReasonSelect.value = appState.regReasonDefault;
+        }
+
+        const regCustomGroup = document.getElementById('reg-custom-reason-group');
+        if (regCustomGroup) {
+            if (isCustomReason(regReasonSelect.value)) {
+                regCustomGroup.classList.remove('hidden');
+            } else {
+                regCustomGroup.classList.add('hidden');
+            }
+        }
     }
 
     const regMotSelect = document.getElementById('reg-motivation');
     if (regMotSelect && appState.regMotivations) {
+        const currentVal = regMotSelect.value;
         regMotSelect.innerHTML = appState.regMotivations.map(item => {
             const label = typeof item === 'object' ? item.label : item;
             return `<option value="${escapeHtml(label)}">${escapeHtml(label)}</option>`;
         }).join('');
+        if (currentVal && appState.regMotivations.some(x => (typeof x === 'object' ? x.label : x) === currentVal)) {
+            regMotSelect.value = currentVal;
+        } else if (appState.regMotivationDefault) {
+            regMotSelect.value = appState.regMotivationDefault;
+        }
     }
 }
 
@@ -228,12 +307,14 @@ export function openEditModal(type, id = null) {
         modalTitle.innerText = "עריכת סיבות פרישה (תעודה)";
         const optionsList = appState.certReasons || [];
         modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק סיבות פרישה שיופיעו בתיבת הבחירה של מחולל התעודות:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף, מחק או שנה את הסדר (באמצעות החצים ⬆️ ⬇️) של סיבות הפרישה שיופיעו בתיבת הבחירה של מחולל התעודות:</p>
             <div id="m-cert-reasons-list">
                 ${optionsList.map(opt => `
-                    <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                        <input type="text" class="form-control m-cert-opt-input" value="${escapeHtml(opt)}">
-                        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                    <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                        <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+                        <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+                        <input type="text" class="form-control m-cert-opt-input" value="${escapeHtml(opt)}" style="flex:1;">
+                        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
                     </div>
                 `).join('')}
             </div>
@@ -243,14 +324,16 @@ export function openEditModal(type, id = null) {
         modalTitle.innerText = "עריכת סיבות פרישה משוערות (טופס הרשמה)";
         const optionsList = appState.regReasons || [];
         modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק סיבות פרישה בטופס הקבלה/הרשמה:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף, מחק או שנה את הסדר (באמצעות החצים ⬆️ ⬇️) של סיבות הפרישה בטופס ההרשמה:</p>
             <div id="m-reg-reasons-list">
                 ${optionsList.map(item => {
                     const val = typeof item === 'object' ? item.label : item;
                     return `
-                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                            <input type="text" class="form-control m-reg-opt-input" value="${escapeHtml(val)}">
-                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                        <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                            <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+                            <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+                            <input type="text" class="form-control m-reg-opt-input" value="${escapeHtml(val)}" style="flex:1;">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
                         </div>
                     `;
                 }).join('')}
@@ -261,19 +344,94 @@ export function openEditModal(type, id = null) {
         modalTitle.innerText = "עריכת רמות מוטיבציה (טופס הרשמה)";
         const optionsList = appState.regMotivations || [];
         modalBody.innerHTML = `
-            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף או מחק רמות מוטיבציה בטופס הקבלה/הרשמה:</p>
+            <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.9rem;">ערוך, הוסף, מחק או שנה את הסדר (באמצעות החצים ⬆️ ⬇️) של רמות המוטיבציה בטופס ההרשמה:</p>
             <div id="m-reg-mot-list">
                 ${optionsList.map(item => {
                     const val = typeof item === 'object' ? item.label : item;
                     return `
-                        <div class="form-group" style="display:flex; gap:0.5rem; align-items:center;">
-                            <input type="text" class="form-control m-mot-opt-input" value="${escapeHtml(val)}">
-                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+                        <div class="form-group modal-reorder-row" style="display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;">
+                            <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+                            <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+                            <input type="text" class="form-control m-mot-opt-input" value="${escapeHtml(val)}" style="flex:1;">
+                            <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
                         </div>
                     `;
                 }).join('')}
             </div>
             <button type="button" class="btn btn-sm btn-outline" style="margin-top:0.5rem;" onclick="addRegMotRow()">➕ הוסף אפשרות חדשה</button>
+        `;
+    } else if (type === 'certDefaults') {
+        modalTitle.innerText = "עריכת ערכי ברירת מחדל של התעודה";
+        const reasons = appState.certReasons || [];
+        const curDefReason = appState.certReasonDefault || (reasons[0] || '');
+        modalBody.innerHTML = `
+            <div class="form-group">
+                <label>שם ברירת מחדל למקבל/ת התעודה:</label>
+                <input type="text" id="m-cert-name-default" class="form-control" value="${escapeHtml(appState.certNameDefault || 'אלופה עם בעיות אוזניים')}">
+            </div>
+            <div class="form-group">
+                <label>סיבת פרישה נבחרת כברירת מחדל:</label>
+                <select id="m-cert-reason-default" class="form-control">
+                    ${reasons.map(r => `<option value="${escapeHtml(r)}" ${r === curDefReason ? 'selected' : ''}>${escapeHtml(r)}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>כותרת התעודה (מסמך):</label>
+                <input type="text" id="m-cert-doc-title" class="form-control" value="${escapeHtml(appState.certDocTitle || 'תעודת חצי כוכב רשמית')}">
+            </div>
+            <div class="form-group">
+                <label>פסקת פתיחה ("מוענקת בזאת..."):</label>
+                <input type="text" id="m-cert-doc-to-text" class="form-control" value="${escapeHtml(appState.certDocToText || 'תעודה זו מוענקת בזאת בגאווה רבה ל:')}">
+            </div>
+            <div class="form-group">
+                <label>טקסט גוף התעודה (לפני סיבת הפרישה):</label>
+                <textarea id="m-cert-body-prefix" class="form-control" rows="3">${escapeHtml(appState.certDocBodyPrefix || '')}</textarea>
+            </div>
+            <div class="form-group">
+                <label>חתימת מדריך:</label>
+                <input type="text" id="m-cert-sig1" class="form-control" value="${escapeHtml(appState.certDocSig1 || 'חזיכו - מדריך ראשי')}">
+            </div>
+            <div class="form-group">
+                <label>טקסט חותמת:</label>
+                <input type="text" id="m-cert-seal" class="form-control" value="${escapeHtml(appState.certDocSeal || 'חצי מוכר')}">
+            </div>
+        `;
+    } else if (type === 'regDefaults') {
+        modalTitle.innerText = "עריכת ערכי ברירת מחדל של טופס ההרשמה";
+        const reasons = (appState.regReasons || []).map(r => typeof r === 'object' ? r.label : r);
+        const mots = (appState.regMotivations || []).map(m => typeof m === 'object' ? m.label : m);
+        const curDefReason = appState.regReasonDefault || (reasons[0] || '');
+        const curDefMot = appState.regMotivationDefault || (mots[0] || '');
+
+        modalBody.innerHTML = `
+            <div class="form-group">
+                <label>טקסט מנחה (Placeholder) לשם מלא:</label>
+                <input type="text" id="m-reg-name-ph" class="form-control" value="${escapeHtml(appState.regNamePlaceholder || 'ישראל ישראלי')}">
+            </div>
+            <div class="form-group">
+                <label>טקסט מנחה (Placeholder) לטלפון:</label>
+                <input type="text" id="m-reg-phone-ph" class="form-control" value="${escapeHtml(appState.regPhonePlaceholder || '050-0000000')}">
+            </div>
+            <div class="form-group">
+                <label>טקסט מנחה (Placeholder) להערות מיוחדות:</label>
+                <textarea id="m-reg-notes-ph" class="form-control" rows="2">${escapeHtml(appState.regNotesPlaceholder || '')}</textarea>
+            </div>
+            <div class="form-group">
+                <label>סיבת פרישה נבחרת כברירת מחדל:</label>
+                <select id="m-reg-reason-default" class="form-control">
+                    ${reasons.map(r => `<option value="${escapeHtml(r)}" ${r === curDefReason ? 'selected' : ''}>${escapeHtml(r)}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>רמת מוטיבציה נבחרת כברירת מחדל:</label>
+                <select id="m-reg-mot-default" class="form-control">
+                    ${mots.map(m => `<option value="${escapeHtml(m)}" ${m === curDefMot ? 'selected' : ''}>${escapeHtml(m)}</option>`).join('')}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>טקסט כפתור השליחה:</label>
+                <input type="text" id="m-reg-btn-text" class="form-control" value="${escapeHtml(appState.registerBtnText || 'שגרו בקשה (בלי לחץ)')}">
+            </div>
         `;
     }
 
@@ -284,11 +442,13 @@ export function addCertReasonRow() {
     const list = document.getElementById('m-cert-reasons-list');
     if (!list) return;
     const div = document.createElement('div');
-    div.className = 'form-group';
-    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.className = 'form-group modal-reorder-row';
+    div.style.cssText = 'display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;';
     div.innerHTML = `
-        <input type="text" class="form-control m-cert-opt-input" placeholder="סיבת פרישה חדשה..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+        <input type="text" class="form-control m-cert-opt-input" placeholder="סיבת פרישה חדשה..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
     `;
     list.appendChild(div);
 }
@@ -297,11 +457,13 @@ export function addRegReasonRow() {
     const list = document.getElementById('m-reg-reasons-list');
     if (!list) return;
     const div = document.createElement('div');
-    div.className = 'form-group';
-    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.className = 'form-group modal-reorder-row';
+    div.style.cssText = 'display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;';
     div.innerHTML = `
-        <input type="text" class="form-control m-reg-opt-input" placeholder="אפשרות חדשה..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+        <input type="text" class="form-control m-reg-opt-input" placeholder="אפשרות חדשה..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
     `;
     list.appendChild(div);
 }
@@ -310,11 +472,13 @@ export function addRegMotRow() {
     const list = document.getElementById('m-reg-mot-list');
     if (!list) return;
     const div = document.createElement('div');
-    div.className = 'form-group';
-    div.style.cssText = 'display:flex; gap:0.5rem; align-items:center;';
+    div.className = 'form-group modal-reorder-row';
+    div.style.cssText = 'display:flex; gap:0.4rem; align-items:center; margin-bottom:0.5rem;';
     div.innerHTML = `
-        <input type="text" class="form-control m-mot-opt-input" placeholder="אפשרות חדשה..." value="">
-        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444;" onclick="this.parentElement.remove()">🗑️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למעלה" onclick="moveModalRow(this, -1)" style="padding:0.25rem 0.5rem;">⬆️</button>
+        <button type="button" class="btn btn-sm btn-outline" title="הזז למטה" onclick="moveModalRow(this, 1)" style="padding:0.25rem 0.5rem;">⬇️</button>
+        <input type="text" class="form-control m-mot-opt-input" placeholder="אפשרות חדשה..." value="" style="flex:1;">
+        <button type="button" class="btn btn-sm btn-outline" style="color:#ef4444; border-color:#ef4444; padding:0.25rem 0.5rem;" onclick="this.parentElement.remove()" title="מחק">🗑️</button>
     `;
     list.appendChild(div);
 }
@@ -349,6 +513,42 @@ export function saveModalItem() {
         if (newMots.length > 0) {
             appState.regMotivations = newMots;
         }
+    } else if (type === 'certDefaults') {
+        const nameDef = document.getElementById('m-cert-name-default');
+        const reasonDef = document.getElementById('m-cert-reason-default');
+        const titleDef = document.getElementById('m-cert-doc-title');
+        const toDef = document.getElementById('m-cert-doc-to-text');
+        const bodyDef = document.getElementById('m-cert-body-prefix');
+        const sigDef = document.getElementById('m-cert-sig1');
+        const sealDef = document.getElementById('m-cert-seal');
+
+        if (nameDef) appState.certNameDefault = nameDef.value.trim();
+        if (reasonDef) appState.certReasonDefault = reasonDef.value;
+        if (titleDef) appState.certDocTitle = titleDef.value.trim();
+        if (toDef) appState.certDocToText = toDef.value.trim();
+        if (bodyDef) appState.certDocBodyPrefix = bodyDef.value;
+        if (sigDef) appState.certDocSig1 = sigDef.value.trim();
+        if (sealDef) appState.certDocSeal = sealDef.value.trim();
+
+        // Update active input and display
+        const certNameInput = document.getElementById('cert-name-input');
+        const certDisplayName = document.getElementById('cert-display-name');
+        if (certNameInput) certNameInput.value = appState.certNameDefault;
+        if (certDisplayName) certDisplayName.innerText = appState.certNameDefault;
+    } else if (type === 'regDefaults') {
+        const namePh = document.getElementById('m-reg-name-ph');
+        const phonePh = document.getElementById('m-reg-phone-ph');
+        const notesPh = document.getElementById('m-reg-notes-ph');
+        const reasonDef = document.getElementById('m-reg-reason-default');
+        const motDef = document.getElementById('m-reg-mot-default');
+        const btnText = document.getElementById('m-reg-btn-text');
+
+        if (namePh) appState.regNamePlaceholder = namePh.value;
+        if (phonePh) appState.regPhonePlaceholder = phonePh.value;
+        if (notesPh) appState.regNotesPlaceholder = notesPh.value;
+        if (reasonDef) appState.regReasonDefault = reasonDef.value;
+        if (motDef) appState.regMotivationDefault = motDef.value;
+        if (btnText) appState.registerBtnText = btnText.value;
     } else if (type === 'stat') {
         const newItem = {
             id,
@@ -460,50 +660,22 @@ export function initImageModal() {
     const cancelBtn = document.getElementById('images-modal-cancel-btn');
     const saveBtn = document.getElementById('images-modal-save-btn');
 
-    const logoPathInput = document.getElementById('input-logo-path');
-    const heroPathInput = document.getElementById('input-hero-path');
-    const logoFileInput = document.getElementById('upload-logo-file');
-    const heroFileInput = document.getElementById('upload-hero-file');
+    const logoPathInput = document.getElementById('custom-logo-path');
+    const heroPathInput = document.getElementById('custom-hero-path');
 
-    if (!changeImgBtn || !modal) return;
-
-    changeImgBtn.addEventListener('click', () => {
-        const appState = getState();
-        logoPathInput.value = appState.logoSrc || 'assets/new-transparent-logo.png';
-        heroPathInput.value = appState.heroSrc || 'assets/hero-new.jfif';
-        modal.classList.remove('hidden');
-    });
-
-    if (closeBtn) closeBtn.onclick = () => modal.classList.add('hidden');
-    if (cancelBtn) cancelBtn.onclick = () => modal.classList.add('hidden');
-
-    if (logoFileInput) {
-        logoFileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (evt) => {
-                    logoPathInput.value = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
+    if (changeImgBtn && modal) {
+        changeImgBtn.addEventListener('click', () => {
+            const appState = getState();
+            if (logoPathInput) logoPathInput.value = appState.logoSrc || 'assets/new-transparent-logo.png';
+            if (heroPathInput) heroPathInput.value = appState.heroSrc || 'assets/hero-new.jfif';
+            modal.classList.remove('hidden');
         });
     }
 
-    if (heroFileInput) {
-        heroFileInput.addEventListener('change', (e) => {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (evt) => {
-                    heroPathInput.value = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
+    if (closeBtn && modal) closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    if (cancelBtn && modal) cancelBtn.addEventListener('click', () => modal.classList.add('hidden'));
 
-    if (saveBtn) {
+    if (saveBtn && modal) {
         saveBtn.addEventListener('click', () => {
             const appState = getState();
             appState.logoSrc = logoPathInput.value.trim() || 'assets/new-transparent-logo.png';
@@ -607,13 +779,33 @@ export function setupEditEventListeners(renderAll) {
     const modalSaveBtn = document.getElementById('modal-save-btn');
     if (modalSaveBtn) modalSaveBtn.addEventListener('click', saveModalItem);
 
+    // Registration reason custom input toggle
+    const regReasonSelect = document.getElementById('reg-reason');
+    const regCustomGroup = document.getElementById('reg-custom-reason-group');
+    const regCustomInput = document.getElementById('reg-custom-reason-input');
+    if (regReasonSelect) {
+        regReasonSelect.addEventListener('change', () => {
+            if (isCustomReason(regReasonSelect.value)) {
+                if (regCustomGroup) regCustomGroup.classList.remove('hidden');
+                if (regCustomInput) regCustomInput.focus();
+            } else {
+                if (regCustomGroup) regCustomGroup.classList.add('hidden');
+            }
+        });
+    }
+
     const form = document.getElementById('satirical-form');
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const nameEl = document.getElementById('reg-name');
             const name = nameEl ? nameEl.value : '';
-            alert(`תודה ${name}! הבקשה שלך לשמור חצי כוכב נקלטה. תפוס/פי פינה בצל, אנחנו בדרך עם הקפה! ☕`);
+            const reasonEl = document.getElementById('reg-reason');
+            let reason = reasonEl ? reasonEl.value : '';
+            if (isCustomReason(reason) && regCustomInput && regCustomInput.value.trim()) {
+                reason = regCustomInput.value.trim();
+            }
+            alert(`תודה ${name}! הבקשה שלך לשמור חצי כוכב נקלטה (סיבת פרישה: ${reason}). תפוס/פי פינה בצל, אנחנו בדרך עם הקפה! ☕`);
         });
     }
 }

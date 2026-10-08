@@ -19,6 +19,8 @@ import {
     closeModal,
     saveModalItem,
     deleteItem,
+    moveItem,
+    moveModalRow,
     addCertReasonRow,
     addRegReasonRow,
     addRegMotRow,
@@ -34,6 +36,8 @@ window.addCertReasonRow = addCertReasonRow;
 window.addRegReasonRow = addRegReasonRow;
 window.addRegMotRow = addRegMotRow;
 window.deleteItem = deleteItem;
+window.moveItem = moveItem;
+window.moveModalRow = moveModalRow;
 window.switchSyllabusTab = switchSyllabusTab;
 window.updateCalculatorResult = updateCalculatorResult;
 window.updateCharCounter = updateCharCounter;

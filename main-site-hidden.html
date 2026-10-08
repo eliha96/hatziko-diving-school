@@ -263,7 +263,10 @@
 
                 <div class="cert-wrapper">
                     <div class="cert-form glass-card">
-                        <h3 class="editable" data-key="certFormTitle">פרטי התעודה</h3>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+                            <h3 class="editable" data-key="certFormTitle" style="margin:0;">פרטי התעודה</h3>
+                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('certDefaults')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך ברירות מחדל</button>
+                        </div>
                         <div class="form-group">
                             <label for="cert-name-input" class="editable" data-key="certNameLabel">שם מלא למקבל/ת התעודה:</label>
                             <input type="text" id="cert-name-input" class="form-control" value="אלופה עם בעיות אוזניים">
@@ -277,6 +280,10 @@
                             <select id="cert-reason-select" class="form-control">
                                 <!-- Rendered dynamically by JS -->
                             </select>
+                            <div class="form-group hidden" id="cert-custom-reason-group" style="margin-top:0.6rem;">
+                                <label for="cert-custom-reason-input" style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.25rem;">✍️ הזינו סיבה אישית משלכם:</label>
+                                <input type="text" id="cert-custom-reason-input" class="form-control" placeholder="למשל: נתפס לי שריר התאומים כבר בחימום..." style="border-color:var(--brand-teal);">
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -301,7 +308,7 @@
                                 <h2 class="cert-title editable" data-key="certDocTitle">תעודת חצי כוכב רשמית</h2>
                                 <p class="cert-to-text editable" data-key="certDocToText">תעודה זו מוענקת בזאת בגאווה רבה ל:</p>
                                 
-                                <div class="cert-person-name" id="cert-display-name">אלופה עם בעיות אוזניים</div>
+                                <div class="cert-person-name editable" data-key="certNameDefault" id="cert-display-name">אלופה עם בעיות אוזניים</div>
 
                                 <div class="cert-body-wrapper" style="margin-bottom:1.5rem;">
                                     <span class="cert-body-prefix editable" data-key="certDocBodyPrefix" style="color: #2d3748; font-size: 1.05rem;">על סיום בהצלחה של 50% מקורס הצלילה, הפגנת תושיה בבחירת היבשה, וסיבת פרישה: </span>
@@ -349,7 +356,10 @@
             <div class="container">
                 <div class="register-card glass-card">
                     <div class="register-header">
-                        <h2 class="editable" data-key="registerTitle">שריון מקום בקורס החצי כוכב הקרוב</h2>
+                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
+                            <h2 class="editable" data-key="registerTitle" style="margin:0;">שריון מקום בקורס החצי כוכב הקרוב</h2>
+                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regDefaults')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך ברירות מחדל (Placeholders)</button>
+                        </div>
                         <p class="editable" data-key="registerDesc">מלאו את הפרטים ונחזור אליכם ברגע שנסיים את הקפה.</p>
                     </div>
 
@@ -374,6 +384,10 @@
                                 <select id="reg-reason" class="form-control">
                                     <!-- Rendered dynamically by JS -->
                                 </select>
+                                <div class="form-group hidden" id="reg-custom-reason-group" style="margin-top:0.6rem;">
+                                    <label for="reg-custom-reason-input" style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:0.25rem;">✍️ ספרו לנו בשפה חופשית על סיבת הפרישה שלכם:</label>
+                                    <input type="text" id="reg-custom-reason-input" class="form-control" placeholder="למשל: ראיתי קיפוד ים והבנתי שאני איש של יבשה..." style="border-color:var(--brand-teal);">
+                                </div>
                             </div>
 
                             <div class="form-group">
