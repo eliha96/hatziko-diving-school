@@ -64,7 +64,7 @@ export function triggerKambuchaSecretUnlock() {
                 <div class="kambucha-loading-bar">
                     <div class="kambucha-bar-fill"></div>
                 </div>
-                <p class="kambucha-status-text">🍄 התססת פטריית הקמבוצ'ה הושלמה בהצלחה...</p>
+                <p class="kambucha-status-text">🍄 התססת פטריית הקמבוצ'ה הושלמה בהצלחה, היכונו לשילשול...</p>
             </div>
         `;
         document.body.appendChild(overlay);

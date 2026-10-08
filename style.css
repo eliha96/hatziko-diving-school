@@ -1242,6 +1242,9 @@ body.in-edit-mode .edit-only-inline {
   text-align: center;
   margin-bottom: 2.5rem;
 }
+.calc-header h2 {
+  text-align: center;
+}
 .calc-badge {
   background: rgba(0, 210, 255, 0.15);
   color: var(--primary-cyan);
