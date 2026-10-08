@@ -124,6 +124,56 @@ export function updateCalculatorResult() {
     if (calcAdvice) calcAdvice.innerText = adviceText;
 }
 
+export function openDepthLevelsModal() {
+    const modal = document.getElementById('depth-levels-modal');
+    const listEl = document.getElementById('depth-zones-modal-list');
+    if (!modal || !listEl) return;
+
+    const state = getState();
+    const customLevels = (state.calcLevels && state.calcLevels.length === 5)
+        ? state.calcLevels
+        : null;
+
+    listEl.innerHTML = DEFAULT_CALC_LEVELS.map((level, idx) => {
+        const zone = (customLevels && customLevels[idx] && customLevels[idx].zone) || level.zone;
+        const advice = (customLevels && customLevels[idx] && customLevels[idx].advice) || level.advice;
+        const sampleDepth = level.calcDepth(Math.max(0.01, level.maxFactor - 0.08));
+
+        return `
+            <div class="depth-zone-item">
+                <div class="depth-zone-head">
+                    <span class="depth-zone-name">#${idx + 1} ${escapeHtml(zone)}</span>
+                    <span class="depth-zone-meter">📏 עד ${sampleDepth}</span>
+                </div>
+                <div class="depth-zone-advice">${escapeHtml(advice)}</div>
+            </div>
+        `;
+    }).join('');
+
+    modal.classList.remove('hidden');
+}
+
+export function closeDepthLevelsModal() {
+    const modal = document.getElementById('depth-levels-modal');
+    if (modal) modal.classList.add('hidden');
+}
+
 export function initCalculator() {
     renderCalculatorSliders(getState(), getEditMode());
+
+    const btnShow = document.getElementById('btn-show-depth-zones');
+    if (btnShow) btnShow.addEventListener('click', openDepthLevelsModal);
+
+    const closeBtn = document.getElementById('depth-levels-modal-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeDepthLevelsModal);
+
+    const okBtn = document.getElementById('depth-levels-modal-ok-btn');
+    if (okBtn) okBtn.addEventListener('click', closeDepthLevelsModal);
+
+    const modal = document.getElementById('depth-levels-modal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeDepthLevelsModal();
+        });
+    }
 }
