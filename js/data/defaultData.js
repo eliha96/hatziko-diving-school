@@ -7,7 +7,7 @@ export const DEFAULT_DATA = {
     "brandTitle": "חציכו",
     "brandSubtitle": "בית ספר לצלי",
     "navCta": "הרשמה לחצי כוכב",
-    "logoSrc": "assets/new-logo.png",
+    "logoSrc": "assets/new-transparent-logo.png",
     "heroSrc": "assets/hero-new.jfif",
     "heroBadge": "<img src=\"assets/half-star.png\" class=\"half-star-img\" alt=\"חצי כוכב\"> מסלול חצי כוכב יוקרתי",
     "heroTitle": "חציכו - בית ספר לצלי",

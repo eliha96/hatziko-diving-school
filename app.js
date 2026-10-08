@@ -4,7 +4,7 @@
     "brandTitle": "\u05D7\u05E6\u05D9\u05DB\u05D5",
     "brandSubtitle": "\u05D1\u05D9\u05EA \u05E1\u05E4\u05E8 \u05DC\u05E6\u05DC\u05D9",
     "navCta": "\u05D4\u05E8\u05E9\u05DE\u05D4 \u05DC\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1",
-    "logoSrc": "assets/new-logo.png",
+    "logoSrc": "assets/new-transparent-logo.png",
     "heroSrc": "assets/hero-new.jfif",
     "heroBadge": '<img src="assets/half-star.png" class="half-star-img" alt="\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1"> \u05DE\u05E1\u05DC\u05D5\u05DC \u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1 \u05D9\u05D5\u05E7\u05E8\u05EA\u05D9',
     "heroTitle": "\u05D7\u05E6\u05D9\u05DB\u05D5 - \u05D1\u05D9\u05EA \u05E1\u05E4\u05E8 \u05DC\u05E6\u05DC\u05D9",

@@ -68,8 +68,12 @@
 .cert-logo {
     width: 60px;
     height: 60px;
+    background-color: #ffffff;
     border-radius: 50%;
+    padding: 4px;
     border: 2px solid #d69e2e;
+    object-fit: contain;
+    display: inline-block;
 }
 
 .cert-brand-title {

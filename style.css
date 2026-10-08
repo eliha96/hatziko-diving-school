@@ -229,14 +229,15 @@ h6 {
   text-decoration: none;
 }
 .brand-logo {
-  width: 48px;
-  height: 48px;
+  width: 52px;
+  height: 52px;
   background-color: #ffffff;
   border-radius: 50%;
-  padding: 3px;
+  padding: 4px;
   border: 2px solid var(--accent-gold);
   object-fit: contain;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  display: inline-block;
 }
 .brand-title {
   font-family: var(--font-heading);
@@ -1230,8 +1231,12 @@ input[type=range]::-webkit-slider-thumb {
 .cert-logo {
   width: 60px;
   height: 60px;
+  background-color: #ffffff;
   border-radius: 50%;
+  padding: 4px;
   border: 2px solid #d69e2e;
+  object-fit: contain;
+  display: inline-block;
 }
 .cert-brand-title {
   font-family: var(--font-heading);
