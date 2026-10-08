@@ -42,7 +42,7 @@
     "feat1Text": "\u05D1\u05D6\u05DB\u05D5\u05EA \u05E9\u05D9\u05D8\u05EA \u05D4\u05E2\u05D5\u05DE\u05E7 \u05D4\u05E8\u05D3\u05D5\u05D3 \u05E9\u05DC\u05E0\u05D5, \u05EA\u05D5\u05DB\u05DC\u05D5 \u05DC\u05D4\u05E9\u05DC\u05D9\u05DD \u05D0\u05EA \u05D4\u05E6\u05DC\u05D9\u05DC\u05D4 \u05D1\u05D2\u05D5\u05D1\u05D4 \u05D4\u05E4\u05D5\u05E4\u05D9\u05E7 - \u05D5\u05DC\u05D4\u05D9\u05DE\u05E0\u05E2 \u05DE\u05DB\u05D0\u05D1\u05D9 \u05D0\u05D5\u05D6\u05E0\u05D9\u05D9\u05DD \u05D4\u05E0\u05D5\u05D1\u05E2\u05D9\u05DD \u05DE\u05DB\u05D5\u05DB\u05D1 \u05E9\u05DC\u05DD. \u05DC\u05D0 \u05EA\u05E6\u05D8\u05E8\u05DB\u05D5 \u05DC\u05E4\u05DE\u05E4\u05DD - \u05E8\u05D5\u05D1 \u05D4\u05D6\u05DE\u05DF \u05D4\u05E8\u05D0\u05E9 \u05E9\u05DC\u05DB\u05DD \u05D9\u05D4\u05D9\u05D4 \u05DE\u05E2\u05DC \u05D4\u05DE\u05D9\u05DD!",
     "feat2Icon": "\u{1F6CB}\uFE0F",
     "feat2Title": "100% \u05E6\u05D9\u05E4\u05E8\u05DC\u05E7\u05E1",
-    "feat2Text": "\u05DB\u05DC \u05D4\u05DE\u05D3\u05E8\u05D9\u05DB\u05D9\u05DD \u05E9\u05DC\u05E0\u05D5 \u05E0\u05D5\u05D8\u05DC\u05D9\u05DD \u05D0\u05EA \u05D4\u05EA\u05E8\u05D5\u05E4\u05D4 \u05D1\u05D0\u05D5\u05E4\u05DF \u05E7\u05D1\u05D5\u05E2, \u05D5\u05DE\u05E9\u05EA\u05D9\u05D9\u05DB\u05D9\u05DD \u05DC\u05E7\u05D1\u05D9\u05DC\u05D4 \u05D4\u05D2\u05D0\u05D4 - \u05DC\u05DE\u05E7\u05E8\u05D4 \u05E9\u05D0\u05EA\u05DD \u05DE\u05E6\u05E8\u05E4\u05D9\u05DD",
+    "feat2Text": "\u05DB\u05DC \u05D4\u05DE\u05D3\u05E8\u05D9\u05DB\u05D9\u05DD \u05E9\u05DC\u05E0\u05D5 \u05E0\u05D5\u05D8\u05DC\u05D9\u05DD \u05D0\u05EA \u05D4\u05EA\u05E8\u05D5\u05E4\u05D4 \u05D1\u05D0\u05D5\u05E4\u05DF \u05E7\u05D1\u05D5\u05E2, \u05D5\u05DE\u05E9\u05EA\u05D9\u05D9\u05DB\u05D9\u05DD \u05DC\u05E7\u05D4\u05D9\u05DC\u05D4 \u05D4\u05D2\u05D0\u05D4 - \u05DC\u05DE\u05E7\u05E8\u05D4 \u05E9\u05D0\u05EA\u05DD \u05DE\u05E6\u05E8\u05E4\u05D9\u05DD",
     "feat3Icon": "\u{1F4DC}",
     "feat3Title": "\u05EA\u05E2\u05D5\u05D3\u05D4 \u05D7\u05E6\u05D9-\u05DE\u05D5\u05DB\u05E8\u05EA",
     "feat3Text": '\u05D4\u05EA\u05E2\u05D5\u05D3\u05D4 \u05E9\u05DC\u05E0\u05D5 \u05DE\u05D5\u05DB\u05E8\u05EA \u05E2"\u05D9 \u05D1\u05E8\u05D9\u05DB\u05D5\u05EA \u05E6\u05D9\u05D1\u05D5\u05E8\u05D9\u05D5\u05EA \u05D1\u05E8\u05D7\u05D1\u05D9 \u05D4\u05E2\u05D5\u05DC\u05DD, \u05D5\u05DE\u05D0\u05E4\u05E9\u05E8\u05D5\u05EA \u05DC\u05DB\u05DD \u05DC\u05EA\u05DC\u05D5\u05EA \u05DE\u05E9\u05D4\u05D5 \u05E2\u05DC \u05D4\u05E7\u05D9\u05E8 \u05D4\u05E2\u05D9\u05E8\u05D5\u05DD \u05D5\u05D7\u05E1\u05E8 \u05D4\u05D4\u05D9\u05E9\u05D2\u05D9\u05DD \u05E9\u05DC\u05DB\u05DD',
@@ -152,7 +152,7 @@
     "regPhonePlaceholder": "050-000009",
     "regReasonLabel": "\u05E1\u05D9\u05D1\u05EA \u05D4\u05E4\u05E8\u05D9\u05E9\u05D4 \u05D4\u05DE\u05E9\u05D5\u05E2\u05E8\u05EA \u05E9\u05DC\u05DA:",
     "regMotivationLabel": "\u05E8\u05DE\u05EA \u05D4\u05DE\u05D5\u05D8\u05D9\u05D1\u05E6\u05D9\u05D4 \u05E9\u05DC\u05DA \u05DC\u05D4\u05E9\u05DC\u05D9\u05DD \u05D0\u05EA \u05D4\u05E7\u05D5\u05E8\u05E1:",
-    "regNotesLabel": "\u05D4\u05E2\u05E8\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05D5\u05EA (\u05DC\u05DE\u05E9\u05DC: \u05D0\u05D9\u05D6\u05D4 \u05D0\u05E8\u05D8\u05D9\u05E7 \u05DC\u05D4\u05DB\u05D9\u05DF \u05DC\u05DA \u05D1\u05D7\u05D5\u05E3?):",
+    "regNotesLabel": "\u05D4\u05E2\u05E8\u05D5\u05EA \u05DE\u05D9\u05D5\u05D7\u05D3\u05D5\u05EA:",
     "regNotesPlaceholder": "\u05D3\u05D5\u05D3\u05D4 \u05E9\u05DC\u05D9 \u05E4\u05E8\u05EA \u05D9\u05DD, \u05D0\u05E9\u05DE\u05D7 \u05DC\u05D1\u05D3\u05D5\u05E7 \u05D0\u05DD \u05D6\u05D4 \u05DE\u05D6\u05DB\u05D4 \u05D0\u05D5\u05EA\u05D9 \u05D1\u05D4\u05E0\u05D7\u05D4..",
     "registerBtnText": "\u05E9\u05D2\u05E8\u05D5 \u05D1\u05E7\u05E9\u05D4 (\u05D1\u05DC\u05D9 \u05DC\u05D7\u05E5)",
     "regReasons": [
@@ -268,7 +268,7 @@
         "name": "\u05D5\u05D0\u05DF \u05D2\u05D5\u05DA",
         "role": "\u05E6\u05D5\u05DC\u05DC \u05D5\u05E6\u05D9\u05D9\u05E8 \u05D7\u05D5\u05D1\u05D1",
         "stars": 6,
-        "text": "\u05DE\u05D0\u05D6 \u05E9\u05D0\u05E0\u05D9 \u05D6\u05D5\u05DB\u05E8 \u05D0\u05EA \u05E2\u05E6\u05DE\u05D9 \u05D9\u05E9 \u05DC\u05D9 \u05DB\u05D0\u05D1\u05D9\u05DD \u05D1\u05D0\u05D5\u05D6\u05DF \u05E9\u05DE\u05D0\u05DC, \u05D0\u05D5 \u05DC\u05E4\u05D7\u05D5\u05EA \u05DE\u05D0\u05D6 \u05E9\u05DB\u05E8\u05EA\u05EA\u05D9 \u05D0\u05D5\u05EA\u05D4. \u05DB\u05E9\u05D4\u05D9\u05D9\u05EA\u05D9 \u05E7\u05D8\u05DF \u05E8\u05E6\u05D9\u05EA\u05D9 \u05DC\u05D4\u05D9\u05D5\u05EA \u05D8\u05D9\u05D9\u05E1 \u05D0\u05D1\u05DC \u05E2\u05D5\u05D3 \u05DC\u05D0 \u05D4\u05DE\u05E6\u05D9\u05D0\u05D5 \u05D0\u05EA \u05D4\u05E7\u05D5\u05E0\u05E1\u05E4\u05D8. \u05D0\u05E0\u05D9 \u05E0\u05D5\u05D4\u05D2 \u05DC\u05E6\u05DC\u05D5\u05DC \u05D5\u05DC\u05E6\u05D9\u05D9\u05E8 \u05E2\u05DD \u05D2\u05D6 \u05DE\u05D6\u05D2\u05E0\u05D9\u05DD. \u05EA\u05D1\u05D5\u05D0\u05D5 \u05D9\u05E9 \u05E7\u05E4\u05D4 \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD"
+        "text": "\u05DE\u05D0\u05D6 \u05E9\u05D0\u05E0\u05D9 \u05D6\u05D5\u05DB\u05E8 \u05D0\u05EA \u05E2\u05E6\u05DE\u05D9 \u05D9\u05E9 \u05DC\u05D9 \u05DB\u05D0\u05D1\u05D9\u05DD \u05D1\u05D0\u05D5\u05D6\u05DF \u05E9\u05DE\u05D0\u05DC, \u05D0\u05D5 \u05DC\u05E4\u05D7\u05D5\u05EA \u05DE\u05D0\u05D6 \u05E9\u05DB\u05E8\u05EA\u05EA\u05D9 \u05D0\u05D5\u05EA\u05D4. \u05DB\u05E9\u05D4\u05D9\u05D9\u05EA\u05D9 \u05E7\u05D8\u05DF \u05E8\u05E6\u05D9\u05EA\u05D9 \u05DC\u05D4\u05D9\u05D5\u05EA \u05D8\u05D9\u05D9\u05E1 \u05D0\u05D1\u05DC \u05E2\u05D5\u05D3 \u05DC\u05D0 \u05D4\u05DE\u05E6\u05D9\u05D0\u05D5 \u05D0\u05EA \u05D4\u05E7\u05D5\u05E0\u05E1\u05E4\u05D8. \u05D0\u05E0\u05D9 \u05E0\u05D5\u05D4\u05D2 \u05DC\u05E6\u05DC\u05D5\u05DC \u05D5\u05DC\u05E6\u05D9\u05D9\u05E8 \u05E2\u05DD \u05D1\u05DC\u05D5\u05DF \u05D2\u05D6 \u05DE\u05D6\u05D2\u05E0\u05D9\u05DD. \u05EA\u05D1\u05D5\u05D0\u05D5 \u05D9\u05E9 \u05E7\u05E4\u05D4 \u05D1\u05E9\u05D9\u05E8\u05D5\u05EA\u05D9\u05DD"
       }
     ],
     "faqs": [
@@ -313,60 +313,14 @@
     return appState;
   }
   function getEditMode() {
-    return isEditMode;
+    return false;
   }
   function setEditMode(active) {
-    isEditMode = active;
+    isEditMode = false;
   }
   function loadSavedData() {
-    const saved = localStorage.getItem("hatziko_site_data");
-    if (saved) {
-      try {
-        appState = Object.assign({}, DEFAULT_DATA, JSON.parse(saved));
-        appState.logoSrc = "assets/new-transparent-logo.png";
-        if (appState.heroSrc === "assets/hero.jpg") {
-          appState.heroSrc = "assets/hero-new.jfif";
-        }
-        if (!appState.stats || appState.stats.length === 0) {
-          appState.stats = JSON.parse(JSON.stringify(DEFAULT_DATA.stats));
-        }
-        if (!appState.calcSliders || appState.calcSliders.length === 0) {
-          appState.calcSliders = JSON.parse(JSON.stringify(DEFAULT_DATA.calcSliders));
-        }
-        if (appState.syllabus) {
-          appState.syllabus.forEach((item) => {
-            if (!item.part) {
-              if (item.id === "s1" || item.id === "s2") item.part = "pool";
-              else if (item.id === "s3" || item.id === "s4") item.part = "sea";
-              else if (item.id === "s5") item.part = "final";
-              else item.part = "pool";
-            }
-          });
-        }
-        if (appState.heroBadge && (appState.heroBadge.includes("\u2B50\xBD") || appState.heroBadge.includes("\u2B501/2") || appState.heroBadge.includes("\u2B50 1/2"))) {
-          appState.heroBadge = appState.heroBadge.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1">');
-        }
-        if (appState.testimonials) {
-          appState.testimonials.forEach((t) => {
-            if (t.stars && (t.stars.includes("\u2B50\xBD") || t.stars.includes("\u2B501/2") || t.stars.includes("\u2B50 1/2") || t.stars.includes("\xBD"))) {
-              t.stars = t.stars.replace(/⭐\s*½|⭐\s*1\/2|½|1\/2/g, '<img src="assets/half-star.png" class="half-star-img" alt="\u05D7\u05E6\u05D9 \u05DB\u05D5\u05DB\u05D1">');
-            }
-          });
-        }
-        if (!appState.certReasons || appState.certReasons.length === 0) {
-          appState.certReasons = JSON.parse(JSON.stringify(DEFAULT_DATA.certReasons));
-        }
-        if (!appState.regReasons || appState.regReasons.length === 0) {
-          appState.regReasons = JSON.parse(JSON.stringify(DEFAULT_DATA.regReasons));
-        }
-        if (!appState.regMotivations || appState.regMotivations.length === 0) {
-          appState.regMotivations = JSON.parse(JSON.stringify(DEFAULT_DATA.regMotivations));
-        }
-      } catch (e) {
-        console.error("Failed to parse saved data, loading default.", e);
-        appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
-      }
-    }
+    appState = JSON.parse(JSON.stringify(DEFAULT_DATA));
+    isEditMode = false;
     return appState;
   }
   function saveData() {

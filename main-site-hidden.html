@@ -12,24 +12,6 @@
     <link rel="icon" href="assets/new-transparent-logo.png" type="image/png">
 </head>
 <body>
-    <!-- Edit Mode Bar -->
-    <div id="edit-mode-bar" class="edit-mode-bar hidden">
-        <div class="container edit-bar-content">
-            <span class="edit-badge">✏️ מצב עריכה פעיל - לחץ על כל טקסט לעריכה</span>
-            <div class="edit-actions">
-                <button class="btn btn-sm btn-outline" id="btn-change-images">🖼️ החלף תמונות</button>
-                <button class="btn btn-sm btn-outline" id="btn-add-stat">➕ הוסף מדד/מספר</button>
-                <button class="btn btn-sm btn-outline" id="btn-add-calc-slider">➕ הוסף מדד למחשבון</button>
-                <button class="btn btn-sm btn-outline" id="btn-add-syllabus">➕ הוסף שיעור</button>
-                <button class="btn btn-sm btn-outline" id="btn-add-testimonial">➕ הוסף המלצה</button>
-                <button class="btn btn-sm btn-outline" id="btn-add-faq">➕ הוסף שאלה</button>
-                <button class="btn btn-sm btn-success" id="btn-save-data">💾 שמור בדפדפן</button>
-                <button class="btn btn-sm btn-primary" id="btn-export-data">📤 ייצוא לגיט (הורד קובץ)</button>
-                <button class="btn btn-sm btn-warning" id="btn-reset-data">🔄 אפס למקור</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Top Animated Waves & Rubber Duck -->
     <div class="ocean-surface-header">
         <div class="duck-wrapper">
@@ -70,9 +52,6 @@
             </nav>
 
             <div class="nav-controls">
-                <button id="toggle-edit-mode" class="btn btn-outline-gold">
-                    <span id="edit-toggle-icon">✏️</span> <span id="edit-toggle-text">מצב עריכה</span>
-                </button>
                 <a href="#register" class="btn btn-primary btn-glow editable" data-key="navCta">הרשמה לחצי כוכב</a>
                 <button id="mobile-menu-btn" class="mobile-menu-toggle" aria-label="תפריט ניווט">
                     <span class="hamburger-bar"></span>
@@ -218,10 +197,7 @@
                 <div class="calculator-card glass-card">
                     <div class="calc-header" style="text-align: center;">
                         <span class="calc-badge editable" data-key="calcBadge">🧮 מחשבון חציכו בלעדי</span>
-                        <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:0.75rem; margin:0.4rem 0;">
-                            <h2 class="editable" data-key="calcTitle" style="margin:0; text-align:center;">מחשבון עומק הצרה</h2>
-                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('calcLevels')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך 5 רמות עומק ותיאורים</button>
-                        </div>
+                        <h2 class="editable" data-key="calcTitle" style="margin:0.4rem 0; text-align:center;">מחשבון עומק הצרה</h2>
                         <p class="editable" data-key="calcDesc" style="text-align:center;">הזינו את המדדים שלכם וגלו מה העומק המקסימלי הבטוח עבורכם היום:</p>
                     </div>
 
@@ -271,20 +247,14 @@
 
                 <div class="cert-wrapper">
                     <div class="cert-form glass-card">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-                            <h3 class="editable" data-key="certFormTitle" style="margin:0;">פרטי התעודה</h3>
-                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('certDefaults')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך ברירות מחדל</button>
-                        </div>
+                        <h3 class="editable" data-key="certFormTitle" style="margin-bottom:1rem;">פרטי התעודה</h3>
                         <div class="form-group">
                             <label for="cert-name-input" class="editable" data-key="certNameLabel">שם מלא למקבל/ת התעודה:</label>
                             <input type="text" id="cert-name-input" class="form-control" value="בֵּנִי כַּבֵדִי">
                         </div>
 
                         <div class="form-group">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-                                <label for="cert-reason-select" class="editable" data-key="certReasonLabel" style="margin:0;">סיבת קבלת התעודה:</label>
-                                <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('certReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
-                            </div>
+                            <label for="cert-reason-select" class="editable" data-key="certReasonLabel" style="display:block; margin-bottom:0.4rem;">סיבת קבלת התעודה:</label>
                             <select id="cert-reason-select" class="form-control">
                                 <!-- Rendered dynamically by JS -->
                             </select>
@@ -364,10 +334,7 @@
             <div class="container">
                 <div class="register-card glass-card">
                     <div class="register-header">
-                        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem;">
-                            <h2 class="editable" data-key="registerTitle" style="margin:0;">שריון מקום בקורס החצי כוכב הקרוב</h2>
-                            <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regDefaults')" style="padding:0.2rem 0.6rem; font-size:0.8rem;">⚙️ ערוך ברירות מחדל (Placeholders)</button>
-                        </div>
+                        <h2 class="editable" data-key="registerTitle" style="margin-bottom:0.5rem;">שריון מקום בקורס החצי כוכב הקרוב</h2>
                         <p class="editable" data-key="registerDesc">מלאו את הפרטים ונחזור אליכם ברגע שנסיים את הקפה.</p>
                     </div>
 
@@ -385,10 +352,7 @@
 
                         <div class="form-row">
                             <div class="form-group">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-                                    <label for="reg-reason" class="editable" data-key="regReasonLabel" style="margin:0;">סיבת הפרישה המשוערת שלך:</label>
-                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regReasons')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
-                                </div>
+                                <label for="reg-reason" class="editable" data-key="regReasonLabel" style="display:block; margin-bottom:0.4rem;">סיבת הפרישה המשוערת שלך:</label>
                                 <select id="reg-reason" class="form-control">
                                     <!-- Rendered dynamically by JS -->
                                 </select>
@@ -399,10 +363,7 @@
                             </div>
 
                             <div class="form-group">
-                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-                                    <label for="reg-motivation" class="editable" data-key="regMotivationLabel" style="margin:0;">רמת המוטיבציה שלך להשלים את הקורס:</label>
-                                    <button type="button" class="btn btn-sm btn-outline edit-only-inline" onclick="openEditModal('regMotivations')" style="padding:0.15rem 0.5rem; font-size:0.75rem;">⚙️ ערוך אפשרויות</button>
-                                </div>
+                                <label for="reg-motivation" class="editable" data-key="regMotivationLabel" style="display:block; margin-bottom:0.4rem;">רמת המוטיבציה שלך להשלים את הקורס:</label>
                                 <select id="reg-motivation" class="form-control">
                                     <!-- Rendered dynamically by JS -->
                                 </select>
@@ -468,52 +429,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Edit Item Modal -->
-    <div id="edit-modal" class="modal hidden">
-        <div class="modal-content glass-card">
-            <div class="modal-header">
-                <h3 id="modal-title">עריכת פריט</h3>
-                <button class="modal-close" id="modal-close-btn">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body">
-                <!-- Dynamic Modal form fields -->
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="modal-cancel-btn">ביטול</button>
-                <button class="btn btn-success" id="modal-save-btn">שמור פריט</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Images Edit Modal -->
-    <div id="images-modal" class="modal hidden">
-        <div class="modal-content glass-card">
-            <div class="modal-header">
-                <h3>החלפת תמונות לוגו וצולל</h3>
-                <button class="modal-close" id="images-modal-close-btn">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p style="margin-bottom: 1rem; color: var(--accent-gold);">ניתן להעלות קובץ תמונה מהמחשב או להזין קישור/נתיב קובץ:</p>
-                
-                <div class="form-group">
-                    <label>לוגו (מומלץ ריבועי 512x512 פיקסלים):</label>
-                    <input type="text" id="input-logo-path" class="form-control" placeholder="assets/new-transparent-logo.png">
-                    <input type="file" id="upload-logo-file" accept="image/*" class="form-control" style="margin-top: 0.4rem;">
-                </div>
-
-                <div class="form-group" style="margin-top: 1.5rem;">
-                    <label>תמונת צולל ראשית (מומלץ 1920x1080 פיקסלים):</label>
-                    <input type="text" id="input-hero-path" class="form-control" placeholder="assets/hero-new.jfif">
-                    <input type="file" id="upload-hero-file" accept="image/*" class="form-control" style="margin-top: 0.4rem;">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-outline" id="images-modal-cancel-btn">ביטול</button>
-                <button class="btn btn-success" id="images-modal-save-btn">עדכן תמונות</button>
-            </div>
-        </div>
-    </div>
 
     <!-- Registration Rat Dispatch Success Modal -->
     <div id="registration-success-modal" class="modal hidden">

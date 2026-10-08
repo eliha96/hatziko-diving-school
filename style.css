@@ -807,65 +807,10 @@ h6 {
 }
 
 /* css/features/edit-mode.css */
-.edit-mode-bar {
-  position: sticky;
-  top: 0;
-  z-index: 1100;
-  background:
-    linear-gradient(
-      90deg,
-      #1e1b4b 0%,
-      #312e81 100%);
-  border-bottom: 2px solid var(--accent-gold);
-  padding: 0.6rem 0;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-.edit-mode-bar.hidden {
-  display: none;
-}
-.edit-bar-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.edit-badge {
-  background: var(--accent-gold);
-  color: #000;
-  font-weight: 700;
-  padding: 0.2rem 0.75rem;
-  border-radius: var(--radius-full);
-  font-size: 0.85rem;
-}
-.edit-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-body.in-edit-mode .editable {
-  outline: 2px dashed var(--accent-gold);
-  outline-offset: 4px;
-  cursor: pointer;
-  transition: outline-color 0.2s ease, background 0.2s ease;
-  border-radius: 4px;
-}
-body.in-edit-mode .editable:hover {
-  background: rgba(255, 183, 3, 0.15);
-  outline-color: #ffffff;
-}
+.edit-mode-bar,
+.edit-only-inline,
 .item-actions-bar {
-  display: flex;
-  gap: 0.4rem;
-  margin-top: 0.75rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed rgba(255, 255, 255, 0.15);
-}
-.edit-only-inline {
   display: none !important;
-}
-body.in-edit-mode .edit-only-inline {
-  display: inline-flex !important;
 }
 
 /* css/sections/hero.css */
